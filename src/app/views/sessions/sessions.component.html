@@ -1,0 +1,450 @@
+<div
+  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 *ngIf="!showForm" class="h2">Sessions</h1>
+  <h5 *ngIf="showForm" class="h2">{{ title }}</h5>
+  <div *ngIf="!showForm" class="btn-toolbar mb-2 mb-md-0">
+    <button (click)="handleShowForm()" class="btn btn-primary">
+      + Nouvelle Session
+    </button>
+  </div>
+</div>
+
+<div *ngIf="showForm" class="session-form">
+  <!-- Select session type -->
+  <div *ngIf="mode === 'update'" class="row">
+    <div class="col-md-12">
+      <label for="description">Type:</label>
+      <input
+        type="text"
+        id="code"
+        disabled
+        [value]="sessionTytpe === '1' ? 'Inter Session' : 'Intra Session'"
+      />
+    </div>
+  </div>
+  <select
+    *ngIf="mode === 'create'"
+    (change)="onSessionTypeChange($event)"
+    class="form-select"
+    aria-label="Default select example"
+  >
+    <option selected>Selectionnez le type de session</option>
+    <option value="1" [selected]="sessionTytpe === '1'">Inter session</option>
+    <option value="2" [selected]="sessionTytpe === '2'">Intra session</option>
+  </select>
+
+  <form [formGroup]="sessionForm" (ngSubmit)="submitSession()">
+    <input type="hidden" id="code" formControlName="id" />
+    <div *ngIf="sessionTytpe === '2'" class="row">
+      <div class="col-md-12">
+        <label for="company"
+          >Entreprise <span class="text-danger">*</span></label
+        >
+        <select id="company" formControlName="company">
+          <option
+            *ngFor="let companie of companies"
+            [ngValue]="companie"
+            [selected]="companie.id === companyToUp.id ? companyToUp : null"
+          >
+            {{ companie.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <label for="description">Code <span class="text-danger">*</span></label>
+        <input type="text" id="code" formControlName="code" />
+        <em
+          *ngIf="
+            sessionForm.get('code')?.hasError('required') &&
+            (sessionForm.get('code')?.touched || sessionForm.get('code')?.dirty)
+          "
+          class="text-danger"
+        >
+          Le code est requis.
+        </em>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <label for="description"
+          >Description<span class="text-danger">*</span></label
+        >
+        <textarea formControlName="description" id="description"></textarea>
+        <em
+          *ngIf="
+            sessionForm.get('description')?.hasError('required') &&
+            (sessionForm.get('description')?.touched ||
+              sessionForm.get('description')?.dirty)
+          "
+          class="text-danger"
+        >
+          Une description est requise.
+        </em>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="lieux">Lieux <span class="text-danger">*</span></label>
+        <input type="text" id="lieux" formControlName="location" />
+        <em
+          *ngIf="
+            sessionForm.get('location')?.hasError('required') &&
+            (sessionForm.get('location')?.touched ||
+              sessionForm.get('location')?.dirty)
+          "
+          class="text-danger"
+        >
+          Renseignez le lieu.
+        </em>
+      </div>
+      <div class="col-md-4">
+        <label for="date">Date <span class="text-danger">*</span></label>
+        <input
+          type="date"
+          id="date"
+          formControlName="date"
+          [value]="sessionForm.get('date')?.value | date : 'yyyy-MM-dd'"
+          [min]="minDate"
+        /><em
+          *ngIf="
+            sessionForm.get('date')?.hasError('required') &&
+            (sessionForm.get('date')?.touched || sessionForm.get('date')?.dirty)
+          "
+          class="text-danger"
+        >
+          Une date est requise.
+        </em>
+      </div>
+      <div class="col-md-4">
+        <label for="duree">Durée (H) <span class="text-danger">*</span></label>
+        <input type="number" min="1" id="duree" formControlName="duration" />
+        <em
+          *ngIf="
+            sessionForm.get('duration')?.hasError('required') &&
+            (sessionForm.get('duration')?.touched ||
+              sessionForm.get('duration')?.dirty)
+          "
+          class="text-danger"
+        >
+          Definissez la durée.
+        </em>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <label for="prix">Prix ($) <span class="text-danger">*</span></label>
+        <input type="number" min="1" id="prix" formControlName="price" />
+        <em
+          *ngIf="
+            sessionForm.get('price')?.hasError('required') &&
+            (sessionForm.get('price')?.touched ||
+              sessionForm.get('price')?.dirty)
+          "
+          class="text-danger"
+        >
+          Definissez le prix.
+        </em>
+      </div>
+      <div class="col-md-4">
+        <label for="formateur"
+          >Formateur <span class="text-danger">*</span></label
+        >
+        <select id="formateur" formControlName="trainer">
+          <option
+            *ngFor="let trainer of trainers"
+            [ngValue]="trainer"
+            [selected]="trainer.id === trainerToUp.id ? trainerToUp : null"
+          >
+            {{ trainer.firstname }}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="formation"
+          >Formation <span class="text-danger">*</span></label
+        >
+        <select id="formation" formControlName="training">
+          <option
+            *ngFor="let training of trainings"
+            [ngValue]="training"
+            [selected]="training.id === trainingToUp.id ? trainingToUp : null"
+          >
+            {{ training.title }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="sessionTytpe == '1'">
+      <div class="col-md-6">
+        <label for="nombreParticipants"
+          >Min Participants <span class="text-danger">*</span></label
+        >
+        <input
+          type="number"
+          id="nombreParticipants"
+          formControlName="minParticipants"
+        />
+        <em
+          *ngIf="
+            sessionForm.get('minParticipants')?.hasError('required') &&
+            (sessionForm.get('minParticipants')?.touched ||
+              sessionForm.get('minParticipants')?.dirty)
+          "
+          class="text-danger"
+        >
+          Entrez le minimun de participant.
+        </em>
+      </div>
+    </div>
+    <div class="bttn d-flex justify-content-end">
+      <button
+        (click)="closeForm()"
+        [disabled]="isFormThemeLoading"
+        class="btn btn-danger mx-2"
+      >
+        Annuler
+      </button>
+      <button type="submit" class="btn btn-primary">
+        <span *ngIf="isFormThemeLoading" class="spinner-border"></span>
+        <span [ngClass]="isFormThemeLoading ? 'hidden' : ''"
+          ><i class="fa fa-save"></i>&nbsp;Enregistrer</span
+        >
+      </button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="!showForm" class="col-lg-12" style="margin-top: 10px">
+  <div class="row tab-content">
+    <div
+      id="list-view"
+      class="tab-pane fade active show col-lg-12"
+      role="tabpanel"
+    >
+      <div class="card">
+        <div class="card-header" style="background-color: #fff">
+          <h4 class="card-title" style="margin-top: 20px">
+            Liste des Sessions
+          </h4>
+          <p class="my-3">
+            <a
+              (click)="showInterSession()"
+              class="link-offset-2 mx-5 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            >
+              <span [ngClass]="{ active: showInterSess }"
+                >Session planifiées</span
+              >
+            </a>
+            <a
+              (click)="showIntraSession()"
+              class="link-offset-2 mx-5 link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            >
+              <span [ngClass]="{ active: showIntraSess }"
+                >Demandes clients</span
+              >
+            </a>
+          </p>
+        </div>
+        <div class="card-body" *ngIf="!isLoading">
+          <div class="row mb-3">
+            <div class="col-md-3 d-flex">
+              <label for="entries" class="me-2">Afficher</label>
+              <select
+                class="form-select form-select-sm me-2"
+                id="entries"
+                style="height: 38px"
+              >
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+              <label for="entries">entrées</label>
+            </div>
+            <div class="col-md-5">&nbsp;</div>
+            <div class="col-md-4">
+              <form style="position: relative; width: 350px; float: right">
+                <i
+                  class="fas fa-search"
+                  style="
+                    position: absolute;
+                    left: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                  "
+                ></i>
+                <input
+                  class="form-control"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                  style="padding-left: 30px"
+                />
+              </form>
+            </div>
+          </div>
+          <div class="table-responsive" style="margin-top: 30px">
+            <!-- Intersession table -->
+            <table *ngIf="!showIntraSess" class="table table-striped">
+              <thead style="--bs-table-bg: rgba(25, 29, 50, 1)">
+                <tr>
+                  <th scope="col" class="text-white">Code</th>
+                  <th scope="col" class="text-white">Description</th>
+                  <th scope="col" class="text-white">Min participants</th>
+                  <th scope="col" class="text-white">Statut</th>
+                  <th scope="col" class="text-white">Durée</th>
+                  <th scope="col" class="text-white">Date</th>
+                  <th scope="col" class="text-white">Local</th>
+                  <th scope="col" class="text-white">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let session of interSessions">
+                  <td>{{ session.code }}</td>
+                  <td>{{ getSubString(session.description) }}</td>
+                  <td>{{ session.minParticipants }}</td>
+                  <td
+                    [ngClass]="
+                      session.status == 'CANCELLED' ? 'text-danger' : ''
+                    "
+                  >
+                    {{ session.status }}
+                  </td>
+                  <td>{{ session.duration }}</td>
+                  <td>{{ session.date | date }}</td>
+                  <td>{{ session.location }}</td>
+                  <td>
+                    <span
+                      class="btn btn-sm sharp btn-success"
+                      title="Détail"
+                      (click)="showSession(session.id)"
+                      ><i class="fa fa-info"></i
+                    ></span>
+                    &nbsp;
+                    <span
+                      (click)="editintertSession(session.id)"
+                      class="btn btn-sm sharp btn-primary"
+                      title="Modifier"
+                    >
+                      <i class="fa fa-pencil"></i> </span
+                    >&nbsp;
+                    <span
+                      (click)="deleteInterSession(session.id)"
+                      class="btn btn-sm sharp btn-danger"
+                      title="Supprimer"
+                    >
+                      <i class="fa fa-trash"></i>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Intrasesion Table -->
+            <table *ngIf="showIntraSess" class="table table-striped">
+              <thead style="--bs-table-bg: rgba(25, 29, 50, 1)">
+                <tr>
+                  <th scope="col" class="text-white">Code</th>
+                  <th scope="col" class="text-white">Description</th>
+                  <th scope="col" class="text-white">Statut</th>
+                  <th scope="col" class="text-white">Durée</th>
+                  <th scope="col" class="text-white">Date</th>
+                  <th scope="col" class="text-white">Local</th>
+                  <th scope="col" class="text-white">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let session of intraSessions">
+                  <td>{{ session.code }}</td>
+                  <td>{{ getSubString(session.description) }}</td>
+                  <td
+                    [ngClass]="
+                      session.status == 'CANCELLED' ? 'text-danger' : ''
+                    "
+                  >
+                    {{ session.status }}
+                  </td>
+                  <td>{{ session.duration }}</td>
+                  <td>{{ session.date | date }}</td>
+                  <td>{{ session.location }}</td>
+                  <td>
+                    <span
+                      class="btn btn-sm sharp btn-success"
+                      title="Détail"
+                      (click)="showSession(session.id)"
+                      ><i class="fa fa-info"></i
+                    ></span>
+                    &nbsp;
+                    <span
+                      (click)="editintratSession(session.id)"
+                      class="btn btn-sm sharp btn-primary"
+                      title="Modifier"
+                    >
+                      <i class="fa fa-pencil"></i> </span
+                    >&nbsp;
+                    <span
+                      (click)="deleteIntraSession(session.id)"
+                      class="btn btn-sm sharp btn-danger"
+                      title="Supprimer"
+                    >
+                      <i class="fa fa-trash"></i>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <p class="m-0">Affichage de 1 à 10 sur 30 entrées</p>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4 text-end">
+              <nav style="float: right">
+                <ul class="pagination pagination-circle">
+                  <li class="page-item page-indicator me-2">
+                    <a
+                      class="page-link rounded-circle"
+                      href="#"
+                      aria-label="Previous"
+                    >
+                      <i class="fas fa-angle-left"></i>
+                    </a>
+                  </li>
+                  <li class="page-item active me-2">
+                    <a class="page-link rounded-circle" href="#">1</a>
+                  </li>
+                  <li class="page-item me-2">
+                    <a class="page-link rounded-circle" href="#">2</a>
+                  </li>
+                  <li class="page-item me-2">
+                    <a class="page-link rounded-circle" href="#">3</a>
+                  </li>
+                  <li class="page-item me-2">
+                    <a class="page-link rounded-circle" href="#">4</a>
+                  </li>
+                  <li class="page-item page-indicator">
+                    <a
+                      class="page-link rounded-circle"
+                      href="#"
+                      aria-label="Next"
+                    >
+                      <i class="fas fa-angle-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid waiting" *ngIf="isLoading">
+          <span class="spinner-border"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
