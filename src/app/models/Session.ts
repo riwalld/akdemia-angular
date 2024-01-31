@@ -14,6 +14,7 @@ export interface Session{
   sessionScore:          number;
   creationDate:          Date;
   updateDate:            Date;
+  manager:               Manager;
   trainer:               Trainer;
   training:              Training;
 }
