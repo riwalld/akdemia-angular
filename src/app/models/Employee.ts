@@ -1,0 +1,10 @@
+import { Company } from "./Company";
+import { User } from "./User";
+
+export interface Employee extends User {
+    id: number;
+    firstname: string;
+    lastname: string;
+    gender: string;
+    company: Company
+}
