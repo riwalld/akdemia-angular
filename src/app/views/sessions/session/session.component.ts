@@ -286,4 +286,3 @@ export class SessionComponent implements OnInit {
     return percentage >= 0 ? percentage : 1;
   }
 }
-

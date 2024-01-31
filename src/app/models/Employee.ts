@@ -6,5 +6,6 @@ export interface Employee extends User {
     firstname: string;
     lastname: string;
     gender: string;
+    highestDiploima: string;
     company: Company
 }

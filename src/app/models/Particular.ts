@@ -6,4 +6,6 @@ export interface Particular extends User {
     firstname: string;
     lastname: string;
     gender: string
+    highestDiploma: string;
+    birthDate: Date;
 }

@@ -30,7 +30,10 @@ const routes: Routes = [
       {path: 'clients/insert', component: InsertClientComponent},
       {path: 'formateurs/insert', component: InsertFormateurComponent},
       {path: 'formateurs/:id', component: InsertFormateurComponent},
-      {path: 'clients/:id', component: InsertClientComponent}
+      {path: 'clients/:id', component: InsertClientComponent},
+      {path: 'clients/employe/:id', component: InsertClientComponent},
+      {path: 'clients/particulier/:id', component: InsertClientComponent},
+      {path: 'clients/company/:id', component: InsertClientComponent}
     ]
   },
 ];

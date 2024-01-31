@@ -49,10 +49,10 @@
                                     <td></td>
                                     <td> {{firstparticular.activity}} </td>
                                     <td> {{ firstparticular.gender }} </td>
-                                    <td> {{ firstparticular.creationDate | date: 'dd/MM/yyyy' }} </td>
+                                    <td> {{ firstparticular.creationDate | date }} </td>
                                     <td>
-                                        <a href="javascript:void(0);" class="btn btn-sm sharp btn-success" (click)="goToEdit(firstparticular.id)" title="Modifier"><i class="fa fa-pencil"></i></a>&nbsp;
-                                        <a href="javascript:void(0);" class="btn btn-sm sharp btn-danger" (click)="deleteClients(firstparticular.id, false)" title="Supprimer"><i class="fa fa-trash"></i></a>&nbsp;
+                                        <a  class="btn btn-sm sharp btn-success" (click)="goToEditPart(firstparticular.id)" title="Modifier"><i class="fa fa-pencil"></i></a>&nbsp;
+                                        <a  class="btn btn-sm sharp btn-danger" (click)="deleteClients(firstparticular.id, 'particulier')" title="Supprimer"><i class="fa fa-trash"></i></a>&nbsp;
                                     </td>
                                 </tr>
                                 <tr *ngFor="let firstemployee of employees"> 
@@ -61,10 +61,22 @@
                                     <td> {{firstemployee.company.name}} </td>
                                     <td></td>
                                     <td> {{ firstemployee.gender }} </td>
-                                    <td> {{ firstemployee.creationDate | date: 'dd/MM/yyyy' }} </td>
+                                    <td> {{ firstemployee.creationDate | date }} </td>
                                     <td>
-                                        <a href="javascript:void(0);" class="btn btn-sm sharp btn-success" (click)="goToEdit(firstemployee.id)" title="Modifier"><i class="fa fa-pencil"></i></a>&nbsp;
-                                        <a href="javascript:void(0);" class="btn btn-sm sharp btn-danger" (click)="deleteClients(firstemployee.id, true)" title="Supprimer"><i class="fa fa-trash"></i></a>&nbsp;
+                                        <a  class="btn btn-sm sharp btn-success" (click)="goToEditClt(firstemployee.id)" title="Modifier"><i class="fa fa-pencil"></i></a>&nbsp;
+                                        <a  class="btn btn-sm sharp btn-danger" (click)="deleteClients(firstemployee.id, 'employé')" title="Supprimer"><i class="fa fa-trash"></i></a>&nbsp;
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let firstcompany of companies"> 
+                                    <td></td>
+                                    <td></td>
+                                    <td> {{firstcompany.name}} </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td> {{ firstcompany.creationDate | date }} </td>
+                                    <td>
+                                        <a  class="btn btn-sm sharp btn-success" (click)="goToEditCpy(firstcompany.id)" title="Modifier"><i class="fa fa-pencil"></i></a>&nbsp;
+                                        <a  class="btn btn-sm sharp btn-danger" (click)="deleteClients(firstcompany.id, 'company')" title="Supprimer"><i class="fa fa-trash"></i></a>&nbsp;
                                     </td>
                                 </tr>
                             </tbody>

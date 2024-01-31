@@ -52,19 +52,30 @@ export class ClientsComponent implements OnInit {
       data => {
         this.isLoading = false;
         this.employees = data;
-        console.log(this.employees);
-        
+      }
+    );
+    this.companyService.getAll().subscribe(
+      data => {
+        this.isLoading = false;
+        this.companies = data;
       }
     );
   }
 
-  goToEdit(id: number) {
-    this.router.navigateByUrl(`/clients/${id}`);
+  goToEditPart(id: number) {
+    this.router.navigateByUrl(`/clients/particulier/${id}`);
   }
 
-  deleteClients(id: number, isEmployee: boolean) {
+  goToEditClt(id: number) {
+    this.router.navigateByUrl(`/clients/employe/${id}`);
+  }
 
-    const clientType = isEmployee ? 'employé' : 'particulier';
+  goToEditCpy(id: number) {
+    this.router.navigateByUrl(`/clients/company/${id}`);
+  }
+
+  deleteClients(id: number, clientType: string) {
+
 
     Swal.fire({
       title: 'Etes-vous sûr de vouloir effectuer cette suppression?',
@@ -91,6 +102,16 @@ export class ClientsComponent implements OnInit {
         } else if(clientType == 'employé') {
            console.log(id);
           this.employeeService.delete(id).subscribe(
+            () => {
+              this.getAllParticipants();
+              Swal.fire(
+                'supprimé!',
+                'Le client a été supprimé avec succès.',
+                'success'
+              );
+            });
+        } else {
+          this.companyService.delete(id).subscribe(
             () => {
               this.getAllParticipants();
               Swal.fire(
