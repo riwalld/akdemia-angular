@@ -27,6 +27,7 @@ import Swal from 'sweetalert2';
 export class SessionsComponent implements OnInit{
 
   minDate: string = new Date(new Date().setMonth(new Date().getMonth() + 3)).toISOString().split('T')[0];
+  minUpdateDate!: string;
   isLoading!: boolean;
   showIntraSess: boolean = false;
   showInterSess: boolean = true;
@@ -68,11 +69,11 @@ export class SessionsComponent implements OnInit{
     this.getAllCompanies();
   }
 
-  getMinDate() {
-    const currentDate = new Date();
-    const minDate = new Date();
-    minDate.setMonth(currentDate.getMonth() + 3);
-  }
+  // getMinDate() {
+  //   const currentDate = new Date();
+  //   const minDate = new Date();
+  //   minDate.setMonth(currentDate.getMonth() + 3);
+  // }
 
 
   getAllTraining() {
@@ -149,7 +150,9 @@ export class SessionsComponent implements OnInit{
         this.interSessionService.save(this.sessionForm.value).subscribe({
           next: data => {
             this.toastService.alertSuccess("Enregistrement effectué avec success !");
-            window.location.reload();
+            this.getAllInterSessions();
+            this.showForm = !this.showForm;
+            this.isFormThemeLoading = false;
           },
           error: err => {
             this.isFormThemeLoading = false;
@@ -160,7 +163,9 @@ export class SessionsComponent implements OnInit{
         this.intraSessionService.save(this.sessionForm.value).subscribe({
           next: data => {
             this.toastService.alertSuccess("Enregistrement effectué avec success !");
-            window.location.reload();
+            this.getAllIntraSessions();
+            this.showForm = !this.showForm;
+            this.isFormThemeLoading = false;
           },
           error: err => {
             this.isFormThemeLoading = false;
@@ -174,7 +179,9 @@ export class SessionsComponent implements OnInit{
         this.interSessionService.edit(id, this.sessionForm.value).subscribe({
           next: data => {
             this.toastService.alertSuccess("Modification effectué avec success !");
-            window.location.reload();
+            this.getAllInterSessions();
+            this.showForm = !this.showForm;
+            this.isFormThemeLoading = false;
           },
           error: err => {
             this.isFormThemeLoading = false;
@@ -185,7 +192,9 @@ export class SessionsComponent implements OnInit{
         this.intraSessionService.edit(id, this.sessionForm.value).subscribe({
           next: data => {
             this.toastService.alertSuccess("Modification effectué avec success !");
-            window.location.reload();
+            this.getAllIntraSessions();
+            this.showForm = !this.showForm;
+            this.isFormThemeLoading = false;
           },
           error: err => {
             this.isFormThemeLoading = false;
@@ -208,6 +217,7 @@ export class SessionsComponent implements OnInit{
       next: data => {
         this.trainerToUp = data.trainer;
         this.trainingToUp = data.training;
+        this.minUpdateDate = this.addMonthsAndFormat(data.creationDate, 3);
         this.sessionForm.patchValue(data);
       },
       error: err => {
@@ -226,6 +236,9 @@ export class SessionsComponent implements OnInit{
         this.trainerToUp = data.trainer;
         this.trainingToUp = data.training;
         this.companyToUp = data.company;
+        console.log(data.date);
+
+        this.minUpdateDate = this.addMonthsAndFormat(data.creationDate, 3);
         this.sessionForm.patchValue(data);
       },
       error: err => {
@@ -253,6 +266,42 @@ export class SessionsComponent implements OnInit{
     return this.utilsService.getSubString(text, 30);
   }
 
+  // Passer le statut en français
+  getStatusString(status: string) {
+    switch (status) {
+      case 'OPEN':
+        return 'Ouvert';
+      case 'CLOSED':
+        return 'Fermé';
+      case 'CANCELLED':
+        return 'Annulé';
+      case 'COMPLETE':
+        return 'Complet';
+      case 'ACTIVE':
+        return 'Actif';
+      case 'WAITING':
+        return 'En attente';
+      case 'IN_PROGRESS':
+        return 'En cours';
+      default:
+        return 'Statut inconnu';
+    }
+  }
+
+  // Filtrer la date sur minimum 3 mois
+  addMonthsAndFormat(dateString: Date, monthsToAdd: number) {
+    const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+      throw new Error('La date doit être une chaîne de caractères de format ISO 8601 valide.');
+    }
+    const newDate = new Date(date.getTime());
+    newDate.setMonth(newDate.getMonth() + monthsToAdd);
+
+    return newDate.toISOString().split('T')[0];
+  }
+
+
+
   deleteInterSession(id: number) {
     Swal.fire({
       title: 'Etes-vous sûr de vouloir effectuer cette suppression?',
@@ -266,7 +315,7 @@ export class SessionsComponent implements OnInit{
     }).then((result) => {
       if (result.isConfirmed) {
         this.interSessionService.delete(id).subscribe(() => {
-          this.getAllIntraSessions();
+          this.ngOnInit();
         });
       }
     });
@@ -285,7 +334,7 @@ export class SessionsComponent implements OnInit{
     }).then((result) => {
       if (result.isConfirmed) {
         this.intraSessionService.delete(id).subscribe(() => {
-          this.getAllIntraSessions();
+          this.ngOnInit();
         });
       }
     });

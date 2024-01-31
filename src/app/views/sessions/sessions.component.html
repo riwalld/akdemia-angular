@@ -1,13 +1,8 @@
 <div
   class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
 >
-  <h1 *ngIf="!showForm" class="h2">Sessions</h1>
-  <h5 *ngIf="showForm" class="h2">{{ title }}</h5>
-  <div *ngIf="!showForm" class="btn-toolbar mb-2 mb-md-0">
-    <button (click)="handleShowForm()" class="btn btn-primary">
-      + Nouvelle Session
-    </button>
-  </div>
+  <h1 *ngIf="!showForm" class="h2 text-primary">Sessions</h1>
+  <h5 *ngIf="showForm" class="lead">{{ title }}</h5>
 </div>
 
 <div *ngIf="showForm" class="session-form">
@@ -107,7 +102,7 @@
           id="date"
           formControlName="date"
           [value]="sessionForm.get('date')?.value | date : 'yyyy-MM-dd'"
-          [min]="minDate"
+          [min]="mode === 'create' ? minDate : minUpdateDate"
         /><em
           *ngIf="
             sessionForm.get('date')?.hasError('required') &&
@@ -119,7 +114,7 @@
         </em>
       </div>
       <div class="col-md-4">
-        <label for="duree">Durée (H) <span class="text-danger">*</span></label>
+        <label for="duree">Durée (J) <span class="text-danger">*</span></label>
         <input type="number" min="1" id="duree" formControlName="duration" />
         <em
           *ngIf="
@@ -205,7 +200,7 @@
       <button
         (click)="closeForm()"
         [disabled]="isFormThemeLoading"
-        class="btn btn-danger mx-2"
+        class="btn btn-secondary mx-2"
       >
         Annuler
       </button>
@@ -227,10 +222,15 @@
       role="tabpanel"
     >
       <div class="card">
-        <div class="card-header" style="background-color: #fff">
-          <h4 class="card-title" style="margin-top: 20px">
-            Liste des Sessions
-          </h4>
+        <div class="card-header">
+          <div class="d-flex justify-content-between">
+            <h4 class="lead" style="margin-top: 20px">Liste des Sessions</h4>
+            <div *ngIf="!showForm">
+              <button (click)="handleShowForm()" class="btn btn-primary">
+                Nouvelle Session
+              </button>
+            </div>
+          </div>
           <p class="my-3">
             <a
               (click)="showInterSession()"
@@ -245,7 +245,7 @@
               class="link-offset-2 mx-5 link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
             >
               <span [ngClass]="{ active: showIntraSess }"
-                >Demandes clients</span
+                >Démandes clients</span
               >
             </a>
           </p>
@@ -287,19 +287,19 @@
               </form>
             </div>
           </div>
-          <div class="table-responsive" style="margin-top: 30px">
+          <div class="table-responsive">
             <!-- Intersession table -->
-            <table *ngIf="!showIntraSess" class="table table-striped">
-              <thead style="--bs-table-bg: rgba(25, 29, 50, 1)">
+            <table *ngIf="!showIntraSess" class="table">
+              <thead>
                 <tr>
-                  <th scope="col" class="text-white">Code</th>
-                  <th scope="col" class="text-white">Description</th>
-                  <th scope="col" class="text-white">Min participants</th>
-                  <th scope="col" class="text-white">Statut</th>
-                  <th scope="col" class="text-white">Durée</th>
-                  <th scope="col" class="text-white">Date</th>
-                  <th scope="col" class="text-white">Local</th>
-                  <th scope="col" class="text-white">Actions</th>
+                  <th scope="col">Code</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Min participants</th>
+                  <th scope="col">Statut</th>
+                  <th scope="col">Durée (J)</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Local</th>
+                  <th scope="col" class="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -307,19 +307,13 @@
                   <td>{{ session.code }}</td>
                   <td>{{ getSubString(session.description) }}</td>
                   <td>{{ session.minParticipants }}</td>
-                  <td
-                    [ngClass]="
-                      session.status == 'CANCELLED' ? 'text-danger' : ''
-                    "
-                  >
-                    {{ session.status }}
-                  </td>
+                  <td>{{ getStatusString(session.status) }}</td>
                   <td>{{ session.duration }}</td>
-                  <td>{{ session.date | date }}</td>
+                  <td>{{ session.date | date : "dd-MM-yyyy" }}</td>
                   <td>{{ session.location }}</td>
-                  <td>
+                  <td class="text-center">
                     <span
-                      class="btn btn-sm sharp btn-success"
+                      class="text-success"
                       title="Détail"
                       (click)="showSession(session.id)"
                       ><i class="fa fa-info"></i
@@ -327,14 +321,14 @@
                     &nbsp;
                     <span
                       (click)="editintertSession(session.id)"
-                      class="btn btn-sm sharp btn-primary"
+                      class="text-primary"
                       title="Modifier"
                     >
                       <i class="fa fa-pencil"></i> </span
                     >&nbsp;
                     <span
                       (click)="deleteInterSession(session.id)"
-                      class="btn btn-sm sharp btn-danger"
+                      class="text-danger"
                       title="Supprimer"
                     >
                       <i class="fa fa-trash"></i>
@@ -345,35 +339,29 @@
             </table>
 
             <!-- Intrasesion Table -->
-            <table *ngIf="showIntraSess" class="table table-striped">
-              <thead style="--bs-table-bg: rgba(25, 29, 50, 1)">
+            <table *ngIf="showIntraSess" class="table">
+              <thead>
                 <tr>
-                  <th scope="col" class="text-white">Code</th>
-                  <th scope="col" class="text-white">Description</th>
-                  <th scope="col" class="text-white">Statut</th>
-                  <th scope="col" class="text-white">Durée</th>
-                  <th scope="col" class="text-white">Date</th>
-                  <th scope="col" class="text-white">Local</th>
-                  <th scope="col" class="text-white">Action</th>
+                  <th scope="col">Code</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Statut</th>
+                  <th scope="col">Durée (J)</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Local</th>
+                  <th scope="col" class="text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let session of intraSessions">
                   <td>{{ session.code }}</td>
                   <td>{{ getSubString(session.description) }}</td>
-                  <td
-                    [ngClass]="
-                      session.status == 'CANCELLED' ? 'text-danger' : ''
-                    "
-                  >
-                    {{ session.status }}
-                  </td>
+                  <td>{{ getStatusString(session.status) }}</td>
                   <td>{{ session.duration }}</td>
-                  <td>{{ session.date | date }}</td>
+                  <td>{{ session.date | date : "dd-MM-yyyy" }}</td>
                   <td>{{ session.location }}</td>
-                  <td>
+                  <td class="text-center">
                     <span
-                      class="btn btn-sm sharp btn-success"
+                      class="text-success"
                       title="Détail"
                       (click)="showSession(session.id)"
                       ><i class="fa fa-info"></i
@@ -381,14 +369,14 @@
                     &nbsp;
                     <span
                       (click)="editintratSession(session.id)"
-                      class="btn btn-sm sharp btn-primary"
+                      class="text-primary"
                       title="Modifier"
                     >
                       <i class="fa fa-pencil"></i> </span
                     >&nbsp;
                     <span
                       (click)="deleteIntraSession(session.id)"
-                      class="btn btn-sm sharp btn-danger"
+                      class="text-danger"
                       title="Supprimer"
                     >
                       <i class="fa fa-trash"></i>

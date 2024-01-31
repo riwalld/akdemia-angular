@@ -109,8 +109,8 @@ export class ThemesInfosComponent implements OnInit {
   handlerGetThemeById(){
     this.themeService.getById(this.id).subscribe(
       (data)=>{
-        this.themeDetail = data;
-        //console.log("Object Theme........" +this.themeDetail.subThemes);
+        // this.themeDetail = data;
+        console.log("Object Theme........" + data);
       }
     );
   }
