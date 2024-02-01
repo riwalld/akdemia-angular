@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from 'src/app/models/Company';
 import { Employee } from 'src/app/models/Employee';
-import { Particular } from 'src/app/models/Particular';
 import { CompanyService } from 'src/app/services/company.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ParticularService } from 'src/app/services/particular.service';
@@ -26,7 +25,7 @@ export class InsertClientComponent implements OnInit{
 
 
   companies: Company[] = [];
- 
+
   entreprise: Partial<Company> = {};
   particulier!: string;
   employe!: string;
@@ -44,7 +43,7 @@ export class InsertClientComponent implements OnInit{
     if(this.idParticipant) {
       this.formVisibility = this.route.snapshot.url[1]?.path ||'';
       this.getById(this.idParticipant);
-      
+
       this.isFormEdit = true;
     }
     this.initForm();
@@ -84,7 +83,7 @@ export class InsertClientComponent implements OnInit{
     this.companyService.getAll().subscribe(
       data => {
         this.companies = data;
-        
+
       }
     )
   }
@@ -93,7 +92,7 @@ export class InsertClientComponent implements OnInit{
       // Sélectionnez la première entreprise du tableau 'companies' comme entreprise par défaut
       this.userForm = new FormGroup({
         id: new FormControl(),
-        company: new FormControl(), 
+        company: new FormControl(),
         firstname: new FormControl(''),
         email: new FormControl('', [Validators.required, Validators.email]),
         lastname: new FormControl(''),
@@ -115,7 +114,7 @@ export class InsertClientComponent implements OnInit{
     this.isLoading = true;
     let form = this.userForm.value;
     if(this.idParticipant) {
-      if(this.formVisibility == 'employe') {        
+      if(this.formVisibility == 'employe') {
         this.employeeService.edit(this.idParticipant, form).subscribe(
           data => {
             this.isLoading = false;
@@ -124,7 +123,7 @@ export class InsertClientComponent implements OnInit{
               "L'employé a été modifié avec succès.",
               'success'
             );
-            this.router.navigate(['/clients']);
+            this.router.navigate(['dashboard/clients']);
           }
         )
       } else if(this.formVisibility == "company") {
@@ -136,7 +135,7 @@ export class InsertClientComponent implements OnInit{
               "L'entreprise a été modifié avec succès.",
               'success'
             );
-            this.router.navigate(['/clients']);
+            this.router.navigate(['dashboard/clients']);
           }
         )
       } else {
@@ -148,7 +147,7 @@ export class InsertClientComponent implements OnInit{
                 "Le participant a été modifié avec succès.",
                 'success'
               );
-              this.router.navigate(['/clients'])
+              this.router.navigate(['dashboard/clients'])
             }
           )
       }
@@ -162,8 +161,8 @@ export class InsertClientComponent implements OnInit{
               "L'employé a été ajouté avec succès.",
               'success'
             );
-            
-            this.router.navigate(['/clients']);
+
+            this.router.navigate(['dashboard/clients']);
           }
         )
       } else if(this.formVisibility == 'particulier') {
@@ -175,7 +174,7 @@ export class InsertClientComponent implements OnInit{
                 "Le participant a été ajouté avec succès.",
                 'success'
               );
-              this.router.navigate(['/clients']);
+              this.router.navigate(['dashboard/clients']);
             }
           )
       } else {
@@ -187,23 +186,12 @@ export class InsertClientComponent implements OnInit{
                 "L'entreprise a été ajouté avec succès.",
                 'success'
               );
-              this.router.navigate(['/clients']);
+              this.router.navigate(['dashboard/clients']);
           }
         )
       }
 
     }
   }
-
-
-  // employeeFormValue() {
-  //   this.employeeValue = this.userForm.value;
-  //   this.employeeValue.firstname = this.userForm.value.firstname;
-  //   this.employeeValue.lastname = this.userForm.value.lastname;
-  //   this.employeeValue.company = this.userForm.value.company;
-  //   this.employeeValue.gender = this.userForm.value.gender;
-
-  //   return this.employeeValue;
-  // }
 
 }

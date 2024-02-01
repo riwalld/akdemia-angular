@@ -267,8 +267,12 @@ export class SessionsComponent implements OnInit {
     }
   }
 
-  showSession(id: number) {
-    this.router.navigate([`/sessions/${id}`]);
+  goToInterSession(id: number) {
+    this.router.navigate([`dashboard/sessions/inter/${id}`]);
+  }
+
+  goToIntraSession(id: number) {
+    this.router.navigate([`dashboard/sessions/intra/${id}`]);
   }
 
   editintertSession(id: number) {
