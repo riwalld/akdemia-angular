@@ -193,7 +193,7 @@ export class SessionsComponent implements OnInit {
         this.isLoading = false;
       },
       error: err => {
-        this.toastService.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les sessions inter');
+        this.toastService.alertError(err.error !== null ? err.error.message : 'Erreur serveur');
       }
     })
   }
@@ -219,6 +219,8 @@ export class SessionsComponent implements OnInit {
           },
           error: err => {
             this.isFormThemeLoading = false;
+            console.log(err);
+
             this.toastService.alertError(err.error !== null ? err.error.message : 'Erreur serveur');
           }
         })

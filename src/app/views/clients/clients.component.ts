@@ -20,6 +20,10 @@ export class ClientsComponent implements OnInit {
   companies: Company[] = [];
   isLoading!: boolean;
 
+  showCmp: boolean = false;
+  showEmp: boolean = false;
+  showPart: boolean = true;
+
   constructor(
     private router: Router,
     private particularService: ParticularService,
@@ -88,7 +92,6 @@ export class ClientsComponent implements OnInit {
       allowOutsideClick: false,
     }).then((result) => {
       if(result.isConfirmed) {
-
         if(clientType == 'particulier') {
           this.particularService.delete(id).subscribe(
             () => {
@@ -100,7 +103,6 @@ export class ClientsComponent implements OnInit {
               );
             });
         } else if(clientType == 'employé') {
-           console.log(id);
           this.employeeService.delete(id).subscribe(
             () => {
               this.getAllParticipants();
@@ -123,7 +125,24 @@ export class ClientsComponent implements OnInit {
         }
       }
     })
+  }
 
+  showParticular() {
+    this.showPart = true;
+    this.showCmp = false;
+    this.showEmp = false;
+   }
+
+  showEmploye() {
+    this.showPart = false;
+    this.showCmp = false;
+    this.showEmp = true;
+   }
+
+  showEntreprise() {
+    this.showPart = false;
+    this.showCmp = true;
+    this.showEmp = false;
   }
 
 }

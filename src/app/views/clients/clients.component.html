@@ -12,15 +12,32 @@
     >
       <div class="card">
         <div class="card-header" style="background-color: #fff">
-          <h4 class="card-title" style="margin-top: 20px">
-            Liste des participants
-          </h4>
-          <a
-            href="dashboard/clients/insert"
-            class="btn btn-outline-dark"
-            style="float: right; margin-top: -40px; box-shadow: black 10px"
-            >Ajouter</a
-          >
+          <div class="d-flex justify-content-between">
+            <h4 class="card-title">Liste des participants</h4>
+            <a href="dashboard/clients/insert" class="btn btn-primary"
+              >Ajouter</a
+            >
+          </div>
+          <p class="my-3">
+            <a
+              (click)="showEntreprise()"
+              class="link-offset-2 mx-5 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            >
+              <span [ngClass]="{ active: showCmp }">Entrprises</span>
+            </a>
+            <a
+              (click)="showEmploye()"
+              class="link-offset-2 mx-5 link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            >
+              <span [ngClass]="{ active: showEmp }">Employeés</span>
+            </a>
+            <a
+              (click)="showParticular()"
+              class="link-offset-2 mx-5 link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            >
+              <span [ngClass]="{ active: showPart }">Particuliers</span>
+            </a>
+          </p>
         </div>
         <div class="card-body">
           <div class="row mb-3">
@@ -51,15 +68,15 @@
             </div>
           </div>
           <div class="table-responsive">
-            <table class="table">
+            <!-- particulier -->
+            <table *ngIf="showPart" class="table">
               <thead>
                 <tr>
                   <th scope="col">Nom</th>
                   <th scope="col">Prénom</th>
-                  <th scope="col">Entreprise</th>
                   <th scope="col">Metier</th>
                   <th scope="col">Sexe</th>
-                  <th scope="col">Date</th>
+                  <th scope="col">Date création</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -67,10 +84,11 @@
                 <tr *ngFor="let firstparticular of particulars">
                   <td>{{ firstparticular.firstname }}</td>
                   <td>{{ firstparticular.lastname }}</td>
-                  <td></td>
                   <td>{{ firstparticular.activity }}</td>
                   <td>{{ firstparticular.gender }}</td>
-                  <td>{{ firstparticular.creationDate | date }}</td>
+                  <td>
+                    {{ firstparticular.creationDate | date : "dd-MM-yyyy" }}
+                  </td>
                   <td>
                     <span
                       class="text-success"
@@ -86,35 +104,59 @@
                     >&nbsp;
                   </td>
                 </tr>
-                <tr *ngFor="let firstemployee of employees">
-                  <td>{{ firstemployee.firstname }}</td>
-                  <td>{{ firstemployee.lastname }}</td>
-                  <td>{{ firstemployee.company.name }}</td>
-                  <td></td>
-                  <td>{{ firstemployee.gender }}</td>
-                  <td>{{ firstemployee.creationDate | date }}</td>
+              </tbody>
+            </table>
+            <!-- employé -->
+            <table *ngIf="showEmp" class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Nom</th>
+                  <th scope="col">Prénom</th>
+                  <th scope="col">Téléphone</th>
+                  <th scope="col">Sexe</th>
+                  <th scope="col">Date création</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let empl of employees">
+                  <td>{{ empl.firstname }}</td>
+                  <td>{{ empl.lastname }}</td>
+                  <td>{{ empl.phone }}</td>
+                  <td>{{ empl.gender }}</td>
+                  <td>{{ empl.creationDate | date : "dd-MM-yyyy" }}</td>
                   <td>
                     <span
                       class="text-success"
-                      (click)="goToEditClt(firstemployee.id)"
+                      (click)="goToEditPart(empl.id)"
                       title="Modifier"
                       ><i class="fa fa-pencil"></i></span
                     >&nbsp;
                     <span
                       class="text-danger"
-                      (click)="deleteClients(firstemployee.id, 'employé')"
+                      (click)="deleteClients(empl.id, 'particulier')"
                       title="Supprimer"
                       ><i class="fa fa-trash"></i></span
                     >&nbsp;
                   </td>
                 </tr>
+              </tbody>
+            </table>
+            <!-- compagny -->
+            <table *ngIf="showCmp" class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Nom</th>
+                  <th scope="col">Activity</th>
+                  <th scope="col">Date création</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
                 <tr *ngFor="let firstcompany of companies">
-                  <td></td>
-                  <td></td>
                   <td>{{ firstcompany.name }}</td>
-                  <td></td>
-                  <td></td>
-                  <td>{{ firstcompany.creationDate | date }}</td>
+                  <td>{{ firstcompany.activity }}</td>
+                  <td>{{ firstcompany.creationDate | date : "dd-MM-yyyy" }}</td>
                   <td>
                     <span
                       class="text-success"
