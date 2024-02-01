@@ -117,7 +117,6 @@ export class FormationsComponent implements OnInit {
   saveFormation() {
     this.isFormTrainingLoading = true;
     let trainingSave = this.createTraining();
-    console.log(this.createTraining());
     this.trainingService.save(trainingSave).pipe(
       tap(
         (value) => {
@@ -169,7 +168,7 @@ export class FormationsComponent implements OnInit {
   }
 
   goToUpdate(id: number){
-    this.router.navigate(['catalogues/formations/update/', id]);
+    this.router.navigate(['dashboard/catalogues/formations/update/', id]);
   }
 
   deleteTraining(id: number){

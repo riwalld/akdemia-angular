@@ -220,8 +220,7 @@ export class ThemesComponent implements OnInit {
   }
 
   themeDetail(id: number) {
-    console.log(id);
-    this.router.navigate(['catalogues/themes/infos/', id]);
+    this.router.navigate([`dashboard/catalogues/themes/infos/${id}`]);
   }
 
   getSubString(text: string) {

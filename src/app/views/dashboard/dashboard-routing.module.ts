@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { ContentDashboardComponent } from '../content-dashboard/content-dashboard.component';
 import { ThemesComponent } from '../themes/themes.component';
@@ -12,6 +11,7 @@ import { EditFormationComponent } from '../formations/edit-formation/edit-format
 import { InsertClientComponent } from '../clients/insert-client/insert-client.component';
 import { InsertFormateurComponent } from '../formateurs/insert-formateur/insert-formateur.component';
 import { SessionComponent } from '../sessions/session/session.component';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -22,7 +22,7 @@ const routes: Routes = [
       {path: 'catalogues/formations', component: FormationsComponent},
       {path: 'formateurs', component: FormateursComponent},
       {path: 'clients', component: ClientsComponent},
-      { path: 'sessions', component: SessionsComponent },
+      {path: 'sessions', component: SessionsComponent },
       {path: 'sessions/intra/:id', component: SessionComponent},
       {path: 'sessions/inter/:id', component: SessionComponent},
       {path: 'catalogues/themes/infos/:id', component: ThemesInfosComponent},

@@ -69,13 +69,6 @@ export class SessionsComponent implements OnInit{
     this.getAllCompanies();
   }
 
-  // getMinDate() {
-  //   const currentDate = new Date();
-  //   const minDate = new Date();
-  //   minDate.setMonth(currentDate.getMonth() + 3);
-  // }
-
-
   getAllTraining() {
     this.trainingService.getAll().subscribe({
       next: data => {
@@ -205,8 +198,12 @@ export class SessionsComponent implements OnInit{
     }
   }
 
-  showSession(id: number) {
-    this.router.navigate([`/sessions/${id}`]);
+  goToInterSession(id: number) {
+    this.router.navigate([`dashboard/sessions/inter/${id}`]);
+  }
+
+  goToIntraSession(id: number) {
+    this.router.navigate([`dashboard/sessions/intra/${id}`]);
   }
 
   editintertSession(id: number) {

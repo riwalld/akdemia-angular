@@ -152,7 +152,7 @@ export class SessionComponent implements OnInit {
           this.alert.alertError("la session n'a pas pu être charger veillez réessayer plustard");
           this.isLoading = false;
         }
-      }, 
+      },
       complete: () => {
         this.getProgression()
       }
@@ -177,9 +177,9 @@ export class SessionComponent implements OnInit {
           this.alert.alertError("la session n'a pas pu être charger veillez réessayer plustard");
           this.isLoading = false;
         }
-      }, 
+      },
       complete: () => {
-        
+
       }
     })
   }
@@ -279,7 +279,7 @@ export class SessionComponent implements OnInit {
 
   getProgression():number {
     const date2 = new Date();
-    const todayDate = new Date(this.date); 
+    const todayDate = new Date(this.date);
     const diffMillis = todayDate.getTime() - date2.getTime();
     const diffDays = Math.floor(diffMillis / (1000 * 60 * 60 * 24));
     const percentage = 100 - diffDays;
