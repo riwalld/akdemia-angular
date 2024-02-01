@@ -67,7 +67,7 @@ export class FormateursComponent implements OnInit {
   }
 
   goToEdit(id: number) {
-    this.router.navigateByUrl(`/formateurs/${id}`);
+    this.router.navigateByUrl(`dashboard/formateurs/${id}`);
   }
 
   initForm() {
@@ -89,7 +89,7 @@ export class FormateursComponent implements OnInit {
       confirmButtonColor: '#0d6efd',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Oui, Supprimer!',
-      allowOutsideClick: false, 
+      allowOutsideClick: false,
     }).then((result) => {
       if(result.isConfirmed) {
         this.trainerService.delete(id).subscribe(
@@ -103,7 +103,7 @@ export class FormateursComponent implements OnInit {
           })
       }
     })
-    
+
   }
 
 }

@@ -51,7 +51,7 @@ export class InsertFormateurComponent implements OnInit {
     });
   }
 
-  
+
 
   getById(id: number) {
     this.trainerService.getById(id).subscribe({
@@ -77,11 +77,11 @@ export class InsertFormateurComponent implements OnInit {
             'Le formateur a été modifié avec succès.',
             'success'
           );
-          
-          this.router.navigate(['/formateurs']);
+
+          this.router.navigate(['dashboard/formateurs']);
         }
       )
-      
+
     } else {
       this.trainerService.save(form).subscribe(
         data => {
@@ -92,11 +92,11 @@ export class InsertFormateurComponent implements OnInit {
             'success'
           );
           console.log(this.trainerForm.value);
-          this.router.navigate(['/formateurs']);
+          this.router.navigate(['dashboard/formateurs']);
         }
       )
     }
-    
+
   }
 
 }

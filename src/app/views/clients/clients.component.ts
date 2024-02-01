@@ -63,15 +63,15 @@ export class ClientsComponent implements OnInit {
   }
 
   goToEditPart(id: number) {
-    this.router.navigateByUrl(`/clients/particulier/${id}`);
+    this.router.navigateByUrl(`dashboard/clients/particulier/${id}`);
   }
 
   goToEditClt(id: number) {
-    this.router.navigateByUrl(`/clients/employe/${id}`);
+    this.router.navigateByUrl(`dashboard/clients/employe/${id}`);
   }
 
   goToEditCpy(id: number) {
-    this.router.navigateByUrl(`/clients/company/${id}`);
+    this.router.navigateByUrl(`dashboard/clients/company/${id}`);
   }
 
   deleteClients(id: number, clientType: string) {
@@ -85,7 +85,7 @@ export class ClientsComponent implements OnInit {
       confirmButtonColor: '#0d6efd',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Oui, Supprimer!',
-      allowOutsideClick: false, 
+      allowOutsideClick: false,
     }).then((result) => {
       if(result.isConfirmed) {
 
@@ -120,10 +120,10 @@ export class ClientsComponent implements OnInit {
                 'success'
               );
             });
-        } 
+        }
       }
     })
-    
+
   }
 
 }
