@@ -25,4 +25,10 @@ export class SessionFormService {
       training: [],
     })
   }
+  getLoginForm() {
+    return this.fb.group({price: ['', Validators.required],
+      email: ['',Validators.required],
+      password	: ['',Validators.required],
+    })
+  }
 }
