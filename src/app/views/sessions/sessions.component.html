@@ -253,38 +253,47 @@
         <div class="card-body" *ngIf="!isLoading">
           <div class="row mb-3">
             <div class="col-md-3 d-flex">
-              <label for="entries" class="me-2">Afficher</label>
-              <select
-                class="form-select form-select-sm me-2"
-                id="entries"
-                style="height: 38px"
-              >
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-              </select>
-              <label for="entries">entrées</label>
+              <form style="width: 100%" [formGroup]="filterForm">
+                <div class="d-flex align-items-baseline">
+                  <label for="entries" class="form-label me-2">Nombre</label>
+                  <select
+                    formControlName="filter"
+                    class="form-select-sm"
+                    id="entries"
+                  >
+                    <option value="5">5</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+              </form>
             </div>
             <div class="col-md-5">&nbsp;</div>
             <div class="col-md-4">
-              <form style="position: relative; width: 350px; float: right">
-                <i
-                  class="fas fa-search"
-                  style="
-                    position: absolute;
-                    left: 10px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                  "
-                ></i>
-                <input
-                  class="form-control"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                  style="padding-left: 30px"
-                />
-              </form>
+              <form
+              [formGroup]="searchForm"
+              style="position: relative; width: 350px; float: right"
+            >
+              <i
+                class="fas fa-search"
+                style="
+                  position: absolute;
+                  left: 10px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                "
+              ></i>
+              <input
+                formControlName="keyWord"
+                (input)="searchByName()"
+                class="form-control"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                style="padding-left: 30px"
+              />
+            </form>
             </div>
           </div>
           <div class="table-responsive">
@@ -303,7 +312,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let session of interSessions">
+                <tr *ngFor="let session of interSessions | paginate: {
+                  itemsPerPage: filterForm.value.filter,
+                  currentPage: page,
+                  }; ">
                   <td>{{ session.code }}</td>
                   <td>{{ getSubString(session.description) }}</td>
                   <td>{{ session.minParticipants }}</td>
@@ -352,7 +364,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let session of intraSessions">
+                <tr *ngFor="let session of intraSessions | paginate: {
+                  itemsPerPage: filterForm.value.filter,
+                  currentPage: page,
+                  }; ">
                   <td>{{ session.code }}</td>
                   <td>{{ getSubString(session.description) }}</td>
                   <td>{{ getStatusString(session.status) }}</td>
@@ -388,44 +403,22 @@
           </div>
           <div class="row mt-3">
             <div class="col-md-6">
-              <p class="m-0">Affichage de 1 à 10 sur 30 entrées</p>
+              <p class="m-0">
+                Affichage de {{ filterForm.value.filter }} entrées sur
+                {{ showInterSess ? interSessions.length : intraSessions.length }}
+              </p>
             </div>
             <div class="col-md-2"></div>
             <div class="col-md-4 text-end">
-              <nav style="float: right">
-                <ul class="pagination pagination-circle">
-                  <li class="page-item page-indicator me-2">
-                    <a
-                      class="page-link rounded-circle"
-                      href="#"
-                      aria-label="Previous"
-                    >
-                      <i class="fas fa-angle-left"></i>
-                    </a>
-                  </li>
-                  <li class="page-item active me-2">
-                    <a class="page-link rounded-circle" href="#">1</a>
-                  </li>
-                  <li class="page-item me-2">
-                    <a class="page-link rounded-circle" href="#">2</a>
-                  </li>
-                  <li class="page-item me-2">
-                    <a class="page-link rounded-circle" href="#">3</a>
-                  </li>
-                  <li class="page-item me-2">
-                    <a class="page-link rounded-circle" href="#">4</a>
-                  </li>
-                  <li class="page-item page-indicator">
-                    <a
-                      class="page-link rounded-circle"
-                      href="#"
-                      aria-label="Next"
-                    >
-                      <i class="fas fa-angle-right"></i>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <pagination-controls
+              (pageChange)="handlePageChange($event)"
+              (pageBoundsCorrection)="handlePageChange($event)"
+              previousLabel="précédant"
+              nextLabel="Suivant"
+              screenReaderPaginationLabel="Pagination"
+              screenReaderPageLabel="page"
+              screenReaderCurrentLabel="Vous êtes à la page"
+            ></pagination-controls>
             </div>
           </div>
         </div>

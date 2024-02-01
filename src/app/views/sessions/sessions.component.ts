@@ -4,7 +4,7 @@ import { IntraSessionService } from './../../services/intra-session.service';
 import { Component, OnInit } from '@angular/core';
 import { IntraSession } from 'src/app/models/IntraSession';
 import { InterSession } from 'src/app/models/InterSession';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { SessionFormService } from '../forms/session-form.service';
 import { Training } from 'src/app/models/Training';
 import { Trainer } from 'src/app/models/Trainer';
@@ -24,7 +24,7 @@ import Swal from 'sweetalert2';
   templateUrl: './sessions.component.html',
   styleUrls: ['./sessions.component.scss']
 })
-export class SessionsComponent implements OnInit{
+export class SessionsComponent implements OnInit {
 
   minDate: string = new Date(new Date().setMonth(new Date().getMonth() + 3)).toISOString().split('T')[0];
   minUpdateDate!: string;
@@ -46,6 +46,18 @@ export class SessionsComponent implements OnInit{
   trainers: Trainer[] = [];
   companies: Company[] = [];
 
+  //for search
+  interSessionReserved: InterSession[] = [];
+  intraSessionReserved: IntraSession[] = [];
+  interSessionSearch: InterSession[] = [];
+  intraSessionSearch: IntraSession[] = [];
+
+  //for filter
+  filterForm!: FormGroup;
+  searchForm!: FormGroup;
+  //for pagination
+  page: number = 1;
+
   constructor(
     private intraSessionService: IntraSessionService,
     private interSessionService: InterSessionService,
@@ -57,7 +69,7 @@ export class SessionsComponent implements OnInit{
     private utilsService: UtilsService,
     private router: Router
 
-  ){}
+  ) { }
 
   ngOnInit(): void {
 
@@ -67,6 +79,61 @@ export class SessionsComponent implements OnInit{
     this.getAllTrainer();
     this.getAllTraining();
     this.getAllCompanies();
+    this.initForms();
+  }
+
+
+  initForms() {
+    this.searchForm = new FormGroup({
+      keyWord: new FormControl('')
+    });
+
+    this.filterForm = new FormGroup({
+      filter: new FormControl(20)
+    })
+  }
+
+  searchByName() {
+  
+    if(this.showInterSess){
+      this.interSessions = this.interSessionReserved;
+      let table: InterSession[] = [];
+      for (let i = 0; i < this.interSessions.length; i++) {
+        if (this.interSessions[i].code.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
+          table.push(this.interSessions[i]);
+        }
+      }
+      if (this.searchForm.value.keyWord.trim() == "") {
+        this.intraSessions = this.intraSessionReserved;
+      } else {
+        this.interSessions = table;
+      }
+    }
+    //for intra session
+    else{
+      this.intraSessions = this.intraSessionReserved;
+      let table: IntraSession[] = [];
+      for (let i = 0; i < this.intraSessions.length; i++) {
+        if (this.intraSessions[i].code.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
+          table.push(this.intraSessions[i]);
+        }
+      }
+      if (this.searchForm.value.keyWord.trim() == "") {
+        this.intraSessions = this.intraSessionReserved;
+      } else {
+        this.intraSessions = table;
+      }
+    }
+  }
+
+  // getMinDate() {
+  //   const currentDate = new Date();
+  //   const minDate = new Date();
+  //   minDate.setMonth(currentDate.getMonth() + 3);
+  // }
+
+  handlePageChange(event: number) {
+    this.page = event;
   }
 
   getAllTraining() {
@@ -107,6 +174,7 @@ export class SessionsComponent implements OnInit{
     this.intraSessionService.getAll().subscribe({
       next: data => {
         this.intraSessions = data.filter(s => s.status !== 'CANCELLED');
+        this.intraSessionReserved = data.filter(s => s.status !== 'CANCELLED');
         this.isLoading = false;
       },
       error: err => {
@@ -120,6 +188,7 @@ export class SessionsComponent implements OnInit{
     this.interSessionService.getAll().subscribe({
       next: data => {
         this.interSessions = data.filter(s => s.status !== 'CANCELLED');
+        this.interSessionReserved = data.filter(s => s.status !== 'CANCELLED');
         this.isLoading = false;
       },
       error: err => {
@@ -138,8 +207,8 @@ export class SessionsComponent implements OnInit{
 
   submitSession() {
     this.isFormThemeLoading = true;
-     if (this.mode === 'create') {
-       if (this.sessionTytpe == "1") {
+    if (this.mode === 'create') {
+      if (this.sessionTytpe == "1") {
         this.interSessionService.save(this.sessionForm.value).subscribe({
           next: data => {
             this.toastService.alertSuccess("Enregistrement effectué avec success !");
@@ -168,9 +237,9 @@ export class SessionsComponent implements OnInit{
           }
         })
       }
-     } else if (this.mode === 'update') {
-       const id = this.sessionForm.get('id')?.value;
-       if (this.sessionTytpe == "1") {
+    } else if (this.mode === 'update') {
+      const id = this.sessionForm.get('id')?.value;
+      if (this.sessionTytpe == "1") {
         this.interSessionService.edit(id, this.sessionForm.value).subscribe({
           next: data => {
             this.toastService.alertSuccess("Modification effectué avec success !");
@@ -183,7 +252,7 @@ export class SessionsComponent implements OnInit{
             this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
           }
         })
-      }else if (this.sessionTytpe == "2") {
+      } else if (this.sessionTytpe == "2") {
         this.intraSessionService.edit(id, this.sessionForm.value).subscribe({
           next: data => {
             this.toastService.alertSuccess("Modification effectué avec success !");
@@ -290,7 +359,7 @@ export class SessionsComponent implements OnInit{
   // Filtrer la date sur minimum 3 mois
   addMonthsAndFormat(dateString: Date, monthsToAdd: number) {
     const date = new Date(dateString);
-      if (isNaN(date.getTime())) {
+    if (isNaN(date.getTime())) {
       throw new Error('La date doit être une chaîne de caractères de format ISO 8601 valide.');
     }
     const newDate = new Date(date.getTime());

@@ -59,15 +59,7 @@ export class ThemesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private alertService: ConfirmBoxEvokeService
-  ) {
-    this.themeUpdateForm = this.formBuilder.group({
-      id: ['', Validators.required],
-      themeTitle: ['', Validators.required],
-      description: ['', Validators.required],
-      creationDate: ['', Validators.required],
-      subThemes: [[]]
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.innitForm();
@@ -92,7 +84,15 @@ export class ThemesComponent implements OnInit {
 
     this.filterForm = new FormGroup({
       filter: new FormControl(10)
-    })
+    });
+
+    this.themeUpdateForm = this.formBuilder.group({
+      id: ['', Validators.required],
+      themeTitle: ['', Validators.required],
+      description: ['', Validators.required],
+      creationDate: ['', Validators.required],
+      subThemes: [[]]
+    });
   }
 
   searchByName() {
