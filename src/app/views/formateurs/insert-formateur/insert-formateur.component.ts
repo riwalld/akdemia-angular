@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Trainer } from 'src/app/models/Trainer';
+import { AlertService } from 'src/app/services/alert.service';
 import { TrainerService } from 'src/app/services/trainer.service';
 import Swal from 'sweetalert2';
 
@@ -16,6 +17,7 @@ export class InsertFormateurComponent implements OnInit {
     private trainerService: TrainerService,
     private formBuilder: FormBuilder,
     private router: Router,
+    private alert: AlertService,
     private route: ActivatedRoute
   ) {}
 
@@ -58,8 +60,8 @@ export class InsertFormateurComponent implements OnInit {
       next: data => {
         this.trainerForm.patchValue(data);
       },
-      error: err => {
-
+      error: (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : "Impossible de récupérer l'identifiant");
       }
     })
   }
@@ -79,6 +81,9 @@ export class InsertFormateurComponent implements OnInit {
           );
 
           this.router.navigate(['dashboard/formateurs']);
+        },
+        (err) => {
+          this.alert.alertError(err.error !== null ? err.error.message : "une erreur s'est produite lors de la modification du formateur");
         }
       )
 
@@ -93,6 +98,9 @@ export class InsertFormateurComponent implements OnInit {
           );
           console.log(this.trainerForm.value);
           this.router.navigate(['dashboard/formateurs']);
+        },
+        (err) => {
+          this.alert.alertError(err.error !== null ? err.error.message : "Une erreur s'est produite lors de l'ajout du formateur");
         }
       )
     }

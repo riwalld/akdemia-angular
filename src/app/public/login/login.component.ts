@@ -4,6 +4,7 @@ import {SessionFormService} from "../../views/forms/session-form.service";
 import {BasicUser} from "../../models/basic-user";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formService.getLoginForm()
   }
 
-  constructor(private formService: SessionFormService, private authService: AuthService, private router: Router) {
+  constructor(private formService: SessionFormService, private authService: AuthService, private router: Router, private alert: AlertService) {
   }
 
   onSubmit() {
@@ -32,6 +33,9 @@ export class LoginComponent implements OnInit {
           if (this.authService.getRoles().includes("admin") || this.authService.getRoles().includes("manager")) {
             this.router.navigate(['dashboard']);
           }
+        },
+        error: (err) => {
+          this.alert.alertError(err.error !== null ? err.error.message : "une erreur s'est produite!");
         }
       }
     );

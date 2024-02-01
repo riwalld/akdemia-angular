@@ -60,6 +60,7 @@ export class SessionsComponent implements OnInit {
 
   constructor(
     private intraSessionService: IntraSessionService,
+    private alert: AlertService,
     private interSessionService: InterSessionService,
     private trainerService: TrainerService,
     private trainingService: TrainingService,
@@ -141,8 +142,8 @@ export class SessionsComponent implements OnInit {
       next: data => {
         this.trainings = data;
       },
-      error: err => {
-        console.log(err.error.message);
+      error: (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les formations');
       }
     })
   }
@@ -153,7 +154,7 @@ export class SessionsComponent implements OnInit {
         this.trainers = data;
       },
       error: err => {
-        this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
+        this.toastService.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les formateurs');
       }
     })
   }
@@ -164,7 +165,7 @@ export class SessionsComponent implements OnInit {
         this.companies = data;
       },
       error: err => {
-        this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
+        this.toastService.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les entreprises');
       }
     })
   }
@@ -178,7 +179,7 @@ export class SessionsComponent implements OnInit {
         this.isLoading = false;
       },
       error: err => {
-        this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
+        this.toastService.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les sessions intra');
       }
     })
   }
@@ -192,7 +193,7 @@ export class SessionsComponent implements OnInit {
         this.isLoading = false;
       },
       error: err => {
-        this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
+        this.toastService.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les sessions inter');
       }
     })
   }
@@ -218,7 +219,7 @@ export class SessionsComponent implements OnInit {
           },
           error: err => {
             this.isFormThemeLoading = false;
-            this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
+            this.toastService.alertError(err.error !== null ? err.error.message : 'Erreur serveur');
           }
         })
       } else if (this.sessionTytpe == "2") {
@@ -231,7 +232,7 @@ export class SessionsComponent implements OnInit {
           },
           error: err => {
             this.isFormThemeLoading = false;
-            this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
+            this.toastService.alertError(err.error !== null ? err.error.message : 'Erreur serveur');
           }
         })
       }
@@ -247,7 +248,7 @@ export class SessionsComponent implements OnInit {
           },
           error: err => {
             this.isFormThemeLoading = false;
-            this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
+            this.toastService.alertError(err.error !== null ? err.error.message : 'Erreur serveur');
           }
         })
       } else if (this.sessionTytpe == "2") {
@@ -260,7 +261,7 @@ export class SessionsComponent implements OnInit {
           },
           error: err => {
             this.isFormThemeLoading = false;
-            this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
+            this.toastService.alertError(err.error !== null ? err.error.message : 'Erreur serveur');
           }
         })
       }
@@ -287,7 +288,7 @@ export class SessionsComponent implements OnInit {
         this.sessionForm.patchValue(data);
       },
       error: err => {
-        this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
+        this.toastService.alertError(err.error !== null ? err.error.message : "une erreur s'est produite lors de la modification de la session inter");
       }
     })
     this.showForm = true;
@@ -308,7 +309,7 @@ export class SessionsComponent implements OnInit {
         this.sessionForm.patchValue(data);
       },
       error: err => {
-        this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
+        this.toastService.alertError(err.error !== null ? err.error.message : "une erreur s'est produite lors de la modification de la session intra");
       }
     })
     this.showForm = true;
@@ -382,6 +383,9 @@ export class SessionsComponent implements OnInit {
       if (result.isConfirmed) {
         this.interSessionService.delete(id).subscribe(() => {
           this.ngOnInit();
+        },
+        (err) => {
+          this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de supprimer la session inter');
         });
       }
     });
@@ -401,6 +405,9 @@ export class SessionsComponent implements OnInit {
       if (result.isConfirmed) {
         this.intraSessionService.delete(id).subscribe(() => {
           this.ngOnInit();
+        },
+        (err) => {
+          this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de supprimer la session intra');
         });
       }
     });

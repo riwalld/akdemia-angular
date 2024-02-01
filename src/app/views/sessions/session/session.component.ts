@@ -101,7 +101,7 @@ export class SessionComponent implements OnInit {
         this.allEmployees = result;
       },
       error: (err) => {
-        alert(err.error.message);
+        this.alert.alertError(err.error.message?err.error.message:'Impossible de récupérer les employés');
       }
     })
   }
@@ -116,7 +116,7 @@ export class SessionComponent implements OnInit {
         this.allParticular = result;
       },
       error: (err) => {
-        alert(err.error.message);
+        this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les particuliers');
       }
     })
   }
@@ -146,7 +146,7 @@ export class SessionComponent implements OnInit {
         this.isLoading = false;
       },
       error: (err) => {
-        if (err.error.message != null) {
+        if (err.error != null) {
           this.alert.alertError(err.error.message);
         } else {
           this.alert.alertError("la session n'a pas pu être charger veillez réessayer plustard");
@@ -171,7 +171,7 @@ export class SessionComponent implements OnInit {
         this.isLoading = false;
       },
       error: (err) => {
-        if (err.error.message != null) {
+        if (err.error != null) {
           this.alert.alertError(err.error.message);
         } else {
           this.alert.alertError("la session n'a pas pu être charger veillez réessayer plustard");
@@ -271,7 +271,7 @@ export class SessionComponent implements OnInit {
   }
 
   getMessage(err: any): string {
-    if (err.error.message != null)
+    if (err.error != null)
       return err.error.message;
     else
       return "échec lors de la suppression"

@@ -42,6 +42,7 @@ export class FormationsComponent implements OnInit {
     private trainingService: TrainingService,
     private subThemeService: SubThemeService,
     private toastService: AlertService,
+    private alert: AlertService,
     private sanitizer: DomSanitizer,
     private utilsService: UtilsService,
     private router: Router,
@@ -78,7 +79,10 @@ export class FormationsComponent implements OnInit {
     this.isLoading = true;
     this.trainingService.getAll()
       .subscribe(
-        next => {this.allTrainings = next; this.allTrainingsReserved = next; this.isLoading = false;}
+        next => {this.allTrainings = next; this.allTrainingsReserved = next; this.isLoading = false;},
+        (err) => {
+          this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les particuliers');
+        }
   )
   }
 
@@ -92,6 +96,9 @@ export class FormationsComponent implements OnInit {
       (data) => {
         this.listSubThemes = data;
         this.isLoading = false;
+      },
+      (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les sous-thèmes');
       }
     );
   }
@@ -190,6 +197,9 @@ export class FormationsComponent implements OnInit {
             'La formation a été supprimé avec succès.',
             'success'
           );
+        },
+        (err) => {
+          this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de supprimer la formation');
         });
       }
     });

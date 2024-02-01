@@ -47,6 +47,7 @@ export class EditFormationComponent implements OnInit {
     private trainingService: TrainingService,
     private subThemeService: SubThemeService,
     private sanitizer: DomSanitizer,
+    private alert: AlertService,
     private formBuilder: FormBuilder,
     private toastService: AlertService,
     private router: Router,
@@ -95,6 +96,9 @@ export class EditFormationComponent implements OnInit {
           creationDate: data.creationDate,
           subThemes: data.subThemes
         });
+      },
+      (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : "une erreur s'est produite");
       }
     );
   }
@@ -103,6 +107,9 @@ export class EditFormationComponent implements OnInit {
     this.subThemeService.getAll().subscribe(
       (data)=>{
         this.listSubThemes = data;
+      },
+      (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les sous-thèmes');
       }
     );
   }

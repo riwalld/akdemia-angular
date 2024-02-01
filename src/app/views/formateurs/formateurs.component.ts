@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Trainer } from 'src/app/models/Trainer';
+import { AlertService } from 'src/app/services/alert.service';
 import { TrainerService } from 'src/app/services/trainer.service';
 import Swal from 'sweetalert2';
 
@@ -28,7 +29,8 @@ export class FormateursComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private trainerService: TrainerService
+    private trainerService: TrainerService,
+    private alert: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -100,6 +102,9 @@ export class FormateursComponent implements OnInit {
               'Le formateur a été supprimé avec succès.',
               'success'
             );
+          },
+          (err) => {
+            this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de supprimer un formateur');
           })
       }
     })

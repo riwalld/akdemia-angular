@@ -48,6 +48,7 @@ export class ThemesInfosComponent implements OnInit {
     private route: ActivatedRoute,
     private themeService: ThemeService,
     private subThemeService: SubThemeService,
+    private alert: AlertService,
     private toastService: AlertService,
     private utilsService: UtilsService,
     private formBuilder: FormBuilder,
@@ -111,6 +112,9 @@ export class ThemesInfosComponent implements OnInit {
       (data)=>{
         this.themeDetail = data;
         //console.log("Object Theme........" +this.themeDetail.subThemes);
+      },
+      (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : "Une erreur s'est produite");
       }
     );
   }
@@ -154,6 +158,9 @@ export class ThemesInfosComponent implements OnInit {
         this.isLoading = false;
         this.sousThemesAll = data;
         this.subThemesAllReserved = data;
+      },
+      (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les sous-thèmes');
       }
     );
   }
@@ -190,6 +197,9 @@ export class ThemesInfosComponent implements OnInit {
             'Le sous-thème a été supprimé avec succès.',
             'success'
           );
+        },
+        (err) => {
+          this.alert.alertError(err.error !== null ? err.error.message : "Une erreur s'est produite lors de la suppréssion");
         });
       }
     });
@@ -203,6 +213,9 @@ export class ThemesInfosComponent implements OnInit {
         description: data.description,
         creationDate: data.creationDate
       });
+    },
+    (err) => {
+      this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de modifier le sous-thème');
     });
   }
 

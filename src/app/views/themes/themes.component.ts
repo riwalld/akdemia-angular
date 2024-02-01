@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {UtilsService} from "../../services/utils.service";
 import {ConfirmBoxEvokeService} from "@costlydeveloper/ngx-awesome-popup";
 import {ToastrService} from "ngx-toastr";
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-themes',
@@ -56,6 +57,7 @@ export class ThemesComponent implements OnInit {
     private themeService: ThemeService,
     private toastService: ToastrService,
     private utilsService: UtilsService,
+    private alert: AlertService,
     private formBuilder: FormBuilder,
     private router: Router,
     private alertService: ConfirmBoxEvokeService
@@ -148,6 +150,9 @@ export class ThemesComponent implements OnInit {
         this.themesAll = data;
         this.themesAllReserved = data;
         this.isLoading = false;
+      },
+      (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les thèmes');
       }
     );
   }
@@ -171,7 +176,7 @@ export class ThemesComponent implements OnInit {
         }
       },
       (err) => {
-        this.toastService.error(err, 'Erreur');
+        this.toastService.error(err.error !== null? err.error.message : 'Impossible de supprimé le thème');
       }
     )
   }
@@ -185,6 +190,9 @@ export class ThemesComponent implements OnInit {
         creationDate: data.creationDate,
         subThemes: data.subThemes
       });
+    },
+    (err) => {
+      this.alert.alertError(err.error !== null ? err.error.message : 'impossible de modifier');
     });
   }
 
