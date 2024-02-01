@@ -35,12 +35,14 @@ export class InsertClientComponent implements OnInit{
   idParticipant!: any;
   isFormEdit!: boolean;
   curentUri!: string;
+  title: string = 'Enregistrer un participant';
 
   employeeValue!: Employee;
 
   ngOnInit(): void {
     this.idParticipant = this.route.snapshot.paramMap.get('id');
-    if(this.idParticipant) {
+    if (this.idParticipant) {
+      this.title = "Modifier les informations";
       this.formVisibility = this.route.snapshot.url[1]?.path ||'';
       this.getById(this.idParticipant);
 
@@ -114,7 +116,9 @@ export class InsertClientComponent implements OnInit{
     this.isLoading = true;
     let form = this.userForm.value;
     if(this.idParticipant) {
-      if(this.formVisibility == 'employe') {
+      if (this.formVisibility == 'employe') {
+        console.log(form);
+
         this.employeeService.edit(this.idParticipant, form).subscribe(
           data => {
             this.isLoading = false;
@@ -126,7 +130,8 @@ export class InsertClientComponent implements OnInit{
             this.router.navigate(['dashboard/clients']);
           }
         )
-      } else if(this.formVisibility == "company") {
+      } else if (this.formVisibility == "company") {
+        console.log(form);
         this.companyService.edit(this.idParticipant, form).subscribe(
           data => {
             this.isLoading = false;
@@ -139,6 +144,7 @@ export class InsertClientComponent implements OnInit{
           }
         )
       } else {
+        console.log(form);
           this.particularService.edit(this.idParticipant, form).subscribe(
             data => {
               this.isLoading = false;

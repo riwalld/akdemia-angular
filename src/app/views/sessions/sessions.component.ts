@@ -123,7 +123,7 @@ export class SessionsComponent implements OnInit{
         this.isLoading = false;
       },
       error: err => {
-        this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
+        this.toastService.alertError(err.error !== null ? err.error.message : 'Erreur serveur');
       }
     })
   }
@@ -149,7 +149,9 @@ export class SessionsComponent implements OnInit{
           },
           error: err => {
             this.isFormThemeLoading = false;
-            this.toastService.alertError(err.error.message ? err.error.message : 'Erreur serveur');
+            console.log(err);
+
+            this.toastService.alertError(err.error !== null ? err.error.message : 'Erreur serveur');
           }
         })
       } else if (this.sessionTytpe == "2") {
