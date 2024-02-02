@@ -61,28 +61,28 @@
             <div class="col-md-5">&nbsp;</div>
             <div class="col-md-4">
               <form
-              [formGroup]="searchForm"
-              style="position: relative; width: 350px; float: right"
-            >
-              <i
-                class="fas fa-search"
-                style="
-                  position: absolute;
-                  left: 10px;
-                  top: 50%;
-                  transform: translateY(-50%);
-                "
-              ></i>
-              <input
-                formControlName="keyWord"
-                (input)="searchByName()"
-                class="form-control"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                style="padding-left: 30px"
-              />
-            </form>
+                [formGroup]="searchForm"
+                style="position: relative; width: 350px; float: right"
+              >
+                <i
+                  class="fas fa-search"
+                  style="
+                    position: absolute;
+                    left: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                  "
+                ></i>
+                <input
+                  formControlName="keyWord"
+                  (input)="searchByName()"
+                  class="form-control"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                  style="padding-left: 30px"
+                />
+              </form>
             </div>
           </div>
           <div class="table-responsive">
@@ -99,10 +99,12 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let firstparticular of particulars | paginate: {
+                <tr
+                  *ngFor="let firstparticular of particulars | paginate: {
                   itemsPerPage: filterForm.value.filter,
                   currentPage: page,
-                  };">
+                  };"
+                >
                   <td>{{ firstparticular.firstname }}</td>
                   <td>{{ firstparticular.lastname }}</td>
                   <td>{{ firstparticular.activity }}</td>
@@ -140,10 +142,12 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let empl of employees | paginate: {
+                <tr
+                  *ngFor="let empl of employees | paginate: {
                   itemsPerPage: filterForm.value.filter,
                   currentPage: page,
-                  };">
+                  };"
+                >
                   <td>{{ empl.firstname }}</td>
                   <td>{{ empl.lastname }}</td>
                   <td>{{ empl.phone }}</td>
@@ -152,13 +156,13 @@
                   <td>
                     <span
                       class="text-success"
-                      (click)="goToEditPart(empl.id)"
+                      (click)="goToEditClt(empl.id)"
                       title="Modifier"
                       ><i class="fa fa-pencil"></i></span
                     >&nbsp;
                     <span
                       class="text-danger"
-                      (click)="deleteClients(empl.id, 'particulier')"
+                      (click)="deleteClients(empl.id, 'employe')"
                       title="Supprimer"
                       ><i class="fa fa-trash"></i></span
                     >&nbsp;
@@ -177,10 +181,12 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let firstcompany of companies | paginate: {
+                <tr
+                  *ngFor="let firstcompany of companies | paginate: {
                   itemsPerPage: filterForm.value.filter,
                   currentPage: page,
-                  };">
+                  };"
+                >
                   <td>{{ firstcompany.name }}</td>
                   <td>{{ firstcompany.activity }}</td>
                   <td>{{ firstcompany.creationDate | date : "dd-MM-yyyy" }}</td>
@@ -206,20 +212,26 @@
             <div class="col-md-6">
               <p class="m-0">
                 Affichage de {{ filterForm.value.filter }} entrées sur
-                {{ showPart ? particulars.length : showEmp ? employees.length : companies.length}}
+                {{
+                  showPart
+                    ? particulars.length
+                    : showEmp
+                    ? employees.length
+                    : companies.length
+                }}
               </p>
             </div>
             <div class="col-md-2"></div>
             <div class="col-md-4 text-end">
               <pagination-controls
-              (pageChange)="handlePageChange($event)"
-              (pageBoundsCorrection)="handlePageChange($event)"
-              previousLabel="précédant"
-              nextLabel="Suivant"
-              screenReaderPaginationLabel="Pagination"
-              screenReaderPageLabel="page"
-              screenReaderCurrentLabel="Vous êtes à la page"
-            ></pagination-controls>
+                (pageChange)="handlePageChange($event)"
+                (pageBoundsCorrection)="handlePageChange($event)"
+                previousLabel="précédant"
+                nextLabel="Suivant"
+                screenReaderPaginationLabel="Pagination"
+                screenReaderPageLabel="page"
+                screenReaderCurrentLabel="Vous êtes à la page"
+              ></pagination-controls>
             </div>
           </div>
         </div>

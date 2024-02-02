@@ -31,23 +31,22 @@
           <option value="company">Entreprise</option>
         </select>
       </div>
-
       <div class="group" *ngIf="formVisibility === 'company'">
         <div class="form-group" style="margin-bottom: 20px">
+          <label for="name">Nom de l'entreprise:</label>
           <input
             type="text"
             class="form-control"
             formControlName="name"
-            placeholder="Nom de l'entreprise"
             style="border-top: none; border-left: none; border-right: none"
           />
         </div>
         <div class="form-group" style="margin-bottom: 20px">
+          <label for="activity">Description de l'entreprise:</label>
           <input
             type="text"
             class="form-control"
             formControlName="activity"
-            placeholder="description de l'entreprise"
             style="border-top: none; border-left: none; border-right: none"
           />
         </div>
@@ -57,11 +56,11 @@
         *ngIf="formVisibility === 'particulier' || formVisibility === 'employe'"
       >
         <div class="form-group" style="margin-bottom: 20px">
+          <label for="firstname">Nom:</label>
           <input
             type="text"
             class="form-control"
             formControlName="firstname"
-            placeholder="Nom"
             style="border-top: none; border-left: none; border-right: none"
           />
           <input
@@ -72,56 +71,55 @@
           />
         </div>
         <div class="form-group" style="margin-bottom: 20px">
+          <label for="lastname">Prénom:</label>
           <input
             type="text"
             class="form-control"
             formControlName="lastname"
-            placeholder="Prénom"
             style="border-top: none; border-left: none; border-right: none"
           />
         </div>
         <div class="form-group" style="margin-bottom: 20px">
+          <label for="highestDiploma">Dernier diplôme obtenu:</label>
           <input
             type="text"
             class="form-control"
             formControlName="highestDiploma"
-            placeholder="Dernier diplôme obtenu"
             style="border-top: none; border-left: none; border-right: none"
           />
         </div>
         <div class="group1" *ngIf="formVisibility === 'particulier'">
           <div class="form-group" style="margin-bottom: 20px">
+            <label for="activity">Métier:</label>
             <input
               type="text"
               class="form-control"
               formControlName="activity"
-              placeholder="Métier"
               style="border-top: none; border-left: none; border-right: none"
             />
           </div>
           <div class="form-group" style="margin-bottom: 20px">
+            <label for="birthDate">Date de naissance:</label>
             <input
               type="date"
               class="form-control"
               formControlName="birthDate"
-              placeholder="date de naissance"
               style="border-top: none; border-left: none; border-right: none"
             />
           </div>
         </div>
         <div class="group2" *ngIf="formVisibility === 'employe'">
           <div class="form-group" style="margin-bottom: 20px">
+            <label for="company">Sélectionner votre entreprise:</label>
             <select
               formControlName="company"
               class="form-control"
               style="border-top: none; border-left: none; border-right: none"
             >
-              <option value="" disabled [defaultSelected]="true">
-                Sélectionner votre company
-              </option>
+              <option value="" disabled>Sélectionner votre entreprise</option>
               <option
                 *ngFor="let company of companies"
-                [ngValue]="company"
+                [value]="company"
                 [selected]="
                   company.id === entreprise.id ? entreprise.name : null
                 "
@@ -131,22 +129,13 @@
             </select>
           </div>
         </div>
-        <div>
-          Sexe:
-          <label>
-            <input type="radio" formControlName="gender" value="M" required /> M
-          </label>
-          <label>
-            <input type="radio" formControlName="gender" value="F" required /> F
-          </label>
-        </div>
       </div>
       <div class="form-group" style="margin-bottom: 20px">
+        <label for="email">Email:</label>
         <input
           type="email"
           class="form-control"
           formControlName="email"
-          placeholder="Email"
           style="border-top: none; border-left: none; border-right: none"
         />
         <div
@@ -160,24 +149,32 @@
         </div>
       </div>
       <div class="form-group" style="margin-bottom: 20px">
+        <label for="phone">Numéro de téléphone:</label>
         <input
           type="text"
           class="form-control"
           formControlName="phone"
-          placeholder="Numéro de téléphone"
           style="border-top: none; border-left: none; border-right: none"
         />
       </div>
       <div class="form-group" style="margin-bottom: 20px">
+        <label for="address">Votre adresse:</label>
         <input
           type="text"
           class="form-control"
           formControlName="address"
-          placeholder="Votre adresse"
           style="border-top: none; border-left: none; border-right: none"
         />
       </div>
-
+      <div class="form-group">
+        <label for="gender">Sexe:</label>
+        <label>
+          <input type="radio" formControlName="gender" value="M" required /> M
+        </label>
+        <label>
+          <input type="radio" formControlName="gender" value="F" required /> F
+        </label>
+      </div>
       <button
         type="submit"
         class="btn btn-outline-dark"
@@ -192,4 +189,3 @@
     </form>
   </div>
 </div>
-<!-- <pre>{{ userForm.value | json }}</pre> -->
