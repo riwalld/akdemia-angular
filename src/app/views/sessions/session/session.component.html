@@ -1,165 +1,327 @@
 <div class="mt-3">
-    <div class="pt-3 pb-2 mb-3 ">
-        <h1 style="opacity: 95%;">Session {{isInterSession? interSessionDetail.code : intraSessionDetail.code}}</h1>
-    </div>
-    
-    <div class="row page-titles mx-0 card-head">
-        <div class="col-sm-12 p-md-2">
-            <div class="welcome-text">
-                <div class="pt-3 pb-2 mb-3 ">
-                    <h1 class="h2">Formation:  {{isInterSession? interSessionDetail.training.title : intraSessionDetail.training.title}}</h1>
-                </div>
-                <h5 style="margin-top:10px; text-align: justify; opacity: 70%;"><small>date début: {{isInterSession? (interSessionDetail.date | date) : intraSessionDetail.date | date }}</small></h5>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="99"
-                    aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width' : progression}">
-                      
-                    </div>
-                </div>
-            </div>
+  <div class="pt-3 pb-2 mb-3">
+    <h1 style="opacity: 95%">
+      Session
+      {{ isInterSession ? interSessionDetail.code : intraSessionDetail.code }}
+    </h1>
+  </div>
+
+  <div class="row page-titles mx-0 card-head">
+    <div class="col-sm-12 p-md-2">
+      <div class="welcome-text">
+        <div class="pt-3 pb-2 mb-3">
+          <h1 class="h2">
+            Formation:
+            {{
+              isInterSession
+                ? interSessionDetail.training.title
+                : intraSessionDetail.training.title
+            }}
+          </h1>
         </div>
+        <h5 style="margin-top: 10px; text-align: justify; opacity: 70%">
+          <small
+            >date début:
+            {{
+              isInterSession
+                ? (interSessionDetail.date | date)
+                : (intraSessionDetail.date | date)
+            }}</small
+          >
+        </h5>
+        <div class="progress">
+          <div
+            class="progress-bar"
+            role="progressbar"
+            aria-valuenow="99"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [ngStyle]="{ width: progression }"
+          ></div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 <div class="col-lg-12">
-    <div class="row tab-content">
-        <div id="list-view" class="tab-pane fade active show col-lg-12" role="tabpanel">
-            <div class="card">
-                <div class="card-header"  style="background-color: #fff;">
-                    <h4 class="card-title" style="margin-top: 20px;">Tous les participants</h4>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sousThemeModal" style="float: right; margin-top: -40px;">+ Inscrire un client</button>
-                    <div class="modal fade" id="sousThemeModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="sousThemeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Ajouter</h5>
-                                </div>
-                                <form [formGroup]="formSubscription">
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label class="form-label" for="Enter_participant">Ajouter des participants <span style="color: red;">*</span></label>
-                                            <select [ngClass]="!isInterSession? 'hidden': ''" class="form-control" name="" id="Enter_participant" formControlName="participants" multiple>
-                                              <option value="" disabled selected>Sélectionnez les particuliers</option>
-                                              <option *ngFor="let particular of allParticular" [value]="particular.id">{{ particular.firstname+" "+particular.lastname }}</option>
-                                            </select>
-                                            <select [ngClass]="isInterSession? 'hidden': ''" class="form-control" name="" id="Enter_participant" formControlName="participants" multiple>
-                                                <option value="" disabled selected>Sélectionnez les employés</option>
-                                                <option *ngFor="let employee of allEmployees" [value]="employee.id">{{ employee.firstname+" "+employee.lastname }}</option>
-                                              </select>
-                                          </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" (click)="onSubscribe()"  class="btn btn-primary" ><span *ngIf="isLoading"  class="spinner-border"></span><span [ngClass]="isLoading? 'hidden':''"><i class="fa fa-save"></i>&nbsp;Enregistrer</span></button>
-                                        <button type="reset" class="btn btn-danger light" data-bs-dismiss="modal"><i class="fa fa-cancel"></i>&nbsp;Annuler</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+  <div class="row tab-content">
+    <div
+      id="list-view"
+      class="tab-pane fade active show col-lg-12"
+      role="tabpanel"
+    >
+      <div class="card">
+        <div class="card-header" style="background-color: #fff">
+          <h4 class="card-title" style="margin-top: 20px">
+            Tous les participants
+          </h4>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#sousThemeModal"
+            style="float: right; margin-top: -40px"
+          >
+            + Inscrire un client
+          </button>
+          <div
+            class="modal fade"
+            id="sousThemeModal"
+            data-bs-backdrop="static"
+            tabindex="-1"
+            aria-labelledby="sousThemeModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Ajouter</h5>
                 </div>
-                <div class="card-body" *ngIf="!isLoading">
-                    <div class="row mb-3">
-                        <div class="col-md-3 d-flex">
-                            <label for="entries" class="me-2">Afficher</label>
-                            <form style="width: 100%;" [formGroup]="filterForm" class="form">
-                                <select formControlName="filter" class="form-select form-select-sm me-2" id="entries" style="height: 38px;">
-                                    <option value="3">3</option>
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="10">15</option>
-                                    <option value="20">20</option>
-                                    <option value="25">25</option>
-                                </select>
-                            </form>
-                            <label for="entries">entrées</label>
-                        </div>
-                        <div class="col-md-5">
-                            &nbsp;
-                          </div>
-                        <div class="col-md-4">
-                            <form [formGroup]="searchForm" style="position: relative; width: 350px; float: right;">
-                                <i class="fas fa-search" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%);"></i>
-                                <input formControlName="keyWord"  class="form-control" type="search" placeholder="Search" aria-label="Search" style="padding-left: 30px;">
-                            </form>
-                        </div>
+                <form [formGroup]="formSubscription">
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label class="form-label" for="Enter_participant"
+                        >Ajouter des participants
+                        <span style="color: red">*</span></label
+                      >
+                      <select
+                        [ngClass]="!isInterSession ? 'hidden' : ''"
+                        class="form-control"
+                        name=""
+                        id="Enter_participant"
+                        formControlName="participants"
+                        multiple
+                      >
+                        <option value="" disabled selected>
+                          Sélectionnez les particuliers
+                        </option>
+                        <option
+                          *ngFor="let particular of allParticular"
+                          [value]="particular.id"
+                        >
+                          {{ particular.firstname + " " + particular.lastname }}
+                        </option>
+                      </select>
+                      <select
+                        [ngClass]="isInterSession ? 'hidden' : ''"
+                        class="form-control"
+                        name=""
+                        id="Enter_participant"
+                        formControlName="participants"
+                        multiple
+                      >
+                        <option value="" disabled selected>
+                          Sélectionnez les employés
+                        </option>
+                        <option
+                          *ngFor="let employee of allEmployees"
+                          [value]="employee.id"
+                        >
+                          {{ employee.firstname + " " + employee.lastname }}
+                        </option>
+                      </select>
                     </div>
-                    <div class="table-responsive" style="margin-top: 30px;">
-                        <table class="table table-striped" *ngIf="isInterSession && allParticularSubscriptions.length > 0" [ngClass]="isIntraSession? 'hidden':''">
-                            <thead style="--bs-table-bg: rgba(25, 29, 50, 1);">
-                                <tr>
-                                    <th scope="col" class="text-white">Nom</th>
-                                    <th scope="col" class="text-white">Prénom</th>
-                                    <th scope="col" class="text-white">Téléphone</th>
-                                    <th scope="col" class="text-white">Sexe</th>
-                                    <th scope="col" class="text-white">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody *ngIf="allParticularSubscriptions.length > 0">
-                                <tr  *ngFor="let user of  allParticularSubscriptions | paginate: { itemsPerPage: filterForm.value.filter,currentPage: page};">
-                                    <th scope="row">{{ user.particular.lastname }}</th>
-                                    <td>{{ user.particular.firstname }}</td>
-                                    <td>{{ user.particular.phone }}</td>
-                                    <td>{{ user.particular.gender }}</td>
-                                    <td>
-                                        <a (click)="removeUserToSession(user.particular.firstname,user.id)" class="btn btn-sm sharp btn-danger" title="Supprimer"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <ng-container class="container" *ngIf="isInterSession && allParticularSubscriptions.length == 0">
-                                
-                            <h2 class="text-center">AUCUN CLIENT INSCRIT À CETTE SESSION</h2>
-                        
-                    </ng-container>
-                        <!-- intra session table -->
-                        <table class="table table-striped" *ngIf="isIntraSession && allEmployeeSubcriptions.length > 0" [ngClass]="isInterSession? 'hidden':''">
-                            <thead style="--bs-table-bg: rgba(25, 29, 50, 1);">
-                                <tr>
-                                    <th scope="col" class="text-white">Nom</th>
-                                    <th scope="col" class="text-white">Prénom</th>
-                                    <th scope="col" class="text-white">Téléphone</th>
-                                    <th scope="col" class="text-white">Sexe</th>
-                                    <th scope="col" class="text-white">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody *ngIf="allEmployeeSubcriptions.length > 0">
-                                <tr *ngFor="let user of  allEmployeeSubcriptions | paginate: { itemsPerPage: filterForm.value.filter,currentPage: page};">
-                                    <th scope="row">{{ user.employee.lastname }}</th>
-                                    <td>{{ user.employee.firstname }}</td>
-                                    <td>{{ user.employee.phone }}</td>
-                                    <td>{{ user.employee.gender }}</td>
-                                    <td>
-                                        <a class="btn btn-sm sharp btn-danger" (click)="removeUserToSession(user.employee.firstname,user.id)" title="Supprimer"><i class="fa fa-trash"></i></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <ng-container class="container" *ngIf="isIntraSession && allEmployeeSubcriptions.length == 0">
-                                
-                            <h2 class="text-center">AUCUN UTILISATEUR INSCRIT À CETTE SESSION</h2>
-                        
-                    </ng-container>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <p class="m-0">Affichage de {{filterForm.value.filter}} entrées sur {{isInterSession? allParticularSubscriptions.length : allEmployeeSubcriptions.length}}
-                        </div>
-                        <div class="col-md-4 text-end">
-                            <pagination-controls
-                            (pageChange)="handlePageChange($event)"
-                            (pageBoundsCorrection)="handlePageChange($event)"
-                            previousLabel="précédant"
-                            nextLabel="Suivant"
-                            screenReaderPaginationLabel="Pagination"
-                            screenReaderPageLabel="page"
-                            screenReaderCurrentLabel="Vous êtes à la page"
-                            ></pagination-controls>
-                        </div>
-                    </div>
-                </div>
-                <div class="container-fluid waiting" *ngIf="isLoading">
-                    <span class="spinner-border"></span>
-                </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="submit"
+                      (click)="onSubscribe()"
+                      class="btn btn-primary"
+                    >
+                      <span *ngIf="isLoading" class="spinner-border"></span
+                      ><span [ngClass]="isLoading ? 'hidden' : ''"
+                        ><i class="fa fa-save"></i>&nbsp;Enregistrer</span
+                      >
+                    </button>
+                    <button
+                      type="reset"
+                      class="btn btn-danger light"
+                      data-bs-dismiss="modal"
+                    >
+                      <i class="fa fa-cancel"></i>&nbsp;Annuler
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
+        <div class="card-body" *ngIf="!isLoading">
+          <div class="row mb-3">
+            <div class="col-md-3 d-flex">
+              <form style="width: 100%" [formGroup]="filterForm">
+                <div class="d-flex align-items-baseline">
+                  <label for="entries" class="form-label me-2">Nombre</label>
+                  <select
+                    formControlName="filter"
+                    class="form-select-sm"
+                    id="entries"
+                  >
+                    <option value="5">5</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-5">&nbsp;</div>
+            <div class="col-md-4">
+              <form
+                [formGroup]="searchForm"
+                style="position: relative; width: 350px; float: right"
+              >
+                <i
+                  class="fas fa-search"
+                  style="
+                    position: absolute;
+                    left: 10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                  "
+                ></i>
+                <input
+                  formControlName="keyWord"
+                  (input)="searchByName()"
+                  class="form-control"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                  style="padding-left: 30px"
+                />
+              </form>
+            </div>
+          </div>
+          <div class="table-responsive" style="margin-top: 30px">
+            <table
+              class="table table-striped"
+              *ngIf="isInterSession && allParticularSubscriptions.length > 0"
+              [ngClass]="isIntraSession ? 'hidden' : ''"
+            >
+              <thead style="--bs-table-bg: rgba(25, 29, 50, 1)">
+                <tr>
+                  <th scope="col" class="text-white">Nom</th>
+                  <th scope="col" class="text-white">Prénom</th>
+                  <th scope="col" class="text-white">Téléphone</th>
+                  <th scope="col" class="text-white">Sexe</th>
+                  <th scope="col" class="text-white">Action</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="allParticularSubscriptions.length > 0">
+                <tr
+                  *ngFor="
+                    let user of allParticularSubscriptions
+                      | paginate
+                        : {
+                            itemsPerPage: filterForm.value.filter,
+                            currentPage: page
+                          }
+                  "
+                >
+                  <th scope="row">{{ user.particular.lastname }}</th>
+                  <td>{{ user.particular.firstname }}</td>
+                  <td>{{ user.particular.phone }}</td>
+                  <td>{{ user.particular.gender }}</td>
+                  <td>
+                    <a
+                      (click)="
+                        removeUserToSession(user.particular.firstname, user.id)
+                      "
+                      class="btn btn-sm sharp btn-danger"
+                      title="Supprimer"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <ng-container
+              class="container"
+              *ngIf="isInterSession && allParticularSubscriptions.length == 0"
+            >
+              <h2 class="text-center">AUCUN CLIENT INSCRIT À CETTE SESSION</h2>
+            </ng-container>
+            <!-- intra session table -->
+            <table
+              class="table table-striped"
+              *ngIf="isIntraSession && allEmployeeSubcriptions.length > 0"
+              [ngClass]="isInterSession ? 'hidden' : ''"
+            >
+              <thead style="--bs-table-bg: rgba(25, 29, 50, 1)">
+                <tr>
+                  <th scope="col" class="text-white">Nom</th>
+                  <th scope="col" class="text-white">Prénom</th>
+                  <th scope="col" class="text-white">Téléphone</th>
+                  <th scope="col" class="text-white">Sexe</th>
+                  <th scope="col" class="text-white">Action</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="allEmployeeSubcriptions.length > 0">
+                <tr
+                  *ngFor="
+                    let user of allEmployeeSubcriptions
+                      | paginate
+                        : {
+                            itemsPerPage: filterForm.value.filter,
+                            currentPage: page
+                          }
+                  "
+                >
+                  <th scope="row">{{ user.employee.lastname }}</th>
+                  <td>{{ user.employee.firstname }}</td>
+                  <td>{{ user.employee.phone }}</td>
+                  <td>{{ user.employee.gender }}</td>
+                  <td>
+                    <a
+                      class="btn btn-sm sharp btn-danger"
+                      (click)="
+                        removeUserToSession(user.employee.firstname, user.id)
+                      "
+                      title="Supprimer"
+                      ><i class="fa fa-trash"></i
+                    ></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <ng-container
+              class="container"
+              *ngIf="isIntraSession && allEmployeeSubcriptions.length == 0"
+            >
+              <h2 class="text-center">
+                AUCUN UTILISATEUR INSCRIT À CETTE SESSION
+              </h2>
+            </ng-container>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <p class="m-0">
+                Affichage de {{ filterForm.value.filter }} entrées sur
+                {{
+                  isInterSession
+                    ? allParticularSubscriptions.length
+                    : allEmployeeSubcriptions.length
+                }}
+              </p>
+            </div>
+
+            <div class="col-md-4 text-end">
+              <pagination-controls
+                (pageChange)="handlePageChange($event)"
+                (pageBoundsCorrection)="handlePageChange($event)"
+                previousLabel="précédant"
+                nextLabel="Suivant"
+                screenReaderPaginationLabel="Pagination"
+                screenReaderPageLabel="page"
+                screenReaderCurrentLabel="Vous êtes à la page"
+              ></pagination-controls>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid waiting" *ngIf="isLoading">
+          <span class="spinner-border"></span>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

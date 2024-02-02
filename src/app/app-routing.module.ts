@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {loginGuard} from "./guard/login.guard";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'public', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: 'public',
     loadChildren: () => import('../app/public/public.module').then(m => m.PublicModule),

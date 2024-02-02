@@ -183,23 +183,21 @@
         <div class="card-body" *ngIf="!isLoading">
           <div class="row mb-3">
             <div class="col-md-3 d-flex">
-              <label for="entries" class="me-2">Afficher</label>
-              <form style="width: 100%" [formGroup]="filterForm" class="form">
-                <select
-                  formControlName="filter"
-                  class="form-select form-select-sm me-2"
-                  id="entries"
-                  style="height: 38px"
-                >
-                  <option value="3">3</option>
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                  <option value="10">15</option>
-                  <option value="20">20</option>
-                  <option value="25">25</option>
-                </select>
+              <form style="width: 100%" [formGroup]="filterForm">
+                <div class="d-flex align-items-baseline">
+                  <label for="entries" class="form-label me-2">Nombre</label>
+                  <select
+                    formControlName="filter"
+                    class="form-select-sm"
+                    id="entries"
+                  >
+                    <option value="5">5</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
               </form>
-              <label for="entries">entrées</label>
             </div>
             <div class="col-md-5">&nbsp;</div>
             <div class="col-md-4">

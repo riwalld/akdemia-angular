@@ -105,7 +105,7 @@ export class SessionsComponent implements OnInit {
         }
       }
       if (this.searchForm.value.keyWord.trim() == "") {
-        this.intraSessions = this.intraSessionReserved;
+        this.interSessions = this.interSessionReserved;
       } else {
         this.interSessions = table;
       }
