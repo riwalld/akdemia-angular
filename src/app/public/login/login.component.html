@@ -22,7 +22,7 @@
                formControlName="password" required>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-login"><span *ngIf="isLoading" class="spinner-border"></span><span [ngClass]="isLoading ? 'hidden' : ''" ><i class="fa fa-user"></i>&nbsp;Connexion</span></button>
+        <button [disabled]="loginForm.invalid || isLoading" type="submit" class="btn btn-primary btn-login"><span *ngIf="isLoading" class="spinner-border"></span><span [ngClass]="isLoading ? 'hidden' : ''" ><i class="fa fa-user"></i>&nbsp;Connexion</span></button>
       </div>
     </form>
   </div>

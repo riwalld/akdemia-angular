@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.isLoading = true;
     this.user = this.loginForm.value;
+    this.authService.logout();
     this.authService.login(this.user).subscribe({
         next: (data: any) => {
           let jwtToken = data.token;
