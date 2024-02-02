@@ -33,7 +33,7 @@ export class ClientsComponent implements OnInit {
     particularSearch: Particular[] = [];
     companySearch: Particular[] = [];
     employeeSearch: Employee[] = [];
-  
+
     //for filter
     filterForm!: FormGroup;
     searchForm!: FormGroup;
@@ -69,12 +69,12 @@ export class ClientsComponent implements OnInit {
   }
 
   searchByName() {
-  
+
     if(this.showPart){
       this.particulars = this.particularReserved;
       let table: Particular[] = [];
       for (let i = 0; i < this.particulars.length; i++) {
-        if (this.particulars[i].email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase()) 
+        if (this.particulars[i].email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())
         || this.particulars[i].firstname.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
           table.push(this.particulars[i]);
         }
@@ -90,7 +90,7 @@ export class ClientsComponent implements OnInit {
       this.employees = this.employeeReserved;
       let table: Employee[] = [];
       for (let i = 0; i < this.employees.length; i++) {
-        if (this.employees[i].email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase()) 
+        if (this.employees[i].email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())
         || this.employees[i].firstname.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
           table.push(this.employees[i]);
         }
@@ -106,7 +106,7 @@ export class ClientsComponent implements OnInit {
       this.companies = this.companyReserved;
       let table: Company[] = [];
       for (let i = 0; i < this.companies.length; i++) {
-        if (this.companies[i].email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase()) 
+        if (this.companies[i].email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())
         || this.companies[i].name.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
           table.push(this.companies[i]);
         }
@@ -190,7 +190,7 @@ export class ClientsComponent implements OnInit {
                 'success'
               );
             });
-        } else if(clientType == 'employé') {
+        } else if (clientType == 'employe') {
           this.employeeService.delete(id).subscribe(
             () => {
               this.getAllParticipants();
