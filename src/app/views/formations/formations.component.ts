@@ -195,6 +195,7 @@ export class FormationsComponent implements OnInit {
           Swal.fire(
             'Supprimé!',
             'La formation a été supprimé avec succès.',
+            'La formation a été supprimée avec succès.',
             'success'
           );
         },

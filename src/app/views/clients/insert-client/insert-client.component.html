@@ -140,6 +140,7 @@
             <input type="radio" formControlName="gender" value="F" required /> F
           </label>
         </div>
+        
       </div>
       <div class="form-group" style="margin-bottom: 20px">
         <input
@@ -176,6 +177,20 @@
           placeholder="Votre adresse"
           style="border-top: none; border-left: none; border-right: none"
         />
+      </div>
+      <div
+        class="group"
+        *ngIf="formVisibility === 'particulier' || formVisibility === 'employe'"
+      >
+        <div>
+          Sexe:
+          <label>
+            <input type="radio" formControlName="gender" value="M" required /> M
+          </label>
+          <label>
+            <input type="radio" formControlName="gender" value="F" required /> F
+          </label>
+        </div>
       </div>
 
       <button

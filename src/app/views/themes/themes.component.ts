@@ -172,6 +172,7 @@ export class ThemesComponent implements OnInit {
           this.themeService.delete(id).subscribe(() => {
             this.getAllThemes();
             this.toastService.success('Supprimé avec succès' );
+            this.toastService.success('Suppréssion éffectuée avec succès' );
           });
         }
       },
