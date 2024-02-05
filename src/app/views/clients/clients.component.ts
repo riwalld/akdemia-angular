@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Company } from 'src/app/models/Company';
 import { Employee } from 'src/app/models/Employee';
@@ -24,6 +25,21 @@ export class ClientsComponent implements OnInit {
   showEmp: boolean = false;
   showPart: boolean = true;
 
+    //for search
+    particularReserved: Particular[] = [];
+    employeeReserved: Employee[] = [];
+    companyReserved: Company[] = [];
+
+    particularSearch: Particular[] = [];
+    companySearch: Particular[] = [];
+    employeeSearch: Employee[] = [];
+
+    //for filter
+    filterForm!: FormGroup;
+    searchForm!: FormGroup;
+    //for pagination
+    page: number = 1;
+
   constructor(
     private router: Router,
     private particularService: ParticularService,
@@ -34,12 +50,80 @@ export class ClientsComponent implements OnInit {
   ngOnInit(): void {
     this.getAllParticipants();
     this.getAllCompanies();
+    this.initForm();
+  }
+
+
+  initForm() {
+     this.searchForm = new FormGroup({
+      keyWord: new FormControl('')
+    });
+
+    this.filterForm = new FormGroup({
+      filter: new FormControl(20)
+    })
+  }
+
+  handlePageChange(event: number) {
+    this.page = event;
+  }
+
+  searchByName() {
+
+    if(this.showPart){
+      this.particulars = this.particularReserved;
+      let table: Particular[] = [];
+      for (let i = 0; i < this.particulars.length; i++) {
+        if (this.particulars[i].email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())
+        || this.particulars[i].firstname.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
+          table.push(this.particulars[i]);
+        }
+      }
+      if (this.searchForm.value.keyWord.trim() == "") {
+        this.particulars = this.particularReserved;
+      } else {
+        this.particulars = table;
+      }
+    }
+    //for employee
+    else if(this.showEmp){
+      this.employees = this.employeeReserved;
+      let table: Employee[] = [];
+      for (let i = 0; i < this.employees.length; i++) {
+        if (this.employees[i].email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())
+        || this.employees[i].firstname.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
+          table.push(this.employees[i]);
+        }
+      }
+      if (this.searchForm.value.keyWord.trim() == "") {
+        this.employees = this.employeeReserved;
+      } else {
+        this.employees = table;
+      }
+    }
+    //for company
+    else if(this.showCmp){
+      this.companies = this.companyReserved;
+      let table: Company[] = [];
+      for (let i = 0; i < this.companies.length; i++) {
+        if (this.companies[i].email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())
+        || this.companies[i].name.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
+          table.push(this.companies[i]);
+        }
+      }
+      if (this.searchForm.value.keyWord.trim() == "") {
+        this.companies = this.companyReserved;
+      } else {
+        this.companies = table;
+      }
+    }
   }
 
   getAllCompanies() {
     this.companyService.getAll().subscribe(
       data => {
-        this.companies = data
+        this.companies = data;
+        this.companyReserved = data;
       }
     )
   }
@@ -48,20 +132,24 @@ export class ClientsComponent implements OnInit {
     this.isLoading = true;
     this.particularService.getAll().subscribe(
       data => {
-        this.isLoading = false;
         this.particulars = data;
+        this.particularReserved = data;
+        this.isLoading = false;
       }
     );
+
     this.employeeService.getAll().subscribe(
       data => {
-        this.isLoading = false;
         this.employees = data;
+        this.employeeReserved = data;
+        this.isLoading = false;
       }
     );
     this.companyService.getAll().subscribe(
       data => {
-        this.isLoading = false;
         this.companies = data;
+        this.companyReserved = data;
+        this.isLoading = false;
       }
     );
   }
@@ -102,7 +190,7 @@ export class ClientsComponent implements OnInit {
                 'success'
               );
             });
-        } else if(clientType == 'employé') {
+        } else if (clientType == 'employe') {
           this.employeeService.delete(id).subscribe(
             () => {
               this.getAllParticipants();

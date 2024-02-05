@@ -104,7 +104,9 @@ export class InsertClientComponent implements OnInit{
         gender: new FormControl('M'),
         highestDiploma: new FormControl(''),
         address: new FormControl(''),
-        birthDate: new FormControl('')
+        birthDate: new FormControl(''),
+        creationDate: new FormControl(),
+        updateDate: new FormControl(),
       });
   }
 

@@ -53,7 +53,9 @@ export class FormateursComponent implements OnInit {
     this.trainers = this.allTrainersReserved;
     let table: Trainer[] = [];
     for (let i = 0; i < this.trainers.length; i++) {
-      if (this.trainers[i].email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
+      if (this.trainers[i].email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase()) 
+      || this.trainers[i].firstname.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())
+      || this.trainers[i].lastname.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
         table.push(this.trainers[i]);
       }
     }

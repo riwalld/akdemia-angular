@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   isLoggedIn: boolean = false;
   loginForm!: FormGroup;
   user!: BasicUser;
+  isLoading!: boolean;
 
   ngOnInit() {
     this.loginForm = this.formService.getLoginForm()
@@ -24,18 +25,23 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isLoading = true;
     this.user = this.loginForm.value;
+    this.authService.logout();
     this.authService.login(this.user).subscribe({
         next: (data: any) => {
           console.log(data)
           let jwtToken = data.token;
           this.authService.saveToken(jwtToken);
           if (this.authService.getRoles().includes("admin") || this.authService.getRoles().includes("manager")) {
+            this.isLoading = false;
             this.router.navigate(['dashboard']);
           }
+          this.isLoading = false;
         },
         error: (err) => {
           this.alert.alertError(err.error !== null ? err.error.message : "une erreur s'est produite!");
+          this.isLoading = false;
         }
       }
     );

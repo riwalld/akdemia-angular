@@ -32,6 +32,10 @@ export class SessionComponent implements OnInit {
   allUsers: User[] = [];
   UserAllReserved: User[] = [];
   UserSearch: User[] = [];
+  allEmployeeSubcriptionReserved: EmployeeSubscription[] = [];
+  allParticularSubscriptionReserved: ParticularSubscription[] = [];
+  allEmployeeSubcriptionSearch: EmployeeSubscription[] = [];
+  allParticularSubscriptionSearch: ParticularSubscription[] = [];
   //for filter
   filterForm!: FormGroup;
   searchForm!: FormGroup;
@@ -132,6 +136,7 @@ export class SessionComponent implements OnInit {
 
     this.filterForm = new FormGroup({
       filter: new FormControl(10)
+      filter: new FormControl(20)
     })
   }
 
@@ -141,6 +146,7 @@ export class SessionComponent implements OnInit {
       next: (result) => {
         this.interSessionDetail = result;
         this.allParticularSubscriptions = result.particularSubscriptions;
+        this.allParticularSubscriptionReserved = result.particularSubscriptions;
         this.date = this.interSessionDetail.date;
         this.progression = this.getProgression()+'%';
         this.isLoading = false;
@@ -166,6 +172,7 @@ export class SessionComponent implements OnInit {
 
         this.intraSessionDetail = result;
         this.allEmployeeSubcriptions = result.employeeSubscriptions;
+        this.allEmployeeSubcriptionReserved = result.employeeSubscriptions;
         this.date = this.intraSessionDetail.date;
         this.progression = this.getProgression()+'%';
         this.isLoading = false;
@@ -179,9 +186,47 @@ export class SessionComponent implements OnInit {
         }
       },
       complete: () => {
-
+        this.getProgression()
       }
     })
+  }
+
+  searchByName() {
+  
+    if(this.isInterSession){
+      this.allParticularSubscriptions = this.allParticularSubscriptionReserved;
+      let table: ParticularSubscription[] = [];
+      for (let i = 0; i < this.allParticularSubscriptions.length; i++) {
+        if (this.allParticularSubscriptions[i].particular.firstname.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase()) 
+        || this.allParticularSubscriptions[i].particular.lastname.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())
+        || this.allParticularSubscriptions[i].particular.email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
+          table.push(this.allParticularSubscriptions[i]);
+        }
+      }
+    })
+      if (this.searchForm.value.keyWord.trim() == "") {
+        this.allParticularSubscriptions = this.allParticularSubscriptionReserved;
+      } else {
+        this.allParticularSubscriptions = table;
+      }
+    }
+    //for intra session
+    else{
+      this.allEmployeeSubcriptions = this.allEmployeeSubcriptionReserved;
+      let table: EmployeeSubscription[] = [];
+      for (let i = 0; i < this.allEmployeeSubcriptions.length; i++) {
+        if (this.allEmployeeSubcriptions[i].employee.firstname.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase()) 
+        || this.allEmployeeSubcriptions[i].employee.lastname.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())
+        || this.allEmployeeSubcriptions[i].employee.email.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
+          table.push(this.allEmployeeSubcriptions[i]);
+        }
+      }
+      if (this.searchForm.value.keyWord.trim() == "") {
+        this.allEmployeeSubcriptions = this.allEmployeeSubcriptionReserved;
+      } else {
+        this.allEmployeeSubcriptions = table;
+      }
+    }
   }
 
   onSubscribe() {
