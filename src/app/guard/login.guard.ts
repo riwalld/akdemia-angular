@@ -7,12 +7,10 @@ export const loginGuard: CanActivateFn = (route, state) => {
   const router = inject(Router)
   if (authService.isTokenExpired()) {
     authService.logout();
-    router.navigateByUrl('')
     router.navigateByUrl('/public/login')
     return false
   }
   if (!authService.getRoles().includes("admin") && !authService.getRoles().includes("manager")) {
-    router.navigateByUrl('')
     router.navigateByUrl('/public/login')
     return false
   }

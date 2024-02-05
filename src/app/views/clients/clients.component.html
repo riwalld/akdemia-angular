@@ -23,7 +23,6 @@
               (click)="showEntreprise()"
               class="link-offset-2 mx-5 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
             >
-              <span [ngClass]="{ active: showCmp }">Entrprises</span>
               <span [ngClass]="{ active: showCmp }">Entreprises</span>
             </a>
             <a
@@ -43,17 +42,6 @@
         <div class="card-body">
           <div class="row mb-3">
             <div class="col-md-3 d-flex">
-              <label for="entries" class="me-2">Afficher</label>
-              <select
-                class="form-select form-select-sm me-2"
-                id="entries"
-                style="height: 38px"
-              >
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-              </select>
-              <label for="entries">entrées</label>
               <form style="width: 100%" [formGroup]="filterForm">
                 <div class="d-flex align-items-baseline">
                   <label for="entries" class="form-label me-2">Nombre</label>

@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
     this.authService.logout();
     this.authService.login(this.user).subscribe({
         next: (data: any) => {
-          console.log(data)
           let jwtToken = data.token;
           this.authService.saveToken(jwtToken);
           if (this.authService.getRoles().includes("admin") || this.authService.getRoles().includes("manager")) {

@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,7 +8,6 @@ import Swal from 'sweetalert2';
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.scss']
 })
-export class NavBarComponent {
 export class NavBarComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) { }

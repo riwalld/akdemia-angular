@@ -10,7 +10,6 @@
 <div class="container">
   <h2 class="welcome-heading">Bienvenue</h2>
   <div class="login-container">
-    <h2>Login</h2>
     <h2>Connexion</h2>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">
@@ -19,13 +18,11 @@
                formControlName="email" required>
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
         <label for="password" class="form-label">Mot de passe</label>
         <input type="password" class="form-control" id="password" placeholder="Enter your password"
                formControlName="password" required>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-login">Login</button>
         <button [disabled]="loginForm.invalid || isLoading" type="submit" class="btn btn-primary btn-login"><span *ngIf="isLoading" class="spinner-border"></span><span [ngClass]="isLoading ? 'hidden' : ''" ><i class="fa fa-user"></i>&nbsp;Connexion</span></button>
       </div>
     </form>
