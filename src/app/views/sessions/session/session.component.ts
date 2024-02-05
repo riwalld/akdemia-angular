@@ -203,7 +203,6 @@ export class SessionComponent implements OnInit {
           table.push(this.allParticularSubscriptions[i]);
         }
       }
-    })
       if (this.searchForm.value.keyWord.trim() == "") {
         this.allParticularSubscriptions = this.allParticularSubscriptionReserved;
       } else {
