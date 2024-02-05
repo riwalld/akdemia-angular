@@ -85,7 +85,6 @@ export class ThemesComponent implements OnInit {
     });
 
     this.filterForm = new FormGroup({
-      filter: new FormControl(10)
       filter: new FormControl(20)
     });
 
