@@ -207,7 +207,7 @@
       <button type="submit" class="btn btn-primary">
         <span *ngIf="isFormThemeLoading" class="spinner-border"></span>
         <span [ngClass]="isFormThemeLoading ? 'hidden' : ''"
-          ><i class="fa fa-save"></i>&nbsp;Enregistrer</span
+          >&nbsp;Enregistrer</span
         >
       </button>
     </div>
@@ -387,7 +387,7 @@
                       class="text-primary"
                       title="Modifier"
                     >
-                      <i class="fa fa-pencil"></i> </span
+                      <i class="fa fa-pencil text-primary"></i> </span
                     >&nbsp;
                     <span
                       (click)="deleteIntraSession(session.id)"

@@ -1,22 +1,4 @@
 <div class="mt-3">
-    <div class="pt-3 pb-2 mb-3 ">
-        <h1 style="opacity: 95%;">Session {{isInterSession? interSessionDetail.code : intraSessionDetail.code}}</h1>
-    </div>
-    
-    <div class="row page-titles mx-0 card-head">
-        <div class="col-sm-12 p-md-2">
-            <div class="welcome-text">
-                <div class="pt-3 pb-2 mb-3 ">
-                    <h1 class="h2">Formation:  {{isInterSession? interSessionDetail.training.title : intraSessionDetail.training.title}}</h1>
-                </div>
-                <h5 style="margin-top:10px; text-align: justify; opacity: 70%;"><small>date début: {{isInterSession? (interSessionDetail.date | date) : intraSessionDetail.date | date }}</small></h5>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="99"
-                    aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width' : progression}">
-                      
-                    </div>
-                </div>
-            </div>
   <div class="pt-3 pb-2 mb-3">
     <h1 style="opacity: 95%">
       Session
@@ -62,40 +44,6 @@
   </div>
 </div>
 <div class="col-lg-12">
-    <div class="row tab-content">
-        <div id="list-view" class="tab-pane fade active show col-lg-12" role="tabpanel">
-            <div class="card">
-                <div class="card-header"  style="background-color: #fff;">
-                    <h4 class="card-title" style="margin-top: 20px;">Tous les participants</h4>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sousThemeModal" style="float: right; margin-top: -40px;">+ Inscrire un client</button>
-                    <div class="modal fade" id="sousThemeModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="sousThemeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Ajouter</h5>
-                                </div>
-                                <form [formGroup]="formSubscription">
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label class="form-label" for="Enter_participant">Ajouter des participants <span style="color: red;">*</span></label>
-                                            <select [ngClass]="!isInterSession? 'hidden': ''" class="form-control" name="" id="Enter_participant" formControlName="participants" multiple>
-                                              <option value="" disabled selected>Sélectionnez les particuliers</option>
-                                              <option *ngFor="let particular of allParticular" [value]="particular.id">{{ particular.firstname+" "+particular.lastname }}</option>
-                                            </select>
-                                            <select [ngClass]="isInterSession? 'hidden': ''" class="form-control" name="" id="Enter_participant" formControlName="participants" multiple>
-                                                <option value="" disabled selected>Sélectionnez les employés</option>
-                                                <option *ngFor="let employee of allEmployees" [value]="employee.id">{{ employee.firstname+" "+employee.lastname }}</option>
-                                              </select>
-                                          </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" (click)="onSubscribe()"  class="btn btn-primary" ><span *ngIf="isLoading"  class="spinner-border"></span><span [ngClass]="isLoading? 'hidden':''"><i class="fa fa-save"></i>&nbsp;Enregistrer</span></button>
-                                        <button type="reset" class="btn btn-danger light" data-bs-dismiss="modal"><i class="fa fa-cancel"></i>&nbsp;Annuler</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
   <div class="row tab-content">
     <div
       id="list-view"
@@ -182,15 +130,15 @@
                     >
                       <span *ngIf="isLoading" class="spinner-border"></span
                       ><span [ngClass]="isLoading ? 'hidden' : ''"
-                        ><i class="fa fa-save"></i>&nbsp;Enregistrer</span
+                        >&nbsp;Enregistrer</span
                       >
                     </button>
                     <button
                       type="reset"
-                      class="btn btn-danger light"
+                      class="btn btn-secondary"
                       data-bs-dismiss="modal"
                     >
-                      <i class="fa fa-cancel"></i>&nbsp;Annuler
+                      &nbsp;Annuler
                     </button>
                   </div>
                 </form>
