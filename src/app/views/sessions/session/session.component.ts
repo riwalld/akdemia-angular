@@ -29,6 +29,9 @@ export class SessionComponent implements OnInit {
 
   id!: number;
   //for search
+  allUsers: User[] = [];
+  UserAllReserved: User[] = [];
+  UserSearch: User[] = [];
   allEmployeeSubcriptionReserved: EmployeeSubscription[] = [];
   allParticularSubscriptionReserved: ParticularSubscription[] = [];
   allEmployeeSubcriptionSearch: EmployeeSubscription[] = [];
