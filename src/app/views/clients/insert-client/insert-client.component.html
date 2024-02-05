@@ -119,7 +119,7 @@
               <option value="" disabled>Sélectionner votre entreprise</option>
               <option
                 *ngFor="let company of companies"
-                [value]="company"
+                [ngValue]="company"
                 [selected]="
                   company.id === entreprise.id ? entreprise.name : null
                 "

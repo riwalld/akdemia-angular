@@ -160,7 +160,9 @@ export class InsertClientComponent implements OnInit{
           )
       }
     } else {
-      if(this.formVisibility == 'employe') {
+      if (this.formVisibility == 'employe') {
+        console.log(form);
+
         this.employeeService.save(form).subscribe(
           data => {
             this.isLoading = false;

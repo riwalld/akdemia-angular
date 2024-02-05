@@ -20,6 +20,12 @@
           </div>
           <p class="my-3">
             <a
+              (click)="showParticular()"
+              class="link-offset-2 mx-5 link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            >
+              <span [ngClass]="{ active: showPart }">Particuliers</span>
+            </a>
+            <a
               (click)="showEntreprise()"
               class="link-offset-2 mx-5 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
             >
@@ -30,12 +36,6 @@
               class="link-offset-2 mx-5 link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
             >
               <span [ngClass]="{ active: showEmp }">Employeés</span>
-            </a>
-            <a
-              (click)="showParticular()"
-              class="link-offset-2 mx-5 link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-            >
-              <span [ngClass]="{ active: showPart }">Particuliers</span>
             </a>
           </p>
         </div>
