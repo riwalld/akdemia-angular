@@ -198,13 +198,13 @@
               *ngIf="isInterSession && allParticularSubscriptions.length > 0"
               [ngClass]="isIntraSession ? 'hidden' : ''"
             >
-              <thead style="--bs-table-bg: rgba(25, 29, 50, 1)">
+              <thead>
                 <tr>
-                  <th scope="col" class="text-white">Nom</th>
-                  <th scope="col" class="text-white">Prénom</th>
-                  <th scope="col" class="text-white">Téléphone</th>
-                  <th scope="col" class="text-white">Sexe</th>
-                  <th scope="col" class="text-white">Action</th>
+                  <th scope="col" >Nom</th>
+                  <th scope="col" >Prénom</th>
+                  <th scope="col" >Email</th>
+                  <th scope="col" >Sexe</th>
+                  <th scope="col" >Action</th>
                 </tr>
               </thead>
               <tbody *ngIf="allParticularSubscriptions.length > 0">
@@ -220,7 +220,7 @@
                 >
                   <th scope="row">{{ user.particular.lastname }}</th>
                   <td>{{ user.particular.firstname }}</td>
-                  <td>{{ user.particular.phone }}</td>
+                  <td>{{ user.particular.email }}</td>
                   <td>{{ user.particular.gender }}</td>
                   <td>
                     <a
