@@ -34,7 +34,8 @@
                   <input type="radio" formControlName="gender" value="F" required> F
                 </label>
               </div>
-            <button  class="btn btn-outline-dark" style="display: block; margin-left: auto; margin-right: auto" [disabled]="trainerForm.invalid || isLoading"><span *ngIf="isLoading" class="spinner-border"></span><span [ngClass]="isLoading? 'hidden':''"><span [ngClass]="isFormEdit?'hidden':''">Ajouter</span><span [ngClass]="!isFormEdit?'hidden':''">Modifier</span></span></button>
+            <button  class="btn btn-primary" style="float: right; margin-right: 20px;" [disabled]="trainerForm.invalid || isLoading"><span *ngIf="isLoading" class="spinner-border"></span><span [ngClass]="isLoading? 'hidden':''"><span [ngClass]="isFormEdit?'hidden':''">Ajouter</span><span [ngClass]="!isFormEdit?'hidden':''">Modifier</span></span></button>
+            <button class="btn btn-secondary" (click)="cancel()" style="float: right; margin-right: 20px;">Annuler</button>
           </form>
     </div>
 </div>

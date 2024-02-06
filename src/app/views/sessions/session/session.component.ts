@@ -259,9 +259,10 @@ export class SessionComponent implements OnInit {
 
   removeUserToSession(user: string, souscriptionId: string | number) {
     Swal.fire({
-      title: user + ' sera supprimer de cette session voulez vous quand même poursuivre l\'opération?',
+      title: user + ' sera supprimé de cette session voulez vous quand même poursuivre l\'opération?',
       text: 'Cette action est irréversible!',
       icon: 'warning',
+      cancelButtonText: 'Annuler',
       showCancelButton: true,
       confirmButtonColor: '#0d6efd',
       cancelButtonColor: '#d33',
@@ -274,8 +275,8 @@ export class SessionComponent implements OnInit {
             next: () => {
               this.getInterById();
               Swal.fire(
-                'éffectué',
-                'l\'utilsateur a été enlevé de la session.',
+                'Effectué',
+                'L\'utilsateur a été supprimé de la session.',
                 'success'
               )
             },
@@ -293,8 +294,8 @@ export class SessionComponent implements OnInit {
             next: () => {
               this.getIntraById();
               Swal.fire(
-                'éffectué',
-                'l\'utilsateur a été enlevé de la session.',
+                'Effectué',
+                'L\'utilsateur a été enlevé de la session.',
                 'success'
               );
             },

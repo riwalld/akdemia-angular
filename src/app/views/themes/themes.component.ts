@@ -177,7 +177,7 @@ export class ThemesComponent implements OnInit {
         }
       },
       (err) => {
-        this.toastService.error(err.error !== null? err.error.message : 'Impossible de supprimé le thème');
+        this.toastService.error(err.error !== null? err.error.message : 'Impossible de supprimer le thème');
       }
     )
   }
@@ -193,7 +193,7 @@ export class ThemesComponent implements OnInit {
       });
     },
     (err) => {
-      this.alert.alertError(err.error !== null ? err.error.message : 'impossible de modifier');
+      this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de modifier');
     });
   }
 

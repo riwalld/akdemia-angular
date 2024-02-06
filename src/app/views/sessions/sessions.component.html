@@ -82,7 +82,7 @@
     </div>
     <div class="row">
       <div class="col-md-4">
-        <label for="lieux">Lieux <span class="text-danger">*</span></label>
+        <label for="lieux">Lieu <span class="text-danger">*</span></label>
         <input type="text" id="lieux" formControlName="location" />
         <em
           *ngIf="
@@ -131,7 +131,7 @@
 
     <div class="row">
       <div class="col-md-4">
-        <label for="prix">Prix ($) <span class="text-danger">*</span></label>
+        <label for="prix">Prix(€) <span class="text-danger">*</span></label>
         <input type="number" min="1" id="prix" formControlName="price" />
         <em
           *ngIf="
@@ -245,7 +245,7 @@
               class="link-offset-2 mx-5 link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
             >
               <span [ngClass]="{ active: showIntraSess }"
-                >Démandes clients</span
+                >Démandes participant</span
               >
             </a>
           </p>
@@ -289,7 +289,7 @@
                 (input)="searchByName()"
                 class="form-control"
                 type="search"
-                placeholder="Search"
+                placeholder="Recherche"
                 aria-label="Search"
                 style="padding-left: 30px"
               />
@@ -307,7 +307,7 @@
                   <th scope="col">Statut</th>
                   <th scope="col">Durée (J)</th>
                   <th scope="col">Date</th>
-                  <th scope="col">Local</th>
+                  <th scope="col">Lieu</th>
                   <th scope="col" class="text-center">Action</th>
                 </tr>
               </thead>
@@ -359,7 +359,7 @@
                   <th scope="col">Statut</th>
                   <th scope="col">Durée (J)</th>
                   <th scope="col">Date</th>
-                  <th scope="col">Local</th>
+                  <th scope="col">Lieu</th>
                   <th scope="col" class="text-center">Action</th>
                 </tr>
               </thead>
@@ -413,7 +413,7 @@
               <pagination-controls
               (pageChange)="handlePageChange($event)"
               (pageBoundsCorrection)="handlePageChange($event)"
-              previousLabel="précédant"
+              previousLabel="Précédent"
               nextLabel="Suivant"
               screenReaderPaginationLabel="Pagination"
               screenReaderPageLabel="page"

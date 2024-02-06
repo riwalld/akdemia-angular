@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class InsertFormateurComponent implements OnInit {
 
+
   constructor(
     private trainerService: TrainerService,
     private formBuilder: FormBuilder,
@@ -37,6 +38,10 @@ export class InsertFormateurComponent implements OnInit {
       this.isFormEdit = true;
     }
     this.initForm();
+  }
+
+  cancel(){
+    this.router.navigate(['dashboard/formateurs']);
   }
 
   initForm() {

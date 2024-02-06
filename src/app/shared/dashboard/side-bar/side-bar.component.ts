@@ -13,6 +13,6 @@ export class SideBarComponent {
   formateursLink: string = "/dashboard/formateurs";
   clientsLink: string = "/dashboard/clients";
   sessionsLink: string = "/dashboard/sessions"
-  catalogueLink: string = "/dashboard/catalogues"
+  catalogueLink: string = "/dashboard/catalogues";
 
 }

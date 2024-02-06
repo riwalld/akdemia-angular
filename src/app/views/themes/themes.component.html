@@ -126,7 +126,7 @@
                 (input)="searchByName()"
                 class="form-control"
                 type="search"
-                placeholder="Search"
+                placeholder="Recherche"
                 aria-label="Search"
                 style="padding-left: 30px"
               />
@@ -189,7 +189,7 @@
             <pagination-controls
               (pageChange)="handlePageChange($event)"
               (pageBoundsCorrection)="handlePageChange($event)"
-              previousLabel="précédant"
+              previousLabel="Précédent"
               nextLabel="Suivant"
               screenReaderPaginationLabel="Pagination"
               screenReaderPageLabel="page"
@@ -265,19 +265,6 @@
       <div class="container-fluid waiting" *ngIf="isLoading">
         <span class="spinner-border"></span>
       </div>
-    </div>
-
-    <div class="col-md-2"></div>
-    <div class="col-md-4 text-end">
-      <pagination-controls
-        (pageChange)="handlePageChange($event)"
-        (pageBoundsCorrection)="handlePageChange($event)"
-        previousLabel="précédant"
-        nextLabel="Suivant"
-        screenReaderPaginationLabel="Pagination"
-        screenReaderPageLabel="page"
-        screenReaderCurrentLabel="Vous êtes à la page"
-      ></pagination-controls>
     </div>
     <div
       class="modal fade"

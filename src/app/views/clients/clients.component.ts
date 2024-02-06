@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Company } from 'src/app/models/Company';
 import { Employee } from 'src/app/models/Employee';
 import { Particular } from 'src/app/models/Particular';
+import { AlertService } from 'src/app/services/alert.service';
 import { CompanyService } from 'src/app/services/company.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ParticularService } from 'src/app/services/particular.service';
@@ -44,7 +45,8 @@ export class ClientsComponent implements OnInit {
     private router: Router,
     private particularService: ParticularService,
     private employeeService: EmployeeService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private alert: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -124,6 +126,9 @@ export class ClientsComponent implements OnInit {
       data => {
         this.companies = data;
         this.companyReserved = data;
+      },
+      (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : 'Une erreur s\'est produite lors de la récupération des entreprises');
       }
     )
   }
@@ -135,6 +140,9 @@ export class ClientsComponent implements OnInit {
         this.particulars = data;
         this.particularReserved = data;
         this.isLoading = false;
+      },
+      (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : 'Une erreur s\'est produite lors de la récupération des particuliers');
       }
     );
 
@@ -143,6 +151,9 @@ export class ClientsComponent implements OnInit {
         this.employees = data;
         this.employeeReserved = data;
         this.isLoading = false;
+      },
+      (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : 'Une erreur s\'est produite lors de la récupération des employés');
       }
     );
     this.companyService.getAll().subscribe(
@@ -150,6 +161,9 @@ export class ClientsComponent implements OnInit {
         this.companies = data;
         this.companyReserved = data;
         this.isLoading = false;
+      },
+      (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : 'Une erreur s\'est produite lors de la récupération des entreprises');
       }
     );
   }
@@ -173,6 +187,7 @@ export class ClientsComponent implements OnInit {
       title: 'Etes-vous sûr de vouloir effectuer cette suppression?',
       text: 'Cette action est irréversible!',
       icon: 'warning',
+      cancelButtonText: 'Annuler',
       showCancelButton: true,
       confirmButtonColor: '#0d6efd',
       cancelButtonColor: '#d33',
@@ -185,20 +200,27 @@ export class ClientsComponent implements OnInit {
             () => {
               this.getAllParticipants();
               Swal.fire(
-                'supprimé!',
-                'Le client a été supprimé avec succès.',
+                'Supprimé!',
+                'Le participant a été supprimé avec succès.',
                 'success'
               );
-            });
+            },
+            (err) => {
+              this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de supprimer un particulier');
+            }
+            );
         } else if (clientType == 'employe') {
           this.employeeService.delete(id).subscribe(
             () => {
               this.getAllParticipants();
               Swal.fire(
                 'supprimé!',
-                'Le client a été supprimé avec succès.',
+                "L'employé a été supprimé avec succès.",
                 'success'
               );
+            },
+            (err) => {
+              this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de supprimer un employé');
             });
         } else {
           this.companyService.delete(id).subscribe(
@@ -206,9 +228,12 @@ export class ClientsComponent implements OnInit {
               this.getAllParticipants();
               Swal.fire(
                 'supprimé!',
-                'Le client a été supprimé avec succès.',
+                "L'entreprise a été supprimé avec succès.",
                 'success'
               );
+            },
+            (err) => {
+              this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de supprimer une entreprise');
             });
         }
       }

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from 'src/app/models/Company';
 import { Employee } from 'src/app/models/Employee';
+import { AlertService } from 'src/app/services/alert.service';
 import { CompanyService } from 'src/app/services/company.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { ParticularService } from 'src/app/services/particular.service';
@@ -20,7 +21,8 @@ export class InsertClientComponent implements OnInit{
     private employeeService: EmployeeService,
     private router: Router,
     private route: ActivatedRoute,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private alert: AlertService
   ) {}
 
 
@@ -52,6 +54,10 @@ export class InsertClientComponent implements OnInit{
     this.getAllCompany();
   }
 
+  cancel() {
+    this.router.navigate(['dashboard/clients']);
+  }
+
   getById(id: any) {
     switch (this.formVisibility) {
       case 'employe':
@@ -59,6 +65,9 @@ export class InsertClientComponent implements OnInit{
           next: data => {
             this.userForm.patchValue(data);
             this.entreprise = data.company;
+          },
+          error: (err) => {
+            this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer l\'identifiant de l\'employé');
           }
         });
         break;
@@ -66,6 +75,9 @@ export class InsertClientComponent implements OnInit{
         this.companyService.getById(id).subscribe({
           next: data => {
             this.userForm.patchValue(data);
+          },
+          error: (err) => {
+            this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer l\'identifiant de l\'entreprise');
           }
         });
         break;
@@ -73,6 +85,9 @@ export class InsertClientComponent implements OnInit{
         this.particularService.getById(id).subscribe({
           next: data => {
             this.userForm.patchValue(data);
+          },
+          error: (err) => {
+            this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer l\'identifiant du particulier');
           }
         });
         break;
@@ -86,6 +101,9 @@ export class InsertClientComponent implements OnInit{
       data => {
         this.companies = data;
 
+      },
+      (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les entreprises');
       }
     )
   }
@@ -130,6 +148,9 @@ export class InsertClientComponent implements OnInit{
               'success'
             );
             this.router.navigate(['dashboard/clients']);
+          },
+          (err) => {
+            this.alert.alertError(err.error !== null ? err.error.message : 'Une erreur s\'est produite lors de la modification de l\'employé');
           }
         )
       } else if (this.formVisibility == "company") {
@@ -143,6 +164,9 @@ export class InsertClientComponent implements OnInit{
               'success'
             );
             this.router.navigate(['dashboard/clients']);
+          },
+          (err) => {
+            this.alert.alertError(err.error !== null ? err.error.message : 'Une erreur s\'est produite lors de la modification de l\'entreprise');
           }
         )
       } else {
@@ -156,6 +180,9 @@ export class InsertClientComponent implements OnInit{
                 'success'
               );
               this.router.navigate(['dashboard/clients'])
+            },
+            (err) => {
+              this.alert.alertError(err.error !== null ? err.error.message : 'Une erreur s\'est produite lors de la modification du particulier');
             }
           )
       }
@@ -173,6 +200,9 @@ export class InsertClientComponent implements OnInit{
             );
 
             this.router.navigate(['dashboard/clients']);
+          },
+          (err) => {
+            this.alert.alertError(err.error !== null ? err.error.message : 'Une erreur s\'est produite lors de l\'ajout de l\'employé');
           }
         )
       } else if(this.formVisibility == 'particulier') {
@@ -185,6 +215,9 @@ export class InsertClientComponent implements OnInit{
                 'success'
               );
               this.router.navigate(['dashboard/clients']);
+            },
+            (err) => {
+              this.alert.alertError(err.error !== null ? err.error.message : 'Une erreur s\'est produite lors de l\'ajout du pariculier');
             }
           )
       } else {
@@ -197,6 +230,9 @@ export class InsertClientComponent implements OnInit{
                 'success'
               );
               this.router.navigate(['dashboard/clients']);
+          },
+          (err) => {
+            this.alert.alertError(err.error !== null ? err.error.message : 'Une erreur s\'est produite lors de l\'ajout de l\'entreprise');
           }
         )
       }

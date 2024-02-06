@@ -89,6 +89,7 @@ export class FormateursComponent implements OnInit {
       title: 'Etes-vous sûr de vouloir effectuer cette suppression?',
       text: 'Cette action est irréversible!',
       icon: 'warning',
+      cancelButtonText: 'Annuler',
       showCancelButton: true,
       confirmButtonColor: '#0d6efd',
       cancelButtonColor: '#d33',
@@ -100,7 +101,7 @@ export class FormateursComponent implements OnInit {
           () => {
             this.getAllTrainers();
             Swal.fire(
-              'supprimé!',
+              'Supprimé!',
               'Le formateur a été supprimé avec succès.',
               'success'
             );
