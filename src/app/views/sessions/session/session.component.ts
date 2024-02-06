@@ -154,7 +154,7 @@ export class SessionComponent implements OnInit {
         if (err.error != null) {
           this.alert.alertError(err.error.message);
         } else {
-          this.alert.alertError("la session n'a pas pu être charger veillez réessayer plustard");
+          this.alert.alertError("la session n'a pas pu être chargé veillez réessayer plustard");
           this.isLoading = false;
         }
       },
@@ -180,7 +180,7 @@ export class SessionComponent implements OnInit {
         if (err.error != null) {
           this.alert.alertError(err.error.message);
         } else {
-          this.alert.alertError("la session n'a pas pu être charger veillez réessayer plustard");
+          this.alert.alertError("la session n'a pas pu être chargé veillez réessayer plustard");
           this.isLoading = false;
         }
       },
@@ -232,7 +232,7 @@ export class SessionComponent implements OnInit {
     if (this.isInterSession) {
       this.particularSuscriptionService.attach(this.interSessionDetail.id, this.formSubscription.value.participants).subscribe({
         next: (value) => {
-          this.alertService.alertSuccess("vous avez bien inscris les utilisateurs à la session " + this.interSessionDetail.code);
+          this.alertService.alertSuccess("vous avez bien inscrit les utilisateurs à la session " + this.interSessionDetail.code);
           this.getInterById()
           this.isLoading = false;
         },
@@ -245,7 +245,7 @@ export class SessionComponent implements OnInit {
     else {
       this.employeeSubscriptionService.attach(this.intraSessionDetail.id, this.formSubscription.value.participants).subscribe({
         next: (value) => {
-          this.alertService.alertSuccess("vous avez bien inscris les utilisateurs à la session " + this.intraSessionDetail.code);
+          this.alertService.alertSuccess("vous avez bien inscrit les utilisateurs à la session " + this.intraSessionDetail.code);
           this.getIntraById();
           this.isLoading = false;
         },
