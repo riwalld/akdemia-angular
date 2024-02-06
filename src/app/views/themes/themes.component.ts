@@ -122,7 +122,7 @@ export class ThemesComponent implements OnInit {
     this.themeService.save(themeSave).subscribe(
       (value) => {
         let themeResponse = value;
-        this.toastService.success("Enregistrement effectué avec success !");
+        this.toastService.success("Enregistrement effectué avec succès !");
         this.isFormThemeLoading = false;
         this.themeForm.reset();
         setTimeout(() => {
@@ -172,7 +172,7 @@ export class ThemesComponent implements OnInit {
           this.themeService.delete(id).subscribe(() => {
             this.getAllThemes();
             this.toastService.success('Supprimé avec succès' );
-            this.toastService.success('Suppréssion éffectuée avec succès' );
+            this.toastService.success('Suppression effectuée avec succès' );
           });
         }
       },
@@ -207,7 +207,7 @@ export class ThemesComponent implements OnInit {
       tap(
         (value) => {
           let themeResponse = value;
-          this.toastService.success("Modification effectué avec success !");
+          this.toastService.success("Modification effectuée avec succès !");
           this.isFormThemeLoading = false;
           this.themeUpdateForm.reset();
           setTimeout(() => {
