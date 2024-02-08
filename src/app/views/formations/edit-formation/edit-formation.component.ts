@@ -146,8 +146,7 @@ export class EditFormationComponent implements OnInit {
       tap(
         (value) => {
           let trainingResponse = value;
-          this.toastService.alertSuccess("Modification effectué avec success !");
-          this.toastService.alertSuccess("Modification effectuée avec success!");
+          this.toastService.alertSuccess("Modification effectuée avec succès!");
           this.isFormTrainingLoading = false;
           this.formationFormUpdate.reset();
           this.router.navigate(['dashboard/catalogues/formations']);

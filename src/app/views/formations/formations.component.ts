@@ -128,7 +128,7 @@ export class FormationsComponent implements OnInit {
       tap(
         (value) => {
           let trainingResponse = value;
-          this.toastService.alertSuccess("Enregistrement effectué avec success !");
+          this.toastService.alertSuccess("Enregistrement effectué avec succès!");
           this.isFormTrainingLoading = false;
           this.formationForm.reset();
           setTimeout(() => {
@@ -216,6 +216,6 @@ export class FormationsComponent implements OnInit {
   }
 
   goToTheme() {
-    window.location.replace('catalogues/themes');
+    window.location.replace('dashboard/catalogues/themes');
   }
 }

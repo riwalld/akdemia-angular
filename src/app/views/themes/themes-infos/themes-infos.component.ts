@@ -128,7 +128,7 @@ export class ThemesInfosComponent implements OnInit {
         (value) => {
           this.isFormSubThemeLoading = false;
           let themeResponse = value;
-          this.toastService.alertSuccess("Enregistrement effectué avec success !");
+          this.toastService.alertSuccess("Enregistrement effectué avec succès!");
           this.subThemeForm.reset();
 
           setTimeout(() => {
@@ -232,7 +232,7 @@ export class ThemesInfosComponent implements OnInit {
         (value) => {
           this.isFormSubThemeLoading = false;
           let themeResponse = value;
-          this.toastService.alertSuccess("Modification effectué avec success !");
+          this.toastService.alertSuccess("Modification effectuée avec succès!");
           this.subThemeUpdateForm.reset();
           setTimeout(() => {
             this.subThemeUpdateForm.reset();

@@ -212,7 +212,7 @@ export class SessionsComponent implements OnInit {
       if (this.sessionTytpe == "1") {
         this.interSessionService.save(this.sessionForm.value).subscribe({
           next: data => {
-            this.toastService.alertSuccess("Enregistrement effectué avec success !");
+            this.toastService.alertSuccess("Enregistrement effectué avec succès!");
             this.getAllInterSessions();
             this.showForm = !this.showForm;
             this.isFormThemeLoading = false;
@@ -227,7 +227,7 @@ export class SessionsComponent implements OnInit {
       } else if (this.sessionTytpe == "2") {
         this.intraSessionService.save(this.sessionForm.value).subscribe({
           next: data => {
-            this.toastService.alertSuccess("Enregistrement effectué avec success !");
+            this.toastService.alertSuccess("Enregistrement effectué avec succès!");
             this.getAllIntraSessions();
             this.showForm = !this.showForm;
             this.isFormThemeLoading = false;
@@ -243,7 +243,7 @@ export class SessionsComponent implements OnInit {
       if (this.sessionTytpe == "1") {
         this.interSessionService.edit(id, this.sessionForm.value).subscribe({
           next: data => {
-            this.toastService.alertSuccess("Modification effectué avec success !");
+            this.toastService.alertSuccess("Modification effectuée avec succès!");
             this.getAllInterSessions();
             this.showForm = !this.showForm;
             this.isFormThemeLoading = false;
@@ -256,7 +256,7 @@ export class SessionsComponent implements OnInit {
       } else if (this.sessionTytpe == "2") {
         this.intraSessionService.edit(id, this.sessionForm.value).subscribe({
           next: data => {
-            this.toastService.alertSuccess("Modification effectué avec success !");
+            this.toastService.alertSuccess("Modification effectuée avec succès!");
             this.getAllIntraSessions();
             this.showForm = !this.showForm;
             this.isFormThemeLoading = false;

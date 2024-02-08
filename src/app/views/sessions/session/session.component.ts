@@ -154,7 +154,7 @@ export class SessionComponent implements OnInit {
         if (err.error != null) {
           this.alert.alertError(err.error.message);
         } else {
-          this.alert.alertError("la session n'a pas pu être chargé veillez réessayer plustard");
+          this.alert.alertError("la session n'a pas pu être chargée veillez réessayer plustard");
           this.isLoading = false;
         }
       },
@@ -180,7 +180,7 @@ export class SessionComponent implements OnInit {
         if (err.error != null) {
           this.alert.alertError(err.error.message);
         } else {
-          this.alert.alertError("la session n'a pas pu être chargé veillez réessayer plustard");
+          this.alert.alertError("la session n'a pas pu être chargée veillez réessayer plustard");
           this.isLoading = false;
         }
       },
@@ -295,7 +295,7 @@ export class SessionComponent implements OnInit {
               this.getIntraById();
               Swal.fire(
                 'Effectué',
-                'L\'utilsateur a été enlevé de la session.',
+                'L\'utilsateur a été supprimé de la session.',
                 'success'
               );
             },

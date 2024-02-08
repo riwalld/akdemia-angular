@@ -160,7 +160,7 @@ export class InsertClientComponent implements OnInit{
             this.isLoading = false;
             Swal.fire(
               'Modifié!',
-              "L'entreprise a été modifié avec succès.",
+              "L'entreprise a été modifiée avec succès.",
               'success'
             );
             this.router.navigate(['dashboard/clients']);
@@ -226,7 +226,7 @@ export class InsertClientComponent implements OnInit{
             this.isLoading = false;
               Swal.fire(
                 'Ajouté!',
-                "L'entreprise a été ajouté avec succès.",
+                "L'entreprise a été ajoutée avec succès.",
                 'success'
               );
               this.router.navigate(['dashboard/clients']);

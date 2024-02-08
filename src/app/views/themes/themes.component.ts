@@ -207,7 +207,7 @@ export class ThemesComponent implements OnInit {
       tap(
         (value) => {
           let themeResponse = value;
-          this.toastService.success("Modification effectuée avec succès !");
+          this.toastService.success("Modification effectuée avec succès!");
           this.isFormThemeLoading = false;
           this.themeUpdateForm.reset();
           setTimeout(() => {

@@ -228,7 +228,7 @@ export class ClientsComponent implements OnInit {
               this.getAllParticipants();
               Swal.fire(
                 'supprimé!',
-                "L'entreprise a été supprimé avec succès.",
+                "L'entreprise a été supprimée avec succès.",
                 'success'
               );
             },
