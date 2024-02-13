@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup} from "@angular/forms";
-import {SessionFormService} from "../../views/forms/session-form.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BasicUser} from "../../models/basic-user";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
@@ -18,10 +17,10 @@ export class LoginComponent implements OnInit {
   isLoading!: boolean;
 
   ngOnInit() {
-    this.loginForm = this.formService.getLoginForm()
+    this.loginForm = this.getLoginForm()
   }
 
-  constructor(private formService: SessionFormService, private authService: AuthService, private router: Router, private alert: AlertService) {
+  constructor(private authService: AuthService, private router: Router, private alert: AlertService, private fb: FormBuilder) {
   }
 
   onSubmit() {
@@ -44,5 +43,12 @@ export class LoginComponent implements OnInit {
         }
       }
     );
+  }
+
+  getLoginForm() {
+    return this.fb.group({
+      email: ['', Validators.email],
+      password: [''],
+    })
   }
 }
