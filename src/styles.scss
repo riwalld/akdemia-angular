@@ -1,19 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@fortawesome/fontawesome-free/css/all.css';
+@import "~@fortawesome/fontawesome-free/css/all.css";
 @import "~node_modules/ngx-toastr/toastr.css";
 @import "node_modules/@costlydeveloper/ngx-awesome-popup/styles/theme";
 body {
-    background-color: #f5f5f5;
+  background-color: #f5f5f5;
 }
 .toast-container .ngx-toastr {
   width: 400px;
 }
-.waiting{
+.waiting {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.hidden{
+.hidden {
   display: none;
+}
+
+// search table
+.fa-search {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+// form div
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group .border-bottom {
+  border: none;
+  border-bottom: 1px solid #000;
 }

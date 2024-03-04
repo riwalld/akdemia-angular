@@ -123,15 +123,7 @@
               [formGroup]="searchForm"
               style="position: relative; width: 350px; float: right"
             >
-              <i
-                class="fas fa-search"
-                style="
-                  position: absolute;
-                  left: 10px;
-                  top: 50%;
-                  transform: translateY(-50%);
-                "
-              ></i>
+              <i class="fas fa-search"></i>
               <input
                 formControlName="keyWord"
                 (input)="searchByName()"
@@ -156,7 +148,7 @@
             </thead>
             <tbody>
               <tr
-                *ngFor="let subThemeFrist of themeDetail.subThemes | paginate: {
+                *ngFor="let subThemeFrist of sousThemesAll | paginate: {
                   itemsPerPage: filterForm.value.filter,
                   currentPage: page,
                   };"
