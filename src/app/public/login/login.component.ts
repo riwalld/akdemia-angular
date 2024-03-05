@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
           this.isLoading = false;
         },
         error: (err) => {
-          this.alert.alertError(err.error !== null ? err.error.message : "une erreur s'est produite!");
+          this.alert.alertError(err.error?.message !== undefined ? err.error?.message : "une erreur s'est produite!");
           this.isLoading = false;
         }
       }
