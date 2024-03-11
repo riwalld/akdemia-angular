@@ -13,6 +13,7 @@ import { ThemesInfosComponent } from '../themes/themes-infos/themes-infos.compon
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormateursComponent } from '../formateurs/formateurs.component';
 import { FormationsComponent } from '../formations/formations.component';
+import { InsertFormateurComponent } from '../formateurs/insert-formateur/insert-formateur.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { FormationsComponent } from '../formations/formations.component';
     ThemesComponent,
     ThemesInfosComponent,
     FormateursComponent,
-    FormationsComponent
+    FormationsComponent,
+    InsertFormateurComponent
   ],
   imports: [
     CommonModule,

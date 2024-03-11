@@ -71,7 +71,9 @@ export class FormationsComponent implements OnInit {
   initForm() {
     this.formationForm = new FormGroup({
       title: new FormControl(''),
+      logo: new FormControl(''),
       description: new FormControl(''),
+      trainingPrice: new FormControl(''),
     });
 
     this.searchForm = new FormGroup({
@@ -84,8 +86,10 @@ export class FormationsComponent implements OnInit {
 
     this.formationUpdateForm = this.formBuilder.group({
       id: ['', Validators.required],
+      logo: ['', Validators.required],
       title: ['', Validators.required],
       description: ['', Validators.required],
+      trainingPrice: ['', Validators.required],
       creationDate: ['', Validators.required],
     });
   }
@@ -179,8 +183,10 @@ export class FormationsComponent implements OnInit {
     this.formationService.getById(id).subscribe((data) => {
       this.formationUpdateForm.patchValue({
         id: data.id,
+        logo: data.logo,
         title: data.title,
         description: data.description,
+        training_price: data.trainingPrice,
         creationDate: data.creationDate
       });
     },

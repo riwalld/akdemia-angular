@@ -16,6 +16,7 @@ import { ClientsComponent } from "./views/clients/clients.component";
 import { InsertClientComponent } from "./views/clients/insert-client/insert-client.component";
 import { FormationsComponent } from './views/formations/formations.component';
 import { FormateursComponent } from './views/formateurs/formateurs.component';
+import { InsertFormateurComponent } from './views/formateurs/insert-formateur/insert-formateur.component';
 
 
 @NgModule({

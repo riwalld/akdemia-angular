@@ -4,7 +4,7 @@ export interface Formation {
     id: number;
     title: string;
     description: string;
-    training_price: number;
+    trainingPrice: number;
     logo: string;
     creationDate: Date;
     updateDate: Date;

@@ -3,7 +3,7 @@ import { User } from "./User";
 
 export interface Formateur extends User {
     id: number;
-    activite: string;
+    activity: string;
     cv_link: string;
     firstname: string;
     lastname: string;

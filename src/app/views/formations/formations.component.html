@@ -21,7 +21,7 @@
           data-bs-toggle="modal"
           data-bs-target="#formationModal"
         >
-          Ajouter une formation
+          Nouvelle formation
         </button>
       </div>
       <div
@@ -35,19 +35,41 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Ajouter une formation</h5>
+              <h5 class="modal-title">Nouvelle formation</h5>
             </div>
             <form [formGroup]="formationForm">
               <div class="modal-body">
-                <div class="mb-3">
-                  <input
-                    type="text"
-                    class="form-control input-default"
-                    placeholder="Intitulé *"
-                    formControlName="title"
-                    required
-                  />
+                <span style="font-style: italic;">
+                  <strong>NB: les champs notés avec (*) sont obligatoires</strong>
+                </span>
+                <div class="row" style="margin-top: 30px;">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label class="form-label" for="title">Intitulé *<span style="color: red;">*</span></label>
+                      <input
+                        id="title"
+                        type="text"
+                        class="form-control input-default"
+                        formControlName="title"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="subTheme" class="form-label">Sous Thème <span class="text-danger">*</span></label>
+                      <sup title="Ajouter un sous thème" class="badge bg-success border border-3 rounded-5"><i class="fa fa-plus text-light"></i></sup>
+                      <!-- <select
+                        id="subTheme"
+                        type="text"
+                        class="form-control input-default"
+                        formControlName="subTheme"
+                        required
+                      /> -->
+                    </div>
+                  </div>
                 </div>
+                
                 <div class="mb-3">
                   <textarea
                     class="form-control input-rounded"
@@ -137,8 +159,10 @@
           <table class="table">
             <thead>
               <tr>
+                <th scope="col">Photo</th>
                 <th scope="col">Intitulé</th>
                 <th scope="col">Description</th>
+                <th scope="col">Prix</th>
                 <th scope="col">Date création</th>
                 <th scope="col" class="text-center">Action</th>
               </tr>
@@ -150,8 +174,10 @@
                                     currentPage: page,
                                     }; "
               >
-                <th scope="row">{{ firstFormation.title }}</th>
+                <td><img *ngIf="firstFormation.logo != null" class="rounded-circle" height="80" width="80" src="data:image/jpeg;base64,{{ firstFormation.logo }}" alt="Photo de la formation"></td>
+                <td>{{ firstFormation.title }}</td>
                 <td>{{ getSubString(firstFormation.description) }}</td>
+                <td>{{ firstFormation.trainingPrice }}</td>
                 <td>{{ firstFormation.creationDate | date : "dd-MM-yyyy" }}</td>
                 <td class="text-center" style="cursor: pointer">
                   <i
