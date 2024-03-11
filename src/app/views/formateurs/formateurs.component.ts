@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./formateurs.component.scss']
 })
 export class FormateursComponent {
+  formationsAllReserved: any;
 
 }

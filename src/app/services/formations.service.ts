@@ -10,6 +10,6 @@ import { URL_BASE } from '../conf/constant';
 export class FormationsService extends CrudService<Formation> {
   constructor(http: HttpClient) {
     const url: string = URL_BASE;
-    super(http, `${url}/formations`);
+    super(http, `${url}/trainings`);
   }
 }

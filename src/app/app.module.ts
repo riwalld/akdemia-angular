@@ -23,9 +23,7 @@ import { FormateursComponent } from './views/formateurs/formateurs.component';
     AppComponent,
     ClientsComponent,
     InsertClientComponent,
-    LoginComponent,
-    FormationsComponent,
-    FormateursComponent,
+    LoginComponent
 
   ],
   imports: [

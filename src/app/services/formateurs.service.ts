@@ -10,6 +10,6 @@ import { HttpClient } from '@angular/common/http';
 export class FormateursService extends CrudService<Formateur>{
   constructor(http: HttpClient) {
     const url: string = URL_BASE;
-    super(http, `${url}/formateurs`);
+    super(http, `${url}/trainers`);
   }
 }

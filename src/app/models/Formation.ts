@@ -6,7 +6,7 @@ export interface Formation {
     description: string;
     training_price: number;
     logo: string;
-    creation_date: Date;
-    update_date: Date;
+    creationDate: Date;
+    updateDate: Date;
     requirement: Requirement;
 }
