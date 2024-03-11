@@ -9,6 +9,8 @@ export class SideBarComponent {
 
   dashboardLink: string = "/"
   themesLink: string = '/dashboard/catalogues/themes';
+  formationsLink: string = '/dashboard/catalogues/formations';
+  formateursLink: string = '/dashboard/formateurs';
   clientsLink: string = "/dashboard/clients";
   catalogueLink: string = "/dashboard/catalogues";
 

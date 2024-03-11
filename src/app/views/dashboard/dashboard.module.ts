@@ -11,6 +11,8 @@ import { ThemesComponent } from '../themes/themes.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ThemesInfosComponent } from '../themes/themes-infos/themes-infos.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { FormateursComponent } from '../formateurs/formateurs.component';
+import { FormationsComponent } from '../formations/formations.component';
 
 
 @NgModule({
@@ -22,6 +24,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ContentDashboardComponent,
     ThemesComponent,
     ThemesInfosComponent,
+    FormateursComponent,
+    FormationsComponent
   ],
   imports: [
     CommonModule,
