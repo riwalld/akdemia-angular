@@ -14,6 +14,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormateursComponent } from '../formateurs/formateurs.component';
 import { FormationsComponent } from '../formations/formations.component';
 import { InsertFormateurComponent } from '../formateurs/insert-formateur/insert-formateur.component';
+import { InsertFormationComponent } from '../formations/insert-formation/insert-formation.component';
+import { SessionsComponent } from '../sessions/sessions.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { InsertFormateurComponent } from '../formateurs/insert-formateur/insert-
     ThemesInfosComponent,
     FormateursComponent,
     FormationsComponent,
-    InsertFormateurComponent
+    InsertFormateurComponent,
+    InsertFormationComponent,
+    SessionsComponent
   ],
   imports: [
     CommonModule,

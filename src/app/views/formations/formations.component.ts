@@ -53,6 +53,9 @@ export class FormationsComponent implements OnInit {
   isLoading!: boolean;
   isFormFormationLoading!: boolean;
 
+  selectedFile?: File;
+  base64String?: string = "";
+  base64Image?: any;
 
   constructor(
     private formationService: FormationsService,
@@ -82,6 +85,7 @@ export class FormationsComponent implements OnInit {
       logo: new FormControl(''),
       description: new FormControl(''),
       trainingPrice: new FormControl(''),
+      subTheme: new FormControl('')
     });
 
     this.searchForm = new FormGroup({
@@ -124,13 +128,15 @@ export class FormationsComponent implements OnInit {
 
   saveFormation() {
     this.isFormFormationLoading = true;
-    let formationSave = this.createformation();
+    let formationSave = this.formationForm.value;
+    formationSave.logo = this.base64String;
     this.formationService.save(formationSave).subscribe(
       (value) => {
         let formationResponse = value;
         this.toastService.success("Enregistrement effectué avec succès !");
         this.isFormFormationLoading = false;
         this.formationForm.reset();
+        console.log(formationSave)
         setTimeout(() => {
           this.formationForm.reset();
           window.location.reload();
@@ -174,19 +180,13 @@ export class FormationsComponent implements OnInit {
     );
   }
 
-  createformation(): Formation {
-    this.formationValue = this.formationForm.value;
-    this.formationValue.title = this.formationForm.value.title;
-    this.formationValue.description = this.formationForm.value.description;
-    this.formationValue.creationDate = new Date();
-    return this.formationValue;
-  }
-
   formationDelete(id: number) {
     this.alertService.customFour('Etes-vous sûr de vouloir effectuer cette suppression?', 'Cette action est irréversible!', 'Confirmer', 'Annuler').subscribe(
       resp => {
         if (resp.success) {
+          console.log(id);
           this.formationService.delete(id).subscribe(() => {
+            
             this.getAllFormations();
             this.toastService.success('Supprimé avec succès' );
             this.toastService.success('Suppression effectuée avec succès' );
@@ -199,20 +199,8 @@ export class FormationsComponent implements OnInit {
     )
   }
 
-  formationEdit(id: number) {
-    this.formationService.getById(id).subscribe((data) => {
-      this.formationUpdateForm.patchValue({
-        id: data.id,
-        logo: data.logo,
-        title: data.title,
-        description: data.description,
-        training_price: data.trainingPrice,
-        creationDate: data.creationDate
-      });
-    },
-    (err) => {
-      this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de modifier');
-    });
+  gotToFormationEdit(id: number) {
+    this.router.navigateByUrl(`dashboard/catalogues/formations/`+id);
   }
 
   updateFormation() {
@@ -252,5 +240,22 @@ export class FormationsComponent implements OnInit {
 
   getSubString(text: string) {
     return this.utilsService.getSubString(text, 30);
+  }
+
+  onFileChange(event: any) {
+    this.selectedFile = event.target.files[0];
+    this.convertToBase64();
+  }
+
+  convertToBase64() {
+    if (this.selectedFile) {
+      const reader = new FileReader();
+      reader.readAsDataURL(this.selectedFile);
+      reader.onload = () => {
+        this.base64String = reader.result as string;
+      }
+    } else {
+      console.error("Auncun fichier");
+    }
   }
 }

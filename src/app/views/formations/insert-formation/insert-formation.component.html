@@ -1,0 +1,83 @@
+<div
+  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">Formations</h1>
+</div>
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="formationForm" (ngSubmit)="update()">
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="form-label" for="title">Intitulé <span style="color: red;">*</span></label>
+                        <input
+                            id="title"
+                            type="text"
+                            class="form-control input-default"
+                            formControlName="title"
+                            required
+                        />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="subtheme" class="form-label">Sous Thème <span class="text-danger">*</span></label>
+                        <select id="subtheme" class="form-control input-default" formControlName="subtopics" multiple required>
+                            <option *ngFor="let subtheme of listeSubthemes" [ngValue]="subtheme">{{ subtheme.subthemeTitle }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="Enter_Price" class="form-label">Prix de la formation <span style="color: red;">*</span></label>
+                        <input id="Enter_Price" type="number" formControlName="trainingPrice" required="" class="form-control ng-untouched ng-pristine ng-invalid">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-group fallback w-100">
+                        <label for="Enter_File" class="form-label">Choisir un fichier <span style="color: red;">*</span></label>
+                        
+                        <input class="form-control" type="file" id="file" accept="image/*" (change)="onFileChange($event)">                    
+                        <br>
+                        <img width="80" height="80" [src]="formationForm.value.logo"  alt="Image preview" *ngIf="formationForm.value.logo">
+                    </div>
+                </div>                
+
+                <div class="mb-3">
+                    <textarea
+                        class="form-control input-rounded"
+                        name=""
+                        id=""
+                        cols="60"
+                        rows="5"
+                        placeholder="Description *"
+                        formControlName="description"
+                        required
+                    ></textarea>
+                </div>
+            </div>
+            
+            <div>
+                <button
+                    type="submit"
+                    [disabled]="formationForm.invalid || isLoading"
+                    class="btn btn-primary"
+                    (click)="update()"
+                >
+                    <span *ngIf="isLoading" class="spinner-border"></span
+                    ><span [ngClass]="isLoading ? 'hidden' : ''"
+                    >&nbsp;Enregistrer</span
+                    >
+                </button>
+                <button
+                    type="annuler"
+                    (click)="cancel()"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    &nbsp;Annuler
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
