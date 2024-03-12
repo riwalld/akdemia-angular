@@ -14,9 +14,7 @@ import { AuthInterceptor } from "./interceptor/auth.interceptor";
 import { LoginComponent } from "./public/login/login.component";
 import { ClientsComponent } from "./views/clients/clients.component";
 import { InsertClientComponent } from "./views/clients/insert-client/insert-client.component";
-import { FormationsComponent } from './views/formations/formations.component';
-import { FormateursComponent } from './views/formateurs/formateurs.component';
-import { InsertFormateurComponent } from './views/formateurs/insert-formateur/insert-formateur.component';
+import { SessionsComponent } from './views/sessions/sessions.component';
 
 
 @NgModule({
@@ -25,7 +23,6 @@ import { InsertFormateurComponent } from './views/formateurs/insert-formateur/in
     ClientsComponent,
     InsertClientComponent,
     LoginComponent
-
   ],
   imports: [
     BrowserModule,

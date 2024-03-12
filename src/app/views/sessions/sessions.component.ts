@@ -1,30 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Company } from 'src/app/models/Company';
-import { Employee } from 'src/app/models/Employee';
-import { Particular } from 'src/app/models/Particular';
-import { AlertService } from 'src/app/services/alert.service';
-import { CompanyService } from 'src/app/services/company.service';
-import { EmployeeService } from 'src/app/services/employee.service';
-import { ParticularService } from 'src/app/services/particular.service';
+import { InterSession } from 'src/app/models/InterSession';
+import { IntraSession } from 'src/app/models/IntraSession';
+import { Session } from 'src/app/models/Session';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-clients',
-  templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.scss']
+  selector: 'app-sessions',
+  templateUrl: './sessions.component.html',
+  styleUrls: ['./sessions.component.scss']
 })
-export class ClientsComponent implements OnInit {
+export class SessionsComponent implements OnInit {
 
-  particulars: Particular[] = [];
-  employees: Employee[] = [];
-  companies: Company[] = [];
+  sesions: Session[] = [];
+  sessionsInter: InterSession[] = [];
+  sessionsIntra: IntraSession[] = [];
   isLoading!: boolean;
 
-  showCmp: boolean = false;
-  showEmp: boolean = false;
-  showPart: boolean = true;
+  showInter: boolean = true;
+  showIntra: boolean = false;
 
   //for search
   particularReserved: Particular[] = [];
@@ -55,7 +49,6 @@ export class ClientsComponent implements OnInit {
     this.getAllCompanies();
     this.initForm();
   }
-
 
   initForm() {
      this.searchForm = new FormGroup({
@@ -241,22 +234,13 @@ export class ClientsComponent implements OnInit {
     })
   }
 
-  showParticular() {
-    this.showPart = true;
-    this.showCmp = false;
-    this.showEmp = false;
+  showIntra() {
+    this.showIntra = true;
+    this.showInter = false;
    }
 
-  showEmploye() {
-    this.showPart = false;
-    this.showCmp = false;
-    this.showEmp = true;
+  showInter() {
+    this.showIntra = false;
+    this.showInter = true;
    }
-
-  showEntreprise() {
-    this.showPart = false;
-    this.showCmp = true;
-    this.showEmp = false;
-  }
-
 }

@@ -10,6 +10,8 @@ import { DashboardComponent } from './dashboard.component';
 import { FormationsComponent } from '../formations/formations.component';
 import { FormateursComponent } from '../formateurs/formateurs.component';
 import { InsertFormateurComponent } from '../formateurs/insert-formateur/insert-formateur.component';
+import { InsertFormationComponent } from '../formations/insert-formation/insert-formation.component';
+import { SessionsComponent } from '../sessions/sessions.component';
 
 const routes: Routes = [
   {
@@ -18,9 +20,11 @@ const routes: Routes = [
       {path: '', component: ContentDashboardComponent},
       {path: 'catalogues/themes', component: ThemesComponent},
       {path: 'catalogues/formations', component: FormationsComponent},
+      {path: 'catalogues/formations/:id', component: InsertFormationComponent},
       {path: 'formateurs', component: FormateursComponent},
       {path: 'formateurs/insert', component: InsertFormateurComponent},
       {path: 'formateurs/:id', component: InsertFormateurComponent},
+      {path: 'sessions', component: SessionsComponent},
       {path: 'clients', component: ClientsComponent},
       {path: 'catalogues/themes/infos/:id', component: ThemesInfosComponent},
       {path: 'clients/insert', component: InsertClientComponent},

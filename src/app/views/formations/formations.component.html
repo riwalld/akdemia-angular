@@ -45,7 +45,7 @@
                 <div class="row" style="margin-top: 30px;">
                   <div class="col-sm-6">
                     <div class="form-group">
-                      <label class="form-label" for="title">Intitulé *<span style="color: red;">*</span></label>
+                      <label class="form-label" for="title">Intitulé <span style="color: red;">*</span></label>
                       <input
                         id="title"
                         type="text"
@@ -58,29 +58,48 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="subTheme" class="form-label">Sous Thème <span class="text-danger">*</span></label>
-                      <sup title="Ajouter un sous thème" class="badge bg-success border border-3 rounded-5"><i class="fa fa-plus text-light"></i></sup>
-                      <!-- <select
+                      <sup (click)="goToSubTheme()" 
+                           data-bs-dismiss="modal"
+                           title="Ajouter un sous thème" 
+                           class="badge bg-success border border-3 rounded-5"><i class="fa fa-plus text-light"></i></sup>
+                      <select
                         id="subTheme"
                         type="text"
                         class="form-control input-default"
                         formControlName="subTheme"
-                        required
-                      /> -->
+                        multiple
+                        required>
+                        <option *ngFor="let theme of themes" [value]="theme.themeTitle">{{ theme.themeTitle }}</option>
+                      </select>
                     </div>
                   </div>
-                </div>
-                
-                <div class="mb-3">
-                  <textarea
-                    class="form-control input-rounded"
-                    name=""
-                    id=""
-                    cols="60"
-                    rows="5"
-                    placeholder="Description *"
-                    formControlName="description"
-                    required
-                  ></textarea>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="Enter_Price" class="form-label">Prix de la formation <span style="color: red;">*</span></label>
+                      <input id="Enter_Price" type="number" formControlName="trainingPrice" required="" class="form-control ng-untouched ng-pristine ng-invalid">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                    <div class="form-group fallback w-100">
+                      <label for="Enter_File" class="form-label">Choisir un fichier <span style="color: red;">*</span></label>                      
+                      <input class="form-control ng-pristine ng-invalid ng-touched" type="file" id="file" accept="image/*" formControlName="logo" (change)="onFileChange($event)">                    
+                      <br>
+                      <img width="80" height="80" [src]="base64String" alt="Image preview" *ngIf="base64String">
+                    </div>
+                  </div>                
+
+                  <div class="mb-3">
+                    <textarea
+                      class="form-control input-rounded"
+                      name=""
+                      id=""
+                      cols="60"
+                      rows="5"
+                      placeholder="Description *"
+                      formControlName="description"
+                      required
+                    ></textarea>
+                  </div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -174,7 +193,7 @@
                                     currentPage: page,
                                     }; "
               >
-                <td><img *ngIf="firstFormation.logo != null" class="rounded-circle" height="80" width="80" src="data:image/jpeg;base64,{{ firstFormation.logo }}" alt="Photo de la formation"></td>
+                <td><img *ngIf="firstFormation.logo != null" class="rounded-circle" height="80" width="80" src="{{ firstFormation.logo }}" alt="Photo de la formation"></td>
                 <td>{{ firstFormation.title }}</td>
                 <td>{{ getSubString(firstFormation.description) }}</td>
                 <td>{{ firstFormation.trainingPrice }}</td>
@@ -182,9 +201,7 @@
                 <td class="text-center" style="cursor: pointer">
                   <i
                     class="fa fa-pencil text-primary"
-                    (click)="formationEdit(firstFormation.id)"
-                    data-bs-toggle="modal"
-                    data-bs-target="#formationUpdateModal"
+                    (click)="gotToFormationEdit(firstFormation.id)"
                     title="Modifier"
                   ></i>
                   <i
@@ -216,70 +233,6 @@
               screenReaderPageLabel="page"
               screenReaderCurrentLabel="Vous êtes à la page"
             ></pagination-controls>
-          </div>
-          <div
-            class="modal fade"
-            id="formationUpdateModal"
-            data-bs-backdrop="static"
-            tabindex="-1"
-            aria-labelledby="formationUpdateModalLabel"
-            aria-hidden="true"
-          >
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Modifier</h5>
-                </div>
-                <form [formGroup]="formationUpdateForm">
-                  <div class="modal-body">
-                    <div class="mb-1">
-                      <input
-                        type="text"
-                        class="form-control input-default"
-                        placeholder="Intitulé *"
-                        formControlName="title"
-                        required
-                      />
-                    </div>
-                    <div class="mb-1">
-                      <textarea
-                        class="form-control input-rounded"
-                        name=""
-                        id="description"
-                        cols="30"
-                        rows="2"
-                        placeholder="Description *"
-                        formControlName="description"
-                        required
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="submit"
-                      class="btn btn-sm btn-primary"
-                      (click)="updateFormation()"
-                    >
-                      <span
-                        *ngIf="isFormFormationLoading"
-                        class="spinner-border"
-                      ></span
-                      ><span [ngClass]="isFormFormationLoading ? 'hidden' : ''"
-                        >Enregistrer</span
-                      >
-                    </button>
-                    <button
-                      type="reset"
-                      class="btn btn-sm btn-secondary"
-                      class="btn btn-sm btn-light"
-                      data-bs-dismiss="modal"
-                    >
-                      Annuler
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
           </div>
         </div>
       </div>

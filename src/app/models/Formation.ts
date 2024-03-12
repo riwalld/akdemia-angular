@@ -1,4 +1,5 @@
-import { Requirement } from "./Requirement";
+import { Session } from "./Session";
+import { SubTheme } from "./SubTheme";
 
 export interface Formation {
     id: number;
@@ -8,5 +9,6 @@ export interface Formation {
     logo: string;
     creationDate: Date;
     updateDate: Date;
-    requirement: Requirement;
+    subtopics: SubTheme[];
+    sessions: Session[];
 }
