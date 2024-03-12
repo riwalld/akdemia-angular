@@ -75,7 +75,7 @@ export class InsertFormateurComponent implements OnInit {
     let form = this.formateurForm.value;
     if(this.isFormEdit) {
       console.log(form);
-
+ 
       this.formateurService.edit(this.idFormateur, form).subscribe(
         data => {
           this.isLoading = false;
