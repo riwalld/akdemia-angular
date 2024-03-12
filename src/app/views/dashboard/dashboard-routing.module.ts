@@ -7,6 +7,9 @@ import { ContentDashboardComponent } from '../content-dashboard/content-dashboar
 import { ThemesInfosComponent } from '../themes/themes-infos/themes-infos.component';
 import { ThemesComponent } from '../themes/themes.component';
 import { DashboardComponent } from './dashboard.component';
+import { FormationsComponent } from '../formations/formations.component';
+import { FormateursComponent } from '../formateurs/formateurs.component';
+import { InsertFormateurComponent } from '../formateurs/insert-formateur/insert-formateur.component';
 
 const routes: Routes = [
   {
@@ -14,6 +17,10 @@ const routes: Routes = [
     children: [
       {path: '', component: ContentDashboardComponent},
       {path: 'catalogues/themes', component: ThemesComponent},
+      {path: 'catalogues/formations', component: FormationsComponent},
+      {path: 'formateurs', component: FormateursComponent},
+      {path: 'formateurs/insert', component: InsertFormateurComponent},
+      {path: 'formateurs/:id', component: InsertFormateurComponent},
       {path: 'clients', component: ClientsComponent},
       {path: 'catalogues/themes/infos/:id', component: ThemesInfosComponent},
       {path: 'clients/insert', component: InsertClientComponent},
