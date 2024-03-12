@@ -26,20 +26,21 @@ export class ClientsComponent implements OnInit {
   showEmp: boolean = false;
   showPart: boolean = true;
 
-    //for search
-    particularReserved: Particular[] = [];
-    employeeReserved: Employee[] = [];
-    companyReserved: Company[] = [];
+  //for search
+  particularReserved: Particular[] = [];
+  employeeReserved: Employee[] = [];
+  companyReserved: Company[] = [];
 
-    particularSearch: Particular[] = [];
-    companySearch: Particular[] = [];
-    employeeSearch: Employee[] = [];
+  particularSearch: Particular[] = [];
+  companySearch: Particular[] = [];
+  employeeSearch: Employee[] = [];
 
-    //for filter
-    filterForm!: FormGroup;
-    searchForm!: FormGroup;
-    //for pagination
-    page: number = 1;
+  //for filter
+  filterForm!: FormGroup;
+  searchForm!: FormGroup;
+
+  //for pagination
+  page: number = 1;
 
   constructor(
     private router: Router,

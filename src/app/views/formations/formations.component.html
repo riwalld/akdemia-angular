@@ -58,29 +58,45 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label for="subTheme" class="form-label">Sous Thème <span class="text-danger">*</span></label>
-                      <sup title="Ajouter un sous thème" class="badge bg-success border border-3 rounded-5"><i class="fa fa-plus text-light"></i></sup>
-                      <!-- <select
+                      <sup (click)="goToSubTheme()" 
+                           data-bs-dismiss="modal"
+                           title="Ajouter un sous thème" 
+                           class="badge bg-success border border-3 rounded-5"><i class="fa fa-plus text-light"></i></sup>
+                      <select
                         id="subTheme"
                         type="text"
                         class="form-control input-default"
                         formControlName="subTheme"
-                        required
-                      /> -->
+                        required>
+                        <option *ngFor="let subTheme of themes" [value]="subTheme">{{ subTheme }}</option>
+                      </select>
                     </div>
                   </div>
-                </div>
-                
-                <div class="mb-3">
-                  <textarea
-                    class="form-control input-rounded"
-                    name=""
-                    id=""
-                    cols="60"
-                    rows="5"
-                    placeholder="Description *"
-                    formControlName="description"
-                    required
-                  ></textarea>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="Enter_Price" class="form-label">Prix de la formation <span style="color: red;">*</span></label>
+                      <input id="Enter_Price" type="number" formcontrolname="trainingPrice" required="" class="form-control ng-untouched ng-pristine ng-invalid">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                    <div class="form-group fallback w-100">
+                      <label for="Enter_File" class="form-label">Choisir un fichier <span style="color: red;">*</span></label>
+                      <input type="file" data-default-file="" id="Enter_File" formcontrolname="logo" required="" class="form-control ng-pristine ng-invalid ng-touched">
+                    </div>
+                  </div>                
+
+                  <div class="mb-3">
+                    <textarea
+                      class="form-control input-rounded"
+                      name=""
+                      id=""
+                      cols="60"
+                      rows="5"
+                      placeholder="Description *"
+                      formControlName="description"
+                      required
+                    ></textarea>
+                  </div>
                 </div>
               </div>
               <div class="modal-footer">

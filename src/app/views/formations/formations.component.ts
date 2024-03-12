@@ -10,6 +10,8 @@ import { AlertService } from 'src/app/services/alert.service';
 import { FormationsService } from 'src/app/services/formations.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { tap } from 'rxjs';
+import { ThemeService } from 'src/app/services/theme.service';
+import { Theme } from 'src/app/models/Theme';
 
 @Component({
   selector: 'app-formations',
@@ -32,13 +34,17 @@ export class FormationsComponent implements OnInit {
   formationForm!: FormGroup;
   formationValue!: Formation;
   modalRef!: NgbModalRef;
+  themes: Theme[] = [];
+
   //for search
   formationsAll: Formation[] = [];
   formationsAllReserved: Formation[] = [];
   formationsSearch: Formation[] = [];
+
   //for filter
   filterForm!: FormGroup;
   searchForm!: FormGroup;
+
   //for pagination
   page: number = 1;
   position: number = 1;
@@ -50,6 +56,7 @@ export class FormationsComponent implements OnInit {
 
   constructor(
     private formationService: FormationsService,
+    private themeService: ThemeService,
     private toastService: ToastrService,
     private utilsService: UtilsService,
     private alert: AlertService,
@@ -61,6 +68,7 @@ export class FormationsComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
     this.getAllFormations();
+    this.getAllThemes();
   }
 
   selectPage(page: string) {
@@ -91,6 +99,7 @@ export class FormationsComponent implements OnInit {
       description: ['', Validators.required],
       trainingPrice: ['', Validators.required],
       creationDate: ['', Validators.required],
+      subTheme: ['', Validators.required]
     });
   }
 
@@ -138,6 +147,17 @@ export class FormationsComponent implements OnInit {
         }
       }
     )
+  }
+
+  getAllThemes() {
+    this.themeService.getAll().subscribe(
+      (data) => {
+        this.themes = data;        
+      },
+      (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les themes');
+      }
+    );
   }
 
   getAllFormations() {
@@ -224,6 +244,10 @@ export class FormationsComponent implements OnInit {
         }
       )
     ).subscribe();
+  }
+
+  goToSubTheme() {
+    this.router.navigateByUrl(`dashboard/catalogues/themes`);
   }
 
   getSubString(text: string) {
