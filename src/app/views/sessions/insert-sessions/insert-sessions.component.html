@@ -26,14 +26,23 @@
         </select>
       </div>
       <div class="group" *ngIf="formVisibility === 'intra'">
-        <div class="form-group">
+        <div class="form-group">          
           <label for="company">Entreprise <span style="color: red;">*</span></label>
-          <input
-            id="company"
-            type="text"
-            class="form-control border-bottom"
-            formControlName="company"
-          />
+          <select
+              formControlName="company"
+              class="form-control border-bottom"
+            >
+              <option value="" disabled>Sélectionner votre entreprise</option>
+              <option
+                *ngFor="let company of companies"
+                [ngValue]="company"
+                [selected]="
+                  company.id === entreprise.id ? entreprise.name : null
+                "
+              >
+                {{ company.name }}
+              </option>
+            </select>
         </div>
       </div>
       <div class="form-group">

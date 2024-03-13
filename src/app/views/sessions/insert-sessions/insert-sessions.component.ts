@@ -5,6 +5,7 @@ import { Company } from 'src/app/models/Company';
 import { Formateur } from 'src/app/models/Formateur';
 import { Formation } from 'src/app/models/Formation';
 import { AlertService } from 'src/app/services/alert.service';
+import { CompanyService } from 'src/app/services/company.service';
 import { FormateursService } from 'src/app/services/formateurs.service';
 import { FormationsService } from 'src/app/services/formations.service';
 import { InterSessionsService } from 'src/app/services/inter-sessions.service';
@@ -23,14 +24,17 @@ export class InsertSessionsComponent implements OnInit {
     private intraSessionsService: IntraSessionsService,
     private formationsService: FormationsService,
     private formateursService: FormateursService,
+    private companyService: CompanyService,
     private router: Router,
     private route: ActivatedRoute,
     private alert: AlertService
   ) {}
   formation: Partial<Formation> = {};
   formateur: Partial<Formateur> = {};
+  entreprise: Partial<Company> = {};
   formateurs: Formateur[] = [];
   formations: Formation[] = [];
+  companies: Company[] = [];
   sessionForm!: FormGroup;
   formVisibility!: string;
   isLoading!: boolean;
@@ -38,8 +42,6 @@ export class InsertSessionsComponent implements OnInit {
   isFormEdit!: boolean;
   curentUri!: string;
   title: string = 'Enregistrer une session';
-
-  //employeeValue!: Employee;
 
   ngOnInit(): void {
     this.idSession = this.route.snapshot.paramMap.get('id');
@@ -52,11 +54,24 @@ export class InsertSessionsComponent implements OnInit {
     }
     this.getAllFormations();
     this.getAllFormateurs();
+    this.getAllCompanies();
     this.initForm();
   }
 
   cancel() {
     this.router.navigate(['dashboard/sessions']);
+  }
+
+  getAllCompanies() {
+    this.companyService.getAll().subscribe({
+      next: data => {
+        this.companies = data;
+      },
+      error: (err) => {
+        this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer les formations');
+      }
+    });
+
   }
 
   getAllFormations() {
@@ -99,6 +114,9 @@ export class InsertSessionsComponent implements OnInit {
         this.intraSessionsService.getById(id).subscribe({
           next: data => {
             this.sessionForm.patchValue(data);
+            this.formation = data.training;
+            this.formateur = data.trainer;
+            this.entreprise = data.company;
           },
           error: (err) => {
             this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer l\'identifiant de la session');
