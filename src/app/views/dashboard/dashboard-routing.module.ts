@@ -13,6 +13,7 @@ import { InsertFormateurComponent } from '../formateurs/insert-formateur/insert-
 import { InsertFormationComponent } from '../formations/insert-formation/insert-formation.component';
 import { SessionsComponent } from '../sessions/sessions.component';
 import { InsertSessionsComponent } from '../sessions/insert-sessions/insert-sessions.component';
+import { SessionsInfosComponent } from '../sessions/sessions-infos/sessions-infos.component';
 
 const routes: Routes = [
   {

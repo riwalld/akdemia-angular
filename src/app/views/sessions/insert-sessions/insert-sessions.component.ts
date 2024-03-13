@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Company } from 'src/app/models/Company';
 import { Formateur } from 'src/app/models/Formateur';
 import { Formation } from 'src/app/models/Formation';
 import { AlertService } from 'src/app/services/alert.service';
@@ -26,7 +27,8 @@ export class InsertSessionsComponent implements OnInit {
     private route: ActivatedRoute,
     private alert: AlertService
   ) {}
-
+  formation: Partial<Formation> = {};
+  formateur: Partial<Formateur> = {};
   formateurs: Formateur[] = [];
   formations: Formation[] = [];
   sessionForm!: FormGroup;
@@ -85,6 +87,8 @@ export class InsertSessionsComponent implements OnInit {
         this.interSessionService.getById(id).subscribe({
           next: data => {
             this.sessionForm.patchValue(data);
+            this.formation = data.training;
+            this.formateur = data.trainer;
           },
           error: (err) => {
             this.alert.alertError(err.error !== null ? err.error.message : 'Impossible de récupérer l\'identifiant de la session');
@@ -120,7 +124,7 @@ export class InsertSessionsComponent implements OnInit {
         status: new FormControl(''),
         trainer: new FormControl('M'),
         training: new FormControl(''),
-        minParticipant: new FormControl(''),
+        minParticipants: new FormControl(''),
         company: new FormControl('')        
       });
   }

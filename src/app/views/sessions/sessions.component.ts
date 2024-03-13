@@ -94,7 +94,6 @@ export class SessionsComponent implements OnInit {
         this.inter = table;
       }
     }
-    //for employee
     else if(this.showIntra){
       this.intra = this.intraReserved;
       let table: IntraSession[] = [];
@@ -113,15 +112,11 @@ export class SessionsComponent implements OnInit {
   }
 
   goToSessionDetail(id: number, typeSession: string) {
-    this.router.navigateByUrl(`dashboard/sessions/${id}`);
+    this.router.navigateByUrl(`dashboard/sessions/${typeSession}/${id}`);
   }
 
-  goToEditInter(id: number) {
-    this.router.navigateByUrl(`dashboard/sessions/inter/${id}`);
-  }
-
-  goToEditIntra(id: number) {
-    this.router.navigateByUrl(`dashboard/sessions/intra/${id}`);
+  goToEditSession(id: number, typeSession: string) {
+    this.router.navigateByUrl(`dashboard/sessions/${typeSession}/${id}`);
   }
 
   deleteSession(id: number, sessionType: string) {

@@ -96,7 +96,7 @@
                 >
                   <td>{{ interSession.code }}</td>
                   <td>{{ interSession.description }}</td>
-                  <td>{{ interSession.minParticipant }}</td>
+                  <td>{{ interSession.minParticipants }}</td>
                   <td>{{ interSession.status }}</td>
                   <td>{{ interSession.duration }}</td>
                   <td>
@@ -105,21 +105,21 @@
                   <td>{{ interSession.location }}</td>
                   <td>
                     <span 
-                        class="text-success"
+                        class="text-success p-2"
                         (click)="goToSessionDetail(interSession.id, 'inter')"
                         title="Informations">
                         <i class="fa fa-info text-info" ></i>
                     </span>
                     
                     <span
-                      class="text-success"
-                      (click)="goToEditInter(interSession.id)"
+                      class="text-success p-2"
+                      (click)="goToEditSession(interSession.id, 'inter')"
                       title="Modifier">
                       <i class="fa fa-pencil text-primary"></i>
                     </span>
                     
                     <span
-                      class="text-danger"
+                      class="text-danger p-2"
                       (click)="deleteSession(interSession.id, 'inter')"
                       title="Supprimer"
                       ><i class="fa fa-trash"></i></span>
@@ -156,17 +156,25 @@
                     </td>
                     <td>{{ intraSession.location }}</td>
                     <td>
-                    <!-- <span
-                        class="text-success"
-                        (click)="goToEditPart(firstparticular.id)"
-                        title="Modifier"
-                        ><i class="fa fa-pencil text-primary"></i></span
-                    >&nbsp;
+                      <span 
+                        class="text-success p-2"
+                        (click)="goToSessionDetail(intraSession.id, 'intra')"
+                        title="Informations">
+                        <i class="fa fa-info text-info" ></i>
+                    </span>
+                  
                     <span
-                        class="text-danger"
-                        (click)="deleteClients(firstparticular.id, 'particulier')"
-                        title="Supprimer"
-                        ><i class="fa fa-trash"></i></span> -->
+                      class="text-success p-2"
+                      (click)="goToEditSession(intraSession.id, 'intra')"
+                      title="Modifier">
+                      <i class="fa fa-pencil text-primary"></i>
+                    </span>
+                    
+                    <span
+                      class="text-danger p-2"
+                      (click)="deleteSession(intraSession.id, 'intra')"
+                      title="Supprimer"
+                      ><i class="fa fa-trash"></i></span>
                     </td>
                 </tr>
               </tbody>

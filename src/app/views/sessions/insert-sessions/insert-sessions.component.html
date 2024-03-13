@@ -10,8 +10,8 @@
   <div class="card-body">
     <form [formGroup]="sessionForm" (ngSubmit)="create()">
       <div *ngIf="idSession" class="form-group">
-        <label for="description">Type:</label>
-        <input type="text" id="code" disabled [value]="formVisibility" />
+        <label for="type">Type:</label>
+        <input class="form-control border-bottom" type="text" id="type" disabled [value]="formVisibility" />
       </div>
       <div *ngIf="!idSession" class="form-group">
         <select
@@ -96,7 +96,12 @@
             <div class="form-group col-sm-4">
                 <label for="trainer">Formateur <span style="color: red;">*</span></label>
                 <select id="trainer" formControlName="trainer" class="form-control border-bottom" required>
-                    <option *ngFor="let trainer of formateurs" [ngValue]="trainer">{{ trainer.firstname }} {{ trainer.lastname }}</option>
+                    <option *ngFor="let trainer of formateurs" 
+                            [ngValue]="trainer"
+                            [selected]="
+                              trainer.id === formateur.id ? formateur.lastname : null
+                              ">
+                            {{ trainer.firstname }} {{ trainer.lastname }}</option>
                 </select>
             </div>
             <div class="form-group col-sm-4">
@@ -107,8 +112,10 @@
                 >
                 <option
                     *ngFor="let training of formations"
-                    [ngValue]="training"                
-                >
+                    [ngValue]="training"
+                    [selected]="
+                              training.id === formation.id ? formation.title : null
+                              ">
                     {{ training.title }}
                 </option>
                 </select>
@@ -119,12 +126,12 @@
         *ngIf="formVisibility === 'inter'"
       >
         <div class="form-group col-sm-6">
-            <label for="minParticipant">Min Participants <span style="color: red;">*</span></label>
+            <label for="minParticipants">Min Participants <span style="color: red;">*</span></label>
             <input
-                id="minParticipant"
+                id="minParticipants"
                 type="text"
                 class="form-control border-bottom"
-                formControlName="minParticipant"
+                formControlName="minParticipants"
             />
         </div>
       </div>
