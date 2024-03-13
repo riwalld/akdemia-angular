@@ -1,0 +1,167 @@
+<div
+  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">Sessions</h1>
+</div>
+<div class="card">
+  <div class="card-header" style="background-color: #fff">
+    <h4 class="card-title" style="margin-top: 20px">{{ title }}</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="sessionForm" (ngSubmit)="create()">
+      <div *ngIf="idSession" class="form-group">
+        <label for="type">Type:</label>
+        <input class="form-control border-bottom" type="text" id="type" disabled [value]="formVisibility" />
+      </div>
+      <div *ngIf="!idSession" class="form-group">
+        <select
+          (change)="updateForm($event)"
+          class="form-control border-bottom"
+        >
+          <option value="" disabled [defaultSelected]="true">
+            Sélectionner un type de session
+          </option>
+          <option value="inter">Inter</option>
+          <option value="intra">Intra</option>
+        </select>
+      </div>
+      <div class="group" *ngIf="formVisibility === 'intra'">
+        <div class="form-group">          
+          <label for="company">Entreprise <span style="color: red;">*</span></label>
+          <select
+              formControlName="company"
+              class="form-control border-bottom"
+            >
+              <option value="" disabled>Sélectionner votre entreprise</option>
+              <option
+                *ngFor="let company of companies"
+                [ngValue]="company"
+                [selected]="
+                  company.id === entreprise.id ? entreprise.name : null
+                "
+              >
+                {{ company.name }}
+              </option>
+            </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="code">Code <span style="color: red;">*</span></label>
+        <input
+          id="code"
+          type="text"
+          class="form-control border-bottom"
+          formControlName="code"
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Description <span style="color: red;">*</span></label>
+        <input
+          id="description"
+          type="text"
+          class="form-control border-bottom"
+          formControlName="description"
+        />
+      </div>
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="location">Lieu <span style="color: red;">*</span></label>
+                <input
+                    id="location"
+                    type="text"
+                    class="form-control border-bottom"
+                    formControlName="location"
+                />
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="date">Date <span style="color: red;">*</span></label>
+                <input
+                    id="date"
+                    type="date"
+                    class="form-control border-bottom"
+                    formControlName="date"
+                />
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="duration">Durée (J) <span style="color: red;">*</span></label>
+                <input
+                    id="duration"
+                    type="text"
+                    class="form-control border-bottom"
+                    formControlName="duration"
+                />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <label for="price">Prix(€) <span style="color: red;">*</span></label>
+                <input
+                    id="price"
+                    type="text"
+                    class="form-control border-bottom"
+                    formControlName="price"
+                />
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="trainer">Formateur <span style="color: red;">*</span></label>
+                <select id="trainer" formControlName="trainer" class="form-control border-bottom" required>
+                    <option *ngFor="let trainer of formateurs" 
+                            [ngValue]="trainer"
+                            [selected]="
+                              trainer.id === formateur.id ? formateur.lastname : null
+                              ">
+                            {{ trainer.firstname }} {{ trainer.lastname }}</option>
+                </select>
+            </div>
+            <div class="form-group col-sm-4">
+                <label for="training">Formation <span style="color: red;">*</span></label>
+                <select
+                formControlName="training"
+                class="form-control border-bottom"
+                >
+                <option
+                    *ngFor="let training of formations"
+                    [ngValue]="training"
+                    [selected]="
+                              training.id === formation.id ? formation.title : null
+                              ">
+                    {{ training.title }}
+                </option>
+                </select>
+            </div>
+        </div>
+      <div
+        class="group"
+        *ngIf="formVisibility === 'inter'"
+      >
+        <div class="form-group col-sm-6">
+            <label for="minParticipants">Min Participants <span style="color: red;">*</span></label>
+            <input
+                id="minParticipants"
+                type="text"
+                class="form-control border-bottom"
+                formControlName="minParticipants"
+            />
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        style="float: right; margin-right: 20px"
+      >
+        <span *ngIf="isLoading" class="spinner-border"></span>
+        <span [ngClass]="isLoading ? 'hidden' : ''"
+          ><span [ngClass]="isFormEdit ? 'hidden' : ''">Ajouter</span
+          ><span [ngClass]="!isFormEdit ? 'hidden' : ''">Modifier</span></span
+        >
+      </button>
+      <button
+        class="btn btn-secondary"
+        style="float: right; margin-right: 20px"
+        (click)="cancel()"
+      >
+        Annuler
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,1 +1,213 @@
-<p>sessions works!</p>
+<div
+  class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">Sessions</h1>
+</div>
+<div class="col-lg-12">
+  <div class="row tab-content">
+    <div
+      id="list-view"
+      class="tab-pane fade active show col-lg-12"
+      role="tabpanel"
+    >
+      <div class="card">
+        <div class="card-header" style="background-color: #fff">
+          <div class="d-flex justify-content-between">
+            <h4 class="card-title">Liste des Sessions</h4>
+            <a href="dashboard/sessions/insert" class="btn btn-primary"
+              >Nouvelle Session</a
+            >
+          </div>
+          <p class="my-3">
+            <a
+              (click)="showInterSession()"
+              class="link-offset-2 mx-5 link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            >
+              <span [ngClass]="{ active: showInter }">Session planifiées</span>
+            </a>
+            <a
+              (click)="showIntraSession()"
+              class="link-offset-2 mx-5 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            >
+              <span [ngClass]="{ active: showIntra }">Demandes participant</span>
+            </a>
+          </p>
+        </div>
+
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-md-3 d-flex">
+              <form style="width: 100%" [formGroup]="filterForm">
+                <div class="d-flex align-items-baseline">
+                  <label for="entries" class="form-label me-2">Nombre</label>
+                  <select
+                    formControlName="filter"
+                    class="form-select-sm"
+                    id="entries"
+                  >
+                    <option value="5">5</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-5">&nbsp;</div>
+            <div class="col-md-4">
+              <form
+                [formGroup]="searchForm"
+                style="position: relative; width: 350px; float: right"
+              >
+                <i class="fas fa-search"></i>
+                <input
+                  formControlName="keyWord"
+                  (input)="searchByName()"
+                  class="form-control"
+                  type="search"
+                  placeholder="Recherche"
+                  aria-label="Search"
+                  style="padding-left: 30px"
+                />
+              </form>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <!-- inter -->
+            <table *ngIf="showInter" class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Code</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Min participants</th>
+                  <th scope="col">Statut</th>
+                  <th scope="col">Durée (J)</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Lieu</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let interSession of inter | paginate: {
+                  itemsPerPage: filterForm.value.filter,
+                  currentPage: page,
+                  };"
+                >
+                  <td>{{ interSession.code }}</td>
+                  <td>{{ interSession.description }}</td>
+                  <td>{{ interSession.minParticipants }}</td>
+                  <td>{{ interSession.status }}</td>
+                  <td>{{ interSession.duration }}</td>
+                  <td>
+                    {{ interSession.date | date : "dd-MM-yyyy" }}
+                  </td>
+                  <td>{{ interSession.location }}</td>
+                  <td>
+                    <span 
+                        class="text-success p-2"
+                        (click)="goToSessionDetail(interSession.id, 'inter')"
+                        title="Informations">
+                        <i class="fa fa-info text-info" ></i>
+                    </span>
+                    
+                    <span
+                      class="text-success p-2"
+                      (click)="goToEditSession(interSession.id, 'inter')"
+                      title="Modifier">
+                      <i class="fa fa-pencil text-primary"></i>
+                    </span>
+                    
+                    <span
+                      class="text-danger p-2"
+                      (click)="deleteSession(interSession.id, 'inter')"
+                      title="Supprimer"
+                      ><i class="fa fa-trash"></i></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- intra -->
+            <table *ngIf="showIntra" class="table">
+              <thead>
+                <tr>
+                    <th scope="col">Code</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Durée (J)</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Lieu</th>
+                    <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let intraSession of intra | paginate: {
+                  itemsPerPage: filterForm.value.filter,
+                  currentPage: page,
+                  };"
+                >
+                    <td>{{ intraSession.code }}</td>
+                    <td>{{ intraSession.description }}</td>
+                    <td>{{ intraSession.status }}</td>
+                    <td>{{ intraSession.duration }}</td>
+                    <td>
+                    {{ intraSession.date | date : "dd-MM-yyyy" }}
+                    </td>
+                    <td>{{ intraSession.location }}</td>
+                    <td>
+                      <span 
+                        class="text-success p-2"
+                        (click)="goToSessionDetail(intraSession.id, 'intra')"
+                        title="Informations">
+                        <i class="fa fa-info text-info" ></i>
+                    </span>
+                  
+                    <span
+                      class="text-success p-2"
+                      (click)="goToEditSession(intraSession.id, 'intra')"
+                      title="Modifier">
+                      <i class="fa fa-pencil text-primary"></i>
+                    </span>
+                    
+                    <span
+                      class="text-danger p-2"
+                      (click)="deleteSession(intraSession.id, 'intra')"
+                      title="Supprimer"
+                      ><i class="fa fa-trash"></i></span>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <p class="m-0">
+                Affichage de {{ filterForm.value.filter }} entrées sur
+                {{
+                  showInter
+                    ? inter.length
+                    : showIntra
+                    ? intra.length
+                    : 0
+                }}
+              </p>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4 text-end">
+              <pagination-controls
+                (pageChange)="handlePageChange($event)"
+                (pageBoundsCorrection)="handlePageChange($event)"
+                previousLabel="Précédent"
+                nextLabel="Suivant"
+                screenReaderPaginationLabel="Pagination"
+                screenReaderPageLabel="page"
+                screenReaderCurrentLabel="Vous êtes à la page"
+              ></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

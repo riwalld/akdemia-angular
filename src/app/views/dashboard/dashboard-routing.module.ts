@@ -12,6 +12,8 @@ import { FormateursComponent } from '../formateurs/formateurs.component';
 import { InsertFormateurComponent } from '../formateurs/insert-formateur/insert-formateur.component';
 import { InsertFormationComponent } from '../formations/insert-formation/insert-formation.component';
 import { SessionsComponent } from '../sessions/sessions.component';
+import { InsertSessionsComponent } from '../sessions/insert-sessions/insert-sessions.component';
+import { SessionsInfosComponent } from '../sessions/sessions-infos/sessions-infos.component';
 
 const routes: Routes = [
   {
@@ -31,7 +33,11 @@ const routes: Routes = [
       {path: 'clients/:id', component: InsertClientComponent},
       {path: 'clients/employe/:id', component: InsertClientComponent},
       {path: 'clients/particulier/:id', component: InsertClientComponent},
-      {path: 'clients/company/:id', component: InsertClientComponent}
+      {path: 'clients/company/:id', component: InsertClientComponent},
+      {path: 'sessions/insert', component: InsertSessionsComponent},
+      {path: 'sessions/:id', component: InsertSessionsComponent},
+      {path: 'sessions/inter/:id', component: InsertSessionsComponent},
+      {path: 'sessions/intra/:id', component: InsertSessionsComponent},
     ]
   },
 ];

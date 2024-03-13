@@ -2,13 +2,18 @@ import {Component, OnInit} from '@angular/core';
 import { Employee } from 'src/app/models/Employee';
 import { Formateur } from 'src/app/models/Formateur';
 import { Formation } from 'src/app/models/Formation';
+import { InterSession } from 'src/app/models/InterSession';
+import { IntraSession } from 'src/app/models/IntraSession';
 import { Particular } from 'src/app/models/Particular';
 import {Theme} from 'src/app/models/Theme';
 import { AlertService } from 'src/app/services/alert.service';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { FormateursService } from 'src/app/services/formateurs.service';
 import { FormationsService } from 'src/app/services/formations.service';
+import { InterSessionsService } from 'src/app/services/inter-sessions.service';
+import { IntraSessionsService } from 'src/app/services/intra-sessions.service';
 import { ParticularService } from 'src/app/services/particular.service';
+import { SessionsService } from 'src/app/services/sessions.service';
 import {ThemeService} from 'src/app/services/theme.service';
 
 @Component({
@@ -22,6 +27,8 @@ export class ContentDashboardComponent implements OnInit {
     private themeService: ThemeService,
     private particularService: ParticularService,
     private employeeService: EmployeeService,
+    private interSessionService: InterSessionsService,
+    private intraSessionService: IntraSessionsService,
     private formationService : FormationsService,
     private formateurService : FormateursService,
     private alert: AlertService
@@ -32,11 +39,15 @@ export class ContentDashboardComponent implements OnInit {
   listeFormations : Formation[] = [];
   listeParticulars : Particular[] = [];
   listeEmployees : Employee[] = [];
+  listeInterSessions : InterSession[] = [];
+  listeIntraSessions : IntraSession[] = [];
 
   ngOnInit(): void {
     this.getAllParticipants();
     this.getAllFormations();
     this.getAllFormateurs();
+    this.getAllInterSessions();
+    this.getAllIntraSessions();
     this.loadThemes();
   }
 
@@ -44,6 +55,18 @@ export class ContentDashboardComponent implements OnInit {
     this.themeService.getAll().subscribe({
       next: (data) => this.listeTheme = data
     })
+  }
+
+  getAllInterSessions() {
+    this.interSessionService.getAll().subscribe({
+      next: (data) => this.listeInterSessions = data
+    });
+  }
+
+  getAllIntraSessions() {
+    this.intraSessionService.getAll().subscribe({
+      next: (data) => this.listeIntraSessions = data
+    });
   }
 
   getAllFormateurs() {
