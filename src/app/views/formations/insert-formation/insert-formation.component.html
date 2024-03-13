@@ -23,7 +23,12 @@
                     <div class="form-group">
                         <label for="subtheme" class="form-label">Sous Thème <span class="text-danger">*</span></label>
                         <select id="subtheme" class="form-control input-default" formControlName="subtopics" multiple required>
-                            <option *ngFor="let subtheme of listeSubthemes" [ngValue]="subtheme">{{ subtheme.subthemeTitle }}</option>
+                            <option *ngFor="let subtheme of listeSubthemes" 
+                                [ngValue]="subtheme"
+                                [selected]="subtheme.id === subtheme.id ? subtheme.subthemeTitle : null"
+                                >
+                                {{ subtheme.subthemeTitle }}
+                            </option>
                         </select>
                     </div>
                 </div>

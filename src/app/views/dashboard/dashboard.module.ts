@@ -16,6 +16,8 @@ import { FormationsComponent } from '../formations/formations.component';
 import { InsertFormateurComponent } from '../formateurs/insert-formateur/insert-formateur.component';
 import { InsertFormationComponent } from '../formations/insert-formation/insert-formation.component';
 import { SessionsComponent } from '../sessions/sessions.component';
+import { InsertSessionsComponent } from '../sessions/insert-sessions/insert-sessions.component';
+import { SessionsInfosComponent } from '../sessions/sessions-infos/sessions-infos.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { SessionsComponent } from '../sessions/sessions.component';
     FormationsComponent,
     InsertFormateurComponent,
     InsertFormationComponent,
-    SessionsComponent
+    SessionsComponent,
+    InsertSessionsComponent,
+    SessionsInfosComponent
   ],
   imports: [
     CommonModule,

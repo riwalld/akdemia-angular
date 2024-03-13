@@ -111,7 +111,8 @@ export class FormationsComponent implements OnInit {
     this.formationsAll = this.formationsAllReserved;
     let table: Formation[] = [];
     for (let i = 0; i < this.formationsAll.length; i++) {
-      if (this.formationsAll[i].title.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
+      if (this.formationsAll[i].title.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())
+          || this.formationsAll[i].description.toLowerCase().includes(this.searchForm.value.keyWord.toLowerCase())) {
         table.push(this.formationsAll[i]);
       }
     }

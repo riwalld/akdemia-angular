@@ -15,6 +15,8 @@ import { LoginComponent } from "./public/login/login.component";
 import { ClientsComponent } from "./views/clients/clients.component";
 import { InsertClientComponent } from "./views/clients/insert-client/insert-client.component";
 import { SessionsComponent } from './views/sessions/sessions.component';
+import { SessionsInfosComponent } from './views/sessions/sessions-infos/sessions-infos.component';
+import { InsertSessionsComponent } from './views/sessions/insert-sessions/insert-sessions.component';
 
 
 @NgModule({
