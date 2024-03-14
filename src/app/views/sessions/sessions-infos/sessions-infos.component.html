@@ -1,1 +1,136 @@
-<p>sessions-infos works!</p>
+<div class="mt-3">
+  <div class="pt-3 pb-2 mb-3">
+    <h1 style="opacity: 95%;">Session 
+      <span>{{ sessionForm.value.code }}</span>
+    </h1>
+  </div>
+  <div class="row page-titles mx-0 card-head">
+    <div class="col-sm-12 p-md-2">
+      <div class="welcome-text">
+        <div class="pt-3 pb-2 mb-3">
+          <h1 class="h2">
+            <span>{{ sessionForm.value.training.title }}</span>
+          </h1>
+        </div>
+        <h5 style="margin-top: 10px; text-align: justify; opacity: 70%;">
+          <small>Date début : {{ sessionForm.value.date | date: 'dd/MM/yyyy' }}</small>
+        </h5>
+        <div class="progress">
+          <div role="progressbar" aria-valuenow="99" aria-valuemin="0" aria-valuemax="100" class="progress-bar" style="width: 1%;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row tab-content">
+  <div
+    id="list-view"
+    class="tab-pane fade active show col-lg-12"
+    role="tabpanel">
+    <div class="card">
+      <div class="card-header d-flex justify-content-between">
+        <h4 class="lead">
+          Tous les participants
+        </h4>
+        <button
+          type="button"
+          class="btn btn-sm btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#participantModal"
+        >
+          Inscrire un participant
+        </button>
+      </div>
+      <div
+        class="modal fade"
+        id="participantModal"
+        data-bs-backdrop="static"
+        tabindex="-1"
+        aria-labelledby="themeParticipantLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Ajouter</h5>
+            </div>            
+            <div class="modal-body" *ngIf="typeSession == 'inter'">
+              <h5 class="p-2">Tous les participants</h5>
+              <select class="form-control" (change)="onChangeParticulier($event)">
+                <option value="">Sélectionnez un participant</option>
+                <option *ngFor="let particulier of listeAllParticuliers" [value]="particulier.id">
+                  {{ particulier.firstname }} {{ particulier.lastname }} 
+                </option>
+              </select>
+            </div>
+            <div class="modal-body" *ngIf="typeSession == 'intra'">
+              <select class="form-control" (change)="onChangeParticulier($event)">
+                <option value="">Sélectionnez un participant</option>
+                <option *ngFor="let employee of listeAllEmployees" [value]="employee.id">
+                  {{ employee.firstname }} {{ employee.lastname }}
+                </option>
+              </select>
+            </div>
+            
+            <div class="modal-footer">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                (click)="save()"
+              >Enregistrer</button>
+              <button
+                type="reset"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                &nbsp;Annuler
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table table-responsive">
+        <table class="table" *ngIf="typeSession == 'inter'">
+          <thead>
+            <tr>
+              <th scope="col">Nom</th>
+              <th scope="col">Prénom</th>
+              <th scope="col" *ngIf="typeSession == 'inter'">Email</th>
+              <th scope="col" *ngIf="typeSession != 'inter'">Téléphone</th>
+              <th scope="col">Sexe</th>
+              <th scope="col" class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of particulars">
+              <td>{{ s.particular.lastname }}</td>
+              <td>{{ s.particular.firstname }}</td>
+              <td>{{ s.particular.email }}</td>
+              <td>{{ s.particular.gender }}</td>
+              <td class="text-center" style="cursor: pointer">
+                <i
+                class="fa fa-trash text-danger mx-2"
+                title="Supprimer"
+                (click)="delete(s.particular.id)"
+              ></i>
+              </td>
+            </tr>
+            <tr *ngFor="let s of employees">
+              <td>{{ s.employee.lastname }}</td>
+              <td>{{ s.employee.firstname }}</td>
+              <td>{{ s.employee.phone }}</td>
+              <td>{{ s.employee.gender }}</td>
+              <td class="text-center" style="cursor: pointer">
+                <i
+                class="fa fa-trash text-danger mx-2"
+                title="Supprimer"
+                (click)="delete(s.employee.id)"
+              ></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

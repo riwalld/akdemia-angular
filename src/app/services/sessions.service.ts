@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
+import { CrudService } from './crud.service';
+import { Session } from '../models/Session';
+import { HttpClient } from '@angular/common/http';
+import { URL_BASE } from '../conf/constant';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SessionsService {
+export class SessionsService extends CrudService<Session> {
 
-  constructor() { }
+  constructor(http: HttpClient) {
+    const url: string = URL_BASE;
+    super(http, `${url}/sessions`);
+  }
 }

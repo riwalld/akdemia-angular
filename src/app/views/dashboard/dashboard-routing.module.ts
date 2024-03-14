@@ -38,6 +38,8 @@ const routes: Routes = [
       {path: 'sessions/:id', component: InsertSessionsComponent},
       {path: 'sessions/inter/:id', component: InsertSessionsComponent},
       {path: 'sessions/intra/:id', component: InsertSessionsComponent},
+      {path: 'sessions/inter/detail/:id', component: SessionsInfosComponent},
+      {path: 'sessions/intra/detail/:id', component: SessionsInfosComponent},
     ]
   },
 ];
