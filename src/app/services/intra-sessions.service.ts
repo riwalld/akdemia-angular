@@ -9,8 +9,13 @@ import { URL_BASE } from '../conf/constant';
 })
 export class IntraSessionsService extends CrudService<IntraSession> {
 
-  constructor(http: HttpClient) {
+  constructor(private http: HttpClient) {
     const url: string = URL_BASE;
     super(http, `${url}/intrasessions`);
+  }
+
+  deleteParticipant(idSession: any, id: any) {
+    const url: string = URL_BASE;
+    return this.http.delete(`${url}/employeesouscriptions/${idSession}/${id}`);
   }
 }

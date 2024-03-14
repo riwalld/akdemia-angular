@@ -112,7 +112,7 @@ export class SessionsComponent implements OnInit {
   }
 
   goToSessionDetail(id: number, typeSession: string) {
-    this.router.navigateByUrl(`dashboard/sessions/${typeSession}/${id}`);
+    this.router.navigateByUrl(`dashboard/sessions/${typeSession}/detail/${id}`);
   }
 
   goToEditSession(id: number, typeSession: string) {

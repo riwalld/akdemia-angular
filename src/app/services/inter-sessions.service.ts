@@ -9,8 +9,13 @@ import { URL_BASE } from '../conf/constant';
 })
 export class InterSessionsService extends CrudService<InterSession> {
 
-  constructor(http: HttpClient) {
+  constructor(private http: HttpClient) {
     const url: string = URL_BASE;
     super(http, `${url}/intersessions`);
+  }
+
+  deleteParticipant(idSession: any, id: any) {
+    const url: string = URL_BASE;
+    return this.http.delete(`${url}/particularsouscriptions/${idSession}/${id}`);
   }
 }
