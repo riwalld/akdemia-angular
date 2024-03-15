@@ -35,7 +35,7 @@
               (click)="showEmploye()"
               class="link-offset-2 mx-5 link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
             >
-              <span [ngClass]="{ active: showEmp }">Employeés</span>
+              <span [ngClass]="{ active: showEmp }">Employés</span>
             </a>
           </p>
         </div>
@@ -97,8 +97,8 @@
                   currentPage: page,
                   };"
                 >
-                  <td>{{ firstparticular.firstname }}</td>
                   <td>{{ firstparticular.lastname }}</td>
+                  <td>{{ firstparticular.firstname }}</td>
                   <td>{{ firstparticular.activity }}</td>
                   <td>{{ firstparticular.gender }}</td>
                   <td>
